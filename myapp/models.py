@@ -16,12 +16,17 @@ class Member(User):
         return self.first_name
 
 class Followers(models.Model):
+    STATUS_CHOICES = [
+        (1, 'Request'),
+        (2, 'Following'),
+    ]
     id = models.IntegerField(primary_key=True)
-    follower_id = models.ManyToManyField(Member, related_name='followers')
-    followee_id = models.ManyToManyField(Member, related_name='following')
+    follower_id = models.ManyToManyField(Member, related_name='followers',STATUS_CHOICES=1)
+    followee_id = models.ManyToManyField(Member, related_name='following',STATUS_CHOICES=2)
+    request_id=models.ManyToManyField(Member,related_name='user_id')
 
     def __str__(self):
-        return str(self.id)
+        return str(self.follower_id)
 
 
 class feeds(models.Model):
