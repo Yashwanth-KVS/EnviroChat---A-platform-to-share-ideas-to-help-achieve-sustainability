@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Feeds</title>
+</head>
+<body>
+{% for feed in feeds %}
+  <li> {{ feed }}</li>
+{% endfor %}
+<a href="{% url 'project_app:feeds' %}"> Go to Index </a>
+</body>
+</html>
