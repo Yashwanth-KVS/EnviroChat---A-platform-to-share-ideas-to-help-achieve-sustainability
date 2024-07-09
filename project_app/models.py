@@ -24,13 +24,17 @@ class Followers(models.Model):
         return str(self.id)
 
 
-class feeds(models.Model):
+class Feeds(models.Model):
     id = models.IntegerField(primary_key=True)
     user_id = models.ForeignKey(to=Member, on_delete=models.CASCADE)
     updated_at = models.DateTimeField(auto_now=True)
+    tagged_users = models.ManyToManyField(Member, related_name='tagged_in_feeds', blank=True)
+    location = models.CharField(max_length=100, blank=True)
+    activity_log = models.TextField(blank=True)
 
     def __str__(self):
         return str(self.id)
+
 
 
 class Posts(models.Model):
@@ -61,10 +65,10 @@ class Favorites(models.Model):
         return str(self.id)
 
 
-class feeds_posts(models.Model):
-    id = models.IntegerField(primary_key=True)
-    post_id = models.ForeignKey(to=Posts, on_delete=models.CASCADE)
-    feed_id = models.ForeignKey(to=feeds, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return str(self.id)
+# class feeds_posts(models.Model):
+#     id = models.IntegerField(primary_key=True)
+#     post_id = models.ForeignKey(to=Posts, on_delete=models.CASCADE)
+#     feed_id = models.ForeignKey(to=feeds, on_delete=models.CASCADE)
+#
+#     def __str__(self):
+#         return str(self.id)
