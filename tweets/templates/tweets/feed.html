@@ -1,0 +1,21 @@
+<!-- tweets/templates/tweets/profile.html -->
+<h1>{{ request.user.username }}'s Profile</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Tweet</button>
+</form>
+<h2>Your Tweets</h2>
+<ul>
+    {% for tweet in tweets %}
+        <li>{{ tweet.content }} - {{ tweet.created_at }}</li>
+    {% endfor %}
+</ul>
+
+<!-- tweets/templates/tweets/feed.html -->
+<h1>Feed</h1>
+<ul>
+    {% for tweet in tweets %}
+        <li>{{ tweet.user.username }}: {{ tweet.content }} - {{ tweet.created_at }}</li>
+    {% endfor %}
+</ul>

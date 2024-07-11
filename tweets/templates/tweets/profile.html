@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Profile</title>
+</head>
+<body>
+    <h1>{{ request.user.username }}'s Profile</h1>
+    <ul>
+        {% for tweet in tweets %}
+            <li>{{ tweet.content }} - {{ tweet.created_at }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
