@@ -20,7 +20,7 @@ from django.urls import path, include
 from tweets import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-
+`
     # path('myapp/', include('myapp.urls')),
     path('tweet/', include('tweets.urls'))
 ]
