@@ -28,7 +28,8 @@ class Followers(models.Model):
         status = models.IntegerField(choices=[
             (1, 'Follower'),
             (2, 'Following'),
-        ])        def __str__(self):
+        ])
+        def __str__(self):
             return (
                 f'The person who has sent the follow request is {self.follower.username} the person who he wants to '
                 f'follow is {self.followee.username}')

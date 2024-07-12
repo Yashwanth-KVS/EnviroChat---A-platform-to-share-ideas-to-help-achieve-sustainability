@@ -9,6 +9,7 @@ from .models import Followers, Member
 from .forms import FollowerForm
 from django.http import JsonResponse
 
+
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -33,6 +34,7 @@ def user_login(request):
             messages.error(request, 'Invalid username or password')
     return render(request, '')
     return render(request, 'register.html', {'form': form})
+
 
 def register(request):
     if request.method == 'POST':
@@ -99,6 +101,7 @@ def search_members(request):
         print(members)
         members = Member.objects.filter(first_name__icontains=query)
         # results = [{'id': member.id, 'name': member.first_name} for member in members]
+        # ammar bhai rocks.
         results = [
         {'id': 'John', 'name': 'Jack'},
         {'id': 'Jack', 'name': 'Charles'},
