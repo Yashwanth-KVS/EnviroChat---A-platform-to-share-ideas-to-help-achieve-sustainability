@@ -1,0 +1,48 @@
+<!-- search.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Members</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Search Members</h1>
+    <form method="GET" action="{% url 'search_members' %}">
+        <input type="text" id="searchInput" name="query" placeholder="Search by name...">
+    </form>
+    <ul id="results" style="display:none; border: 1px solid #ccc; list-style-type: none; padding: 0;">
+        <!-- Results will be appended here -->
+    </ul>
+
+    <script>
+        $(document).ready(function() {
+            $('#searchInput').keyup(function() {
+                let query = $(this).val();
+                if (query.length > 0) {
+                    $.ajax({
+                        url: '{% url "search_members" %}',
+                        data: {
+                            'query': query
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            $('#results').empty().show();
+                            if (data.length > 0) {
+                                data.forEach(function(item) {
+                                    $('#results').append('<li>' + item.name + '</li>');
+                                });
+                            } else {
+                                $('#results').append('<li>No results found</li>');
+                            }
+                        }
+                    });
+                } else {
+                    $('#results').hide();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

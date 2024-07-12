@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .forms import UserRegisterForm
 
+
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -16,6 +17,7 @@ def register(request):
     else:
         form = UserRegisterForm()
     return render(request, 'register.html', {'form': form})
+
 
 def user_login(request):
     if request.method == 'POST':
@@ -35,3 +37,12 @@ def followers(request, latest_tweets=None):
     follow_request = followers.objects.filter(STATUS_CHOICES=1)
     context = {'latest_tweets': latest_tweets}
     return render(request, 'myapp/templates/myapp/tweet.html', context)
+
+
+def search_members(request):
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        query = request.GET.get('query', '')
+        members = Member.objects.filter(first_name__icontains=query)
+        results = [{'id': member.id, 'name': member.first_name} for member in members]
+        return JsonResponse(results, safe=False)
+    return render(request, 'search.html')
