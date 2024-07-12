@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EnviroChat - Followers</title>
+    <style>
+        body {
+            background-color: green;
+            color: black;
+            font-family: Arial, sans-serif;
+        }
+        h1, h2 {
+            color: black;
+        }
+        ul {
+            list-style-type: none;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>EnviroChat</h1>
+    <h2>Pending Follow Requests</h2>
+    <form method="GET" action="">
+        <label>
+            <input type="checkbox" name="show_requests" {% if show_requests %}checked{% endif %}>
+            Show Follow Requests
+        </label>
+        <button type="submit">Filter</button>
+    </form>
+
+    <h2>Add a New Follower</h2>
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Follower</button>
+    </form>
+
+    <ul>
+        {% for follower in followers %}
+            <li>
+                {% if follower.status == 1 %}
+                    - Status: Follower
+                {% elif follower.status == 2 %}
+                    - Status: Following
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

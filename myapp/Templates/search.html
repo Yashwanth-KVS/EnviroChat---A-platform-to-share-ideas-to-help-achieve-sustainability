@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Members</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #343a40;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        #results {
+            display: none;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            background-color: #fff;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            max-height: 200px;
+            overflow-y: auto;
+            position: absolute;
+            width: calc(100% - 22px); /* Account for padding and border */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #results li {
+            padding: 10px;
+            border-bottom: 1px solid #ced4da;
+            cursor: pointer;
+        }
+
+        #results li:hover {
+            background-color: #e9ecef;
+        }
+
+        #results li:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Search Members</h1>
+    <form>
+        <input type="text" id="searchInput" name="query" placeholder="Search by name...">
+    </form>
+    <ul id="results"></ul>
+
+    <script>
+        $(document).ready(function() {
+            $('#searchInput').keyup(function() {
+                let query = $(this).val();
+                if (query.length > 0) {
+                    $.ajax({
+                        url: '{% url "search_members" %}',
+                        data: {
+                            'query': query
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            $('#results').empty().show();
+                            if (data.length > 0) {
+                                data.forEach(function(item) {
+                                    $('#results').append('<li>' + item.name + '</li>');
+                                });
+                            } else {
+                                $('#results').append('<li>No results found</li>');
+                            }
+                        }
+                    });
+                } else {
+                    $('#results').hide();
+                }
+            });
+
+            // Hide the results when clicking outside
+            $(document).click(function(event) {
+                if (!$(event.target).closest('#searchInput, #results').length) {
+                    $('#results').hide();
+                }
+            });
+
+            // Hide the results when pressing escape
+            $(document).keydown(function(event) {
+                if (event.key === "Escape") {
+                    $('#results').hide();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
