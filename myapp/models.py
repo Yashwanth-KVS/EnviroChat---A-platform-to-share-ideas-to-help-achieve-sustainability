@@ -6,6 +6,7 @@ import datetime
 from django.contrib.auth.models import User
 from django.utils import timezone
 
+
 class Member(User):
     user_id = models.IntegerField(unique=True, primary_key=True)
     email_id = models.EmailField(unique=True)
@@ -14,6 +15,7 @@ class Member(User):
 
     def __str__(self):
         return self.first_name
+
 
 class Followers(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -49,6 +51,7 @@ class Posts(models.Model):
 
     def __str__(self):
         return str(self.id)
+
 
 class Favorites(models.Model):
     id = models.IntegerField(primary_key=True)
