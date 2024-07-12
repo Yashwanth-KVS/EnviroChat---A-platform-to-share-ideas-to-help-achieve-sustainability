@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Members</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -61,9 +66,13 @@
 <body>
     <h1>Search Members</h1>
     <form>
-        <input type="text" id="searchInput" name="query" placeholder="Search by name...">
+        <div class="dropdown">
+            <input type="text" id="searchInput" name="query" placeholder="Search by name..." class="form-control" autocomplete="off" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div id="results" class="dropdown-menu" aria-labelledby="searchInput">
+                <!-- Results will be appended here -->
+            </div>
+        </div>
     </form>
-    <ul id="results"></ul>
 
     <script>
         $(document).ready(function() {
@@ -77,14 +86,15 @@
                         },
                         dataType: 'json',
                         success: function(data) {
-                            $('#results').empty().show();
+                            $('#results').empty();
                             if (data.length > 0) {
                                 data.forEach(function(item) {
-                                    $('#results').append('<li>' + item.name + '</li>');
+                                    $('#results').append('<a class="dropdown-item">' + item.name + '</a>');
                                 });
                             } else {
-                                $('#results').append('<li>No results found</li>');
+                                $('#results').append('<a class="dropdown-item">No results found</a>');
                             }
+                            $('#results').show();
                         }
                     });
                 } else {
