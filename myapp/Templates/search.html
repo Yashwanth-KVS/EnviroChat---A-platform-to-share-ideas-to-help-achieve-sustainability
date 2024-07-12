@@ -48,18 +48,14 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        #results li {
-            padding: 10px;
-            border-bottom: 1px solid #ced4da;
-            cursor: pointer;
+        #results .dropdown-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        #results li:hover {
-            background-color: #e9ecef;
-        }
-
-        #results li:last-child {
-            border-bottom: none;
+        #results .btn-follow {
+            margin-left: 10px;
         }
     </style>
 </head>
@@ -69,37 +65,35 @@
         <div class="dropdown">
             <input type="text" id="searchInput" name="query" placeholder="Search by name..." class="form-control" autocomplete="off" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div id="results" class="dropdown-menu" aria-labelledby="searchInput">
-                <!-- Results will be appended here -->
+                <!-- Static data as placeholder -->
+                <a class="dropdown-item" href="#">
+                    <span>John Doe</span>
+                    <button class="btn btn-primary btn-follow">Follow</button>
+                </a>
+                <a class="dropdown-item" href="#">
+                    <span>Jane Smith</span>
+                    <button class="btn btn-primary btn-follow">Follow</button>
+                </a>
+                <a class="dropdown-item" href="#">
+                    <span>Michael Johnson</span>
+                    <button class="btn btn-primary btn-follow">Follow</button>
+                </a>
+                <a class="dropdown-item" href="#">
+                    <span>Emily Davis</span>
+                    <button class="btn btn-primary btn-follow">Follow</button>
+                </a>
+                <a class="dropdown-item" href="#">
+                    <span>David Brown</span>
+                    <button class="btn btn-primary btn-follow">Follow</button>
+                </a>
             </div>
         </div>
     </form>
 
     <script>
         $(document).ready(function() {
-            $('#searchInput').keyup(function() {
-                let query = $(this).val();
-                if (query.length > 0) {
-                    $.ajax({
-                        url: '{% url "search_members" %}',
-                        data: {
-                            'query': query
-                        },
-                        dataType: 'json',
-                        success: function(data) {
-                            $('#results').empty();
-                            if (data.length > 0) {
-                                data.forEach(function(item) {
-                                    $('#results').append('<a class="dropdown-item">' + item.name + '</a>');
-                                });
-                            } else {
-                                $('#results').append('<a class="dropdown-item">No results found</a>');
-                            }
-                            $('#results').show();
-                        }
-                    });
-                } else {
-                    $('#results').hide();
-                }
+            $('#searchInput').on('input', function() {
+                $('#results').show();
             });
 
             // Hide the results when clicking outside
