@@ -39,3 +39,5 @@ class FollowerForm(forms.ModelForm):
         fields = ['follower', 'followee', 'status']
 class SearchForm(forms.Form):
     query = forms.CharField(label='Search for a member', max_length=100)
+    fields = ['username', 'email', 'password1', 'password2']
+
