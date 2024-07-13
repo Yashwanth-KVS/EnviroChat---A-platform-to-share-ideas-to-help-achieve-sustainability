@@ -30,7 +30,7 @@ class Followers(models.Model):
     id = models.IntegerField(primary_key=True)
     follower_id = models.ManyToManyField(Member, related_name='followers',choices=STATUS_CHOICES)
     followee_id = models.ManyToManyField(Member, related_name='following',choices=STATUS_CHOICES)
-    request_id=models.ManyToManyField(Member,related_name='user_id')
+    request_id = models.ManyToManyField(Member, related_name='requests')
 
     def __str__(self):
         return str(self.follower_id)
