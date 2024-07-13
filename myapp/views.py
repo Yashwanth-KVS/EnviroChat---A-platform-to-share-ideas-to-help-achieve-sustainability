@@ -1,9 +1,15 @@
+from datetime import datetime
+
 from django.shortcuts import render
 from .models import Followers
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .forms import UserRegisterForm
+from django.http import JsonResponse
+from .models import Member
+from django.shortcuts import render
+import datetime
 
 
 def register(request):
@@ -39,10 +45,32 @@ def followers(request, latest_tweets=None):
     return render(request, 'myapp/templates/myapp/tweet.html', context)
 
 
+# views.py
+
+
+# views.py
+
+
+# views.py
+from django.shortcuts import render
+
+
 def search_members(request):
-    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        query = request.GET.get('query', '')
-        members = Member.objects.filter(first_name__icontains=query)
-        results = [{'id': member.id, 'name': member.first_name} for member in members]
-        return JsonResponse(results, safe=False)
-    return render(request, 'search.html')
+    query = request.GET.get('query', '')
+    results = []
+    if query:
+        members = Member.objects.filter(first_name__icontains(query))[:5]
+        results = [{'id': member.user_id, 'name': member.first_name} for member in members]
+    else:
+        results = [
+            {'id': 1, 'name': 'John Doe'},
+            {'id': 2, 'name': 'Jane Smith'},
+            {'id': 3, 'name': 'Michael Johnson'},
+            {'id': 4, 'name': 'Emily Davis'},
+            {'id': 5, 'name': 'David Brown'},
+        ]
+    return render(request, 'search.html', {'results': results, 'query': query})
+
+
+def member_details(request, member_id):
+    return render(request, 'details.html')

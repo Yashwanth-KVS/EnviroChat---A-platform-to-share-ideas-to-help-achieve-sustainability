@@ -34,7 +34,6 @@
         }
 
         #results {
-            display: none;
             border: 1px solid #ced4da;
             border-radius: 4px;
             background-color: #fff;
@@ -43,7 +42,6 @@
             margin: 0;
             max-height: 200px;
             overflow-y: auto;
-            position: absolute;
             width: calc(100% - 22px); /* Account for padding and border */
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
@@ -52,6 +50,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ced4da;
         }
 
         #results .btn-follow {
@@ -61,55 +61,21 @@
 </head>
 <body>
     <h1>Search Members</h1>
-    <form>
-        <div class="dropdown">
-            <input type="text" id="searchInput" name="query" placeholder="Search by name..." class="form-control" autocomplete="off" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <div id="results" class="dropdown-menu" aria-labelledby="searchInput">
-                <!-- Static data as placeholder -->
-                <a class="dropdown-item" href="#">
-                    <span>John Doe</span>
-                    <button class="btn btn-primary btn-follow">Follow</button>
-                </a>
-                <a class="dropdown-item" href="#">
-                    <span>Jane Smith</span>
-                    <button class="btn btn-primary btn-follow">Follow</button>
-                </a>
-                <a class="dropdown-item" href="#">
-                    <span>Michael Johnson</span>
-                    <button class="btn btn-primary btn-follow">Follow</button>
-                </a>
-                <a class="dropdown-item" href="#">
-                    <span>Emily Davis</span>
-                    <button class="btn btn-primary btn-follow">Follow</button>
-                </a>
-                <a class="dropdown-item" href="#">
-                    <span>David Brown</span>
-                    <button class="btn btn-primary btn-follow">Follow</button>
-                </a>
-            </div>
-        </div>
+    <form method="GET" action="{% url 'search_members' %}">
+        <input type="text" id="searchInput" name="query" placeholder="Search by name..." class="form-control" value="{{ query }}">
     </form>
 
-    <script>
-        $(document).ready(function() {
-            $('#searchInput').on('input', function() {
-                $('#results').show();
-            });
-
-            // Hide the results when clicking outside
-            $(document).click(function(event) {
-                if (!$(event.target).closest('#searchInput, #results').length) {
-                    $('#results').hide();
-                }
-            });
-
-            // Hide the results when pressing escape
-            $(document).keydown(function(event) {
-                if (event.key === "Escape") {
-                    $('#results').hide();
-                }
-            });
-        });
-    </script>
+    {% if results %}
+        <ul id="results">
+            {% for result in results %}
+                <li class="dropdown-item">
+                    <span>{{ result.name }}</span>
+                    <a href="{% url 'member_details' result.id %}" class="btn btn-primary btn-follow">Follow</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found</p>
+    {% endif %}
 </body>
 </html>
