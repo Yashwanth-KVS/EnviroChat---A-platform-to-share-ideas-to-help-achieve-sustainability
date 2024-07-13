@@ -9,6 +9,7 @@ from .forms import UserRegisterForm
 from django.http import JsonResponse
 from .models import Member
 from django.shortcuts import render
+
 import datetime
 
 
@@ -45,14 +46,8 @@ def followers(request, latest_tweets=None):
     return render(request, 'myapp/templates/myapp/tweet.html', context)
 
 
-# views.py
 
 
-# views.py
-
-
-# views.py
-from django.shortcuts import render
 
 
 def search_members(request):
@@ -71,6 +66,15 @@ def search_members(request):
         ]
     return render(request, 'search.html', {'results': results, 'query': query})
 
-
 def member_details(request, member_id):
-    return render(request, 'details.html')
+    # Static data for demonstration
+    member_data = {
+        1: {'name': 'John Doe', 'age': 30, 'email': 'john@example.com', 'profile_pic': 'https://randomuser.me/api/portraits/men/1.jpg', 'cover_pic': 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0', 'interests': ['Reading', 'Traveling', 'Swimming']},
+        2: {'name': 'Jane Smith', 'age': 25, 'email': 'jane@example.com', 'profile_pic': 'https://randomuser.me/api/portraits/women/2.jpg', 'cover_pic': 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86', 'interests': ['Cooking', 'Hiking', 'Gardening']},
+        3: {'name': 'Michael Johnson', 'age': 28, 'email': 'michael@example.com', 'profile_pic': 'https://randomuser.me/api/portraits/men/3.jpg', 'cover_pic': 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0', 'interests': ['Cycling', 'Photography', 'Gaming']},
+        4: {'name': 'Emily Davis', 'age': 22, 'email': 'emily@example.com', 'profile_pic': 'https://randomuser.me/api/portraits/women/4.jpg', 'cover_pic': 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86', 'interests': ['Painting', 'Running', 'Yoga']},
+        5: {'name': 'David Brown', 'age': 35, 'email': 'david@example.com', 'profile_pic': 'https://randomuser.me/api/portraits/men/5.jpg', 'cover_pic': 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0', 'interests': ['Writing', 'Fishing', 'Golfing']},
+    }
+
+    member = member_data.get(member_id, {'name': 'Unknown', 'age': 'Unknown', 'email': 'Unknown', 'profile_pic': 'https://via.placeholder.com/150', 'cover_pic': 'https://via.placeholder.com/800x200', 'interests': []})
+    return render(request, 'details.html', {'member': member})

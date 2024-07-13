@@ -6,11 +6,50 @@
     <title>Member Details</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .cover-photo {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-top: -75px;
+            border: 5px solid #fff;
+        }
+        .interests {
+            list-style-type: none;
+            padding: 0;
+        }
+        .interests li {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 5px 10px;
+            margin: 5px;
+            border-radius: 20px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Member Details</h1>
-        <p>This is an empty member details page.</p>
+        <div class="card">
+            <img src="{{ member.cover_pic }}" alt="Cover Photo" class="cover-photo">
+            <div class="card-body text-center">
+                <img src="{{ member.profile_pic }}" alt="Profile Photo" class="profile-photo">
+                <h2>{{ member.name }}</h2>
+                <p><strong>Age:</strong> {{ member.age }}</p>
+                <p><strong>Email:</strong> {{ member.email }}</p>
+                <h3>Interests</h3>
+                <ul class="interests">
+                    {% for interest in member.interests %}
+                        <li>{{ interest }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
     </div>
 </body>
 </html>
