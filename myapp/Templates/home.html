@@ -1,28 +1,101 @@
 <!DOCTYPE html>
+<html lang="en">
 
+{% extends 'base.html'%}
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <title>EnviroChat-Home</title>
-    <h1>EnviroChat</h1>
-    <p>Sharing Ideas for Shaping a Sustainable Future</p>
 </head>
 
-{% extends 'base.html'%}
-
 {% block body_block %}
-    <div class="container">
-    <h2>Welcome to EnviroChat</h2>
-    <blockquote>
+
+{#    <p>Sharing Ideas for Shaping a Sustainable Future</p>#}
+{#    <div class="container">#}
+    <div style="font-size: 5vw;text-align: center;font-family: Forte,sans-serif;">
+        <h2>Welcome to EnviroChat</h2>
+    </div>
+    <div style="text-align: center">
+    <blockquote id="quote-block">
         "In the face of impending catastrophe, whose warning signs are already unbearably disastrous,
         weak action is unwise. No action is dangerous." <br>
         — William Ruto, President of Kenya
     </blockquote>
+    </div>
 
-    <h4></h4>
+
+    <script>
+        const quotes = [
+            {
+                text: "In the face of impending catastrophe, whose warning signs are already unbearably disastrous, weak action is unwise. No action is dangerous.",
+                author: "William Ruto, President of Kenya"
+            },
+            {
+                text: "The greatest threat to our planet is the belief that someone else will save it.",
+                author: "Robert Swan"
+            },
+            {
+                text: "The Earth is what we all have in common.",
+                author: "Wendell Berry"
+            },
+            {
+                text: "He that plants trees loves others beside himself.",
+                author: "Thomas Fuller"
+            },
+            {
+                text: "This is not a partisan debate; it is a human one. Clean air and water, and a livable climate are inalienable human rights. " +
+                    "Solving this crisis is not a question of politics. It is our moral obligation.",
+                author: "Leonardo DiCaprio"
+            },
+            {
+                text: "To leave the world better than you found it, sometimes you have to pick up other people’s trash.",
+                author: "Bill Nye"
+            },
+            {
+                text: "Climate change is sometimes misunderstood as being about changes in the weather. " +
+                    "In reality, it is about changes in our very way of life.",
+                author: "Paul Polman"
+            }
+        ];
+
+        let currentQuoteIndex = 0;
+
+    {#    function changeQuote() {#}
+    {#        currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;#}
+    {#        const quoteBlock = document.getElementById('quote-block');#}
+    {#        // Trigger reflow to restart the animation#}
+    {#        quoteBlock.style.display = 'none';#}
+    {#        setTimeout(() => {#}
+    {#            quoteBlock.innerHTML = `"${quotes[currentQuoteIndex].text}" <br> — ${quotes[currentQuoteIndex].author}`;#}
+    {#            quoteBlock.style.display = 'block';#}
+    {#        }, 0);#}
+            {#quoteBlock.innerHTML = `"${quotes[currentQuoteIndex].text}" <br> — ${quotes[currentQuoteIndex].author}`;#}
+    {#    }#}
+    {##}
+    {#    setInterval(changeQuote, 3000);#}
+    {#</script>#}
+    function changeQuote() {
+            currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+            const quoteBlock = document.getElementById('quote-block');
+
+            // Re-trigger the animation by removing and re-adding the class
+            quoteBlock.classList.remove('fade-in');
+            void quoteBlock.offsetWidth; // Trigger a reflow
+            quoteBlock.classList.add('fade-in');
+
+            // Change the quote
+            quoteBlock.innerHTML = `"${quotes[currentQuoteIndex].text}" <br> — ${quotes[currentQuoteIndex].author}`;
+
+        }
+
+        setInterval(changeQuote, 5000);
+    </script>
+
 
 
 {% endblock %}
-</div>
+{#</div>#}
+</html>
 
 
 
