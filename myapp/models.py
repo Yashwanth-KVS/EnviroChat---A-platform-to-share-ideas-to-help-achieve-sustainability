@@ -126,3 +126,10 @@ class Pages_followers(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+class video(models.Model):
+    caption=models.CharField(max_length=255)
+    video_id = models.IntegerField(primary_key=True)
+    video=models.FileField(upload_to='videos/%Y/%m/%d')
+    def __str__(self):
+        return str(self.caption)
