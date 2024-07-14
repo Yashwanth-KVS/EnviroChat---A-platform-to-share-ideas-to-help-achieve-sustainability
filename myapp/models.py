@@ -1,16 +1,13 @@
 from random import choices
 
 from django.db import models
-
-# Create your models here.
-from django.db import models
 import datetime
 from django.contrib.auth.models import User
-from django.utils import timezone
+
 
 
 class Member(User):
-    user_id = models.IntegerField(unique=True, primary_key=True)
+    user_id = models.AutoField(unique=True, primary_key=True)
     email_id = models.EmailField(unique=True)
     dob = models.DateField(default=datetime.date.today)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -27,55 +24,46 @@ class Followers(models.Model):
         (1, 'Request'),
         (2, 'Following'),
     ]
-    id = models.IntegerField(primary_key=True)
-    follower_id = models.ManyToManyField(Member, related_name='followers',choices=STATUS_CHOICES)
-    followee_id = models.ManyToManyField(Member, related_name='following',choices=STATUS_CHOICES)
-    request_id = models.ManyToManyField(Member, related_name='requests')
+    id = models.AutoField(primary_key=True)
+    follower = models.ForeignKey(Member, related_name='followers', on_delete=models.CASCADE)
+    followee = models.ForeignKey(Member, related_name='following', on_delete=models.CASCADE)
+    status = models.IntegerField(choices=STATUS_CHOICES)
 
     def __str__(self):
-        return str(self.follower_id)
+        return f'Follower: {self.follower.username}, Followee: {self.followee.username}'
 
 
-class feeds(models.Model):
-    id = models.IntegerField(primary_key=True)
-    user_id = models.ForeignKey(to=Member, on_delete=models.CASCADE)
+class Feeds(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(Member, on_delete=models.CASCADE)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return str(self.id)
 
 
-class Threads(models.Model):
-    thread_id = models.IntegerField(primary_key=True)
-    user_id = models.ForeignKey(to=Member, on_delete=models.CASCADE)
-    #category = models.IntegerField(choices=STATUS_CHOICES, default=2)
-    query = models.TextField()
+class Posts(models.Model):
+    STATUS_CHOICES = [
+        (1, 'Thread'),
+        (2, 'Regular Post'),
+        (3, 'Video Post'),
+    ]
+
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(Member, on_delete=models.CASCADE)
+    category = models.IntegerField(choices=STATUS_CHOICES, default=2)
+    content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return str(self.id)
-
-class ThreadComments(models.Model):
-    choices = [
-        (0, 'Yes'),
-        (1, 'No'),
-    ]
-    thread_comment_id = models.IntegerField(primary_key=True)
-    user_id = models.ForeignKey(to=Member, on_delete=models.CASCADE)
-    comment = models.TextField()
-    upvote = models.IntegerField(choices=choices, default=0)
-    downvote = models.IntegerField(choices=choices, default=0)
-
-    def __str__(self):
-        return str(self.comment)
 
 
 class Favorites(models.Model):
-    id = models.IntegerField(primary_key=True)
-    user_id = models.ForeignKey(to=Member, on_delete=models.CASCADE)
-    #thread_id = models.ForeignKey(to=Posts, on_delete=models.CASCADE)
-    thread_id = models.ForeignKey(to=Threads, on_delete=models.CASCADE)
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(Member, on_delete=models.CASCADE)
+    post = models.ForeignKey(Posts, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -83,11 +71,10 @@ class Favorites(models.Model):
         return str(self.id)
 
 
-class feeds_posts(models.Model):
-    id = models.IntegerField(primary_key=True)
-    #post_id = models.ForeignKey(to=Posts, on_delete=models.CASCADE)
-    thread_id = models.ForeignKey(to=Threads, on_delete=models.CASCADE)
-    feed_id = models.ForeignKey(to=feeds, on_delete=models.CASCADE)
+class FeedsPosts(models.Model):
+    id = models.AutoField(primary_key=True)
+    post = models.ForeignKey(Posts, on_delete=models.CASCADE)
+    feed = models.ForeignKey(Feeds, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.id)

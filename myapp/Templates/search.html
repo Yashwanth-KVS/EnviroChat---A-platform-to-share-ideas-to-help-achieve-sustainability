@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Members</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #343a40;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        #results {
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            background-color: #fff;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            max-height: 200px;
+            overflow-y: auto;
+            width: calc(100% - 22px); /* Account for padding and border */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #results .dropdown-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ced4da;
+        }
+
+        #results .btn-follow {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Search Members</h1>
+    <form method="GET" action="{% url 'search_members' %}">
+        <input type="text" id="searchInput" name="query" placeholder="Search by name..." class="form-control" value="{{ query }}">
+    </form>
+
+    {% if results %}
+        <ul id="results">
+            {% for result in results %}
+                <li class="dropdown-item">
+                    <span>{{ result.name }}</span>
+                    <a href="{% url 'member_details' result.id %}" class="btn btn-primary btn-follow">Follow</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found</p>
+    {% endif %}
+</body>
+</html>
