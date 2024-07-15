@@ -9,3 +9,6 @@ def home(request):
 
 def aboutus(request):
     return render(request, 'aboutus.html')
+
+def events(request):
+    return render(request, 'events.html')
