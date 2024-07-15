@@ -28,9 +28,9 @@ class Followers(models.Model):
         (2, 'Following'),
     ]
     id = models.IntegerField(primary_key=True)
-    follower_id = models.ManyToManyField(Member, related_name='followers',STATUS_CHOICES=1)
-    followee_id = models.ManyToManyField(Member, related_name='following',STATUS_CHOICES=2)
-    request_id=models.ManyToManyField(Member,related_name='user_id')
+    follower_id = models.ManyToManyField(Member, related_name='followers',choices=STATUS_CHOICES)
+    followee_id = models.ManyToManyField(Member, related_name='following',choices=STATUS_CHOICES)
+    request_id=models.ManyToManyField(Member,related_name='requests')
 
     def __str__(self):
         return str(self.follower_id)

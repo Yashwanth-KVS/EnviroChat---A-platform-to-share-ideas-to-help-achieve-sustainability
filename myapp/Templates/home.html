@@ -23,6 +23,49 @@
     </blockquote>
     </div>
 
+{#    <div class="u-container">#}
+{#        <h2 style="font-size: 2vw;text-align: center;font-family: Forte,sans-serif" >Trending</h2>#}
+{#        <ul class="app-trending-row">#}
+{#            <li class="app-trending-row__link">#}
+{#                <img src=""#}
+{#                     alt="Score 1733" class="u-mb-8" width="55" height="55" itemprop="image">#}
+{#            </li>#}
+{#            <li>2</li>#}
+{#            <li>3</li>#}
+{#            <li>4</li>#}
+{##}
+{#        </ul>#}
+{##}
+{#    </div>#}
+    <div class="container mt-5">
+    <h2 class="text-center" style="font-size: 2vw; font-family: Forte, sans-serif;">Trending</h2>
+    <ul class="list-unstyled row app-trending-row">
+        <li class="app-trending-row__link col-md-3 text-center mb-4">
+            <a href="https://example.com/article1" class="d-block">
+                <img src="https://example.com/image1.jpg" alt="Article 1" class="img-fluid">
+                <span>Article 1</span>
+            </a>
+        </li>
+        <li class="app-trending-row__link col-md-3 text-center mb-4">
+            <a href="https://example.com/article2" class="d-block">
+                <img src="https://example.com/image2.jpg" alt="Article 2" class="img-fluid">
+                <span>Article 2</span>
+            </a>
+        </li>
+        <li class="app-trending-row__link col-md-3 text-center mb-4">
+            <a href="https://example.com/article3" class="d-block">
+                <img src="https://example.com/image3.jpg" alt="Article 3" class="img-fluid">
+                <span>Article 3</span>
+            </a>
+        </li>
+        <li class="app-trending-row__link col-md-3 text-center mb-4">
+            <a href="https://example.com/article4" class="d-block">
+                <img src="https://example.com/image4.jpg" alt="Article 4" class="img-fluid">
+                <span>Article 4</span>
+            </a>
+        </li>
+    </ul>
+</div>
 
     <script>
         const quotes = [
@@ -58,6 +101,29 @@
             }
         ];
 
+        const articles = [
+            {
+                title: "Article 1",
+                url: "https://example.com/article1",
+                image: "https://example.com/image1.jpg"
+            },
+            {
+                title: "Article 2",
+                url: "https://example.com/article2",
+                image: "https://example.com/image2.jpg"
+            },
+            {
+                title: "Article 3",
+                url: "https://example.com/article3",
+                image: "https://example.com/image3.jpg"
+            },
+            {
+                title: "Article 4",
+                url: "https://example.com/article4",
+                image: "{% static 'twitter-logo.png' %}"
+            }
+        ];
+
         let currentQuoteIndex = 0;
 
     {#    function changeQuote() {#}
@@ -88,8 +154,43 @@
 
         }
 
-        setInterval(changeQuote, 5000);
+        setInterval(changeQuote, 5000);}
+
+    }
     </script>
+
+
+        {#window.onload = function() {#}
+        {## this javascript is for articles#}
+    {#    const trendingRow = document.querySelector('.app-trending-row');#}
+    {#    trendingRow.innerHTML = '';  // Clear existing items#}
+    {##}
+    {#    articles.forEach(article => {#}
+    {#        const listItem = document.createElement('li');#}
+    {#        listItem.className = 'app-trending-row__link';#}
+    {##}
+    {#        const link = document.createElement('a');#}
+    {#        link.href = article.url;#}
+    {#        link.style.display = 'block';  // Make link block-level to ensure image and text stack#}
+    {##}
+    {#        const image = document.createElement('img');#}
+    {#        image.src = article.image;#}
+    {#        image.alt = article.title;#}
+    {#        image.width = 55;  // Set width and height as per your requirement#}
+    {#        image.height = 55;#}
+    {##}
+    {#        const title = document.createElement('span');#}
+    {#        title.textContent = article.title;#}
+    {#        title.style.display = 'block';  // Make title block-level to appear below the image#}
+    {#        title.style.marginTop = '5px';  // Add some space between the image and the title#}
+    {##}
+    {#        link.appendChild(image);#}
+    {#        link.appendChild(title);#}
+    {#        listItem.appendChild(link);#}
+    {#        trendingRow.appendChild(listItem);#}
+    {#    });#}
+
+
 
 
 
