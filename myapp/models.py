@@ -85,11 +85,17 @@ class Pages(models.Model):
     user_id = models.ForeignKey(to=Member, on_delete=models.CASCADE)
     title = models.TextField()
     content = models.TextField()
+    title_img = models.ImageField(upload_to='title_imgs',default='title_page.jpg')
+    content_img = models.ImageField(upload_to='content_imgs', default='content_image.jpg')
+    about_page = models.TextField(default='The page promotes discussion base for green energy')
+    about_img = models.ImageField(upload_to='about_imgs', default='content_page.jpg')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return str(self.title)
+
+
 
 class Pages_comments(models.Model):
     choices = [

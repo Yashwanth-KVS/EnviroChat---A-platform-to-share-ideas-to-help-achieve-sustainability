@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% extends 'base.html' %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -59,10 +60,10 @@
         }
     </style>
 </head>
-<body>
+{% block body_block %}
     <h1>Search Members</h1>
-    <form method="GET" action="{% url 'search_members' %}">
-        <input type="text" id="searchInput" name="query" placeholder="Search by name..." class="form-control" value="{{ query }}">
+    <form method="GET" action="{% url 'myapp:search_members' %}">
+        <label for="searchInput"></label><input type="text" id="searchInput" name="query" placeholder="Search by name..." class="form-control" value="{{ query }}">
     </form>
 
     {% if results %}
@@ -70,12 +71,12 @@
             {% for result in results %}
                 <li class="dropdown-item">
                     <span>{{ result.name }}</span>
-                    <a href="{% url 'member_details' result.id %}" class="btn btn-primary btn-follow">Follow</a>
+                    <a href="{% url 'myapp:member_details' result.id %}" class="btn btn-primary btn-follow">Follow</a>
                 </li>
             {% endfor %}
         </ul>
     {% else %}
         <p>No results found</p>
     {% endif %}
-</body>
+{% endblock %}
 </html>

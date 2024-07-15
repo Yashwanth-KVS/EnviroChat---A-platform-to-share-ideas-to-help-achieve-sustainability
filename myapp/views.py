@@ -2,20 +2,14 @@ from datetime import datetime
 
 from django.shortcuts import render
 
-
 # Create your views here.
 
-def home(request):
-    return render(request, 'home.html')
 
-
-def aboutus(request):
-    return render(request, 'aboutus.html')
 from .models import Followers
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm, PageCreateForm
 from django.http import JsonResponse
 from .models import Member
 from django.shortcuts import render
@@ -34,6 +28,14 @@ def register(request):
     else:
         form = UserRegisterForm()
     return render(request, 'register.html', {'form': form})
+
+
+def home(request):
+    return render(request, 'home.html')
+
+
+def aboutus(request):
+    return render(request, 'aboutus.html')
 
 
 def user_login(request):
@@ -56,10 +58,6 @@ def followers(request, latest_tweets=None):
     return render(request, 'myapp/templates/myapp/tweet.html', context)
 
 
-
-
-
-
 def search_members(request):
     query = request.GET.get('query', '')
     results = []
@@ -76,15 +74,52 @@ def search_members(request):
         ]
     return render(request, 'search.html', {'results': results, 'query': query})
 
+
 def member_details(request, member_id):
     # Static data for demonstration
     member_data = {
-        1: {'name': 'John Doe', 'age': 30, 'email': 'john@example.com', 'profile_pic': 'https://randomuser.me/api/portraits/men/1.jpg', 'cover_pic': 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0', 'interests': ['Reading', 'Traveling', 'Swimming']},
-        2: {'name': 'Jane Smith', 'age': 25, 'email': 'jane@example.com', 'profile_pic': 'https://randomuser.me/api/portraits/women/2.jpg', 'cover_pic': 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86', 'interests': ['Cooking', 'Hiking', 'Gardening']},
-        3: {'name': 'Michael Johnson', 'age': 28, 'email': 'michael@example.com', 'profile_pic': 'https://randomuser.me/api/portraits/men/3.jpg', 'cover_pic': 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0', 'interests': ['Cycling', 'Photography', 'Gaming']},
-        4: {'name': 'Emily Davis', 'age': 22, 'email': 'emily@example.com', 'profile_pic': 'https://randomuser.me/api/portraits/women/4.jpg', 'cover_pic': 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86', 'interests': ['Painting', 'Running', 'Yoga']},
-        5: {'name': 'David Brown', 'age': 35, 'email': 'david@example.com', 'profile_pic': 'https://randomuser.me/api/portraits/men/5.jpg', 'cover_pic': 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0', 'interests': ['Writing', 'Fishing', 'Golfing']},
+        1: {'name': 'John Doe', 'age': 30, 'email': 'john@example.com',
+            'profile_pic': 'https://randomuser.me/api/portraits/men/1.jpg',
+            'cover_pic': 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0',
+            'interests': ['Reading', 'Traveling', 'Swimming']},
+        2: {'name': 'Jane Smith', 'age': 25, 'email': 'jane@example.com',
+            'profile_pic': 'https://randomuser.me/api/portraits/women/2.jpg',
+            'cover_pic': 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86',
+            'interests': ['Cooking', 'Hiking', 'Gardening']},
+        3: {'name': 'Michael Johnson', 'age': 28, 'email': 'michael@example.com',
+            'profile_pic': 'https://randomuser.me/api/portraits/men/3.jpg',
+            'cover_pic': 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0',
+            'interests': ['Cycling', 'Photography', 'Gaming']},
+        4: {'name': 'Emily Davis', 'age': 22, 'email': 'emily@example.com',
+            'profile_pic': 'https://randomuser.me/api/portraits/women/4.jpg',
+            'cover_pic': 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86',
+            'interests': ['Painting', 'Running', 'Yoga']},
+        5: {'name': 'David Brown', 'age': 35, 'email': 'david@example.com',
+            'profile_pic': 'https://randomuser.me/api/portraits/men/5.jpg',
+            'cover_pic': 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0',
+            'interests': ['Writing', 'Fishing', 'Golfing']},
     }
 
-    member = member_data.get(member_id, {'name': 'Unknown', 'age': 'Unknown', 'email': 'Unknown', 'profile_pic': 'https://via.placeholder.com/150', 'cover_pic': 'https://via.placeholder.com/800x200', 'interests': []})
+    member = member_data.get(member_id, {'name': 'Unknown', 'age': 'Unknown', 'email': 'Unknown',
+                                         'profile_pic': 'https://via.placeholder.com/150',
+                                         'cover_pic': 'https://via.placeholder.com/800x200', 'interests': []})
     return render(request, 'details.html', {'member': member})
+
+
+def create_pages(request):
+    if request.method == 'POST':
+        form = PageCreateForm(request.POST)
+        if form.is_valid():
+            new_page = form.save(commit=False)
+            now = datetime.datetime.now()
+            new_page.page_id = int(now.strftime('%Y%m%d%H%M%S') + form.cleaned_data['user_id'])
+            new_page.save()
+            return render(request, template_name='view_page_home.html')
+
+        else:
+            return render(request, template_name='create_page.html', context={'form': form})
+
+    else:
+        form = PageCreateForm()
+        return render(request, template_name='create_page.html', context={'form': form})
+
