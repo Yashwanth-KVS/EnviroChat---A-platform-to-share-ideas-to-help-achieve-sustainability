@@ -1,12 +1,75 @@
 {% extends 'base.html' %}
 
 {% block body_block %}
-    <h2>Enter the Page Details</h2>
+    <style>
+    input[type=text], select {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    input[type=submit] {
+      width: 100%;
+      background-color: #4CAF50;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+      background-color: #45a049;
+    }
+
+    div {
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 20px;
+
+    }
+    </style>
+    <div class="topnav">
+      <a class="active" href="#home">Home</a>
+      <a href="#news">News</a>
+      <a href="#contact">Contact</a>
+      <a href="#about">About</a>
+    </div>
+    <div>
+    <h2 style="background-color:green;">Enter the Page Details</h2>
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Submit</button>
-        </form>
+                <p>
+                <label for="title">Enter a title for the page:</label>
+                <input type="text" id="title" name="title" placeholder="Ex: Green Energy, Farms..">
+                </p>
+                <p>
+                <label for="title_img">Enter the image for title:</label>
+                <input type="file" id="title_img" name="title_img">
+                </p>
+                <p>
+                <label for="content">Enter the content for the page:</label>
+                <input type="text" id="content" name="content" placeholder="Ex: There should be more utilisation of wind energy..">
+                </p>
+                <p>
+                <label for="content_img">Enter the image for content:</label>
+                <input type="file" id="content_img" name="content_img">
+                </p>
+                <p>
+                <label for="about_page">Enter the about you info:</label>
+                <input type="text" id="about_page" name="about_page" placeholder="Ex: I am brand ambassador for green energy..">
+                </p>
+                <p>
+                <label for="about_img">Enter the image for about:</label>
+                <input type="file" id="about_img" name="about_img">
+                </p>
 
+        </form>
+    </div>
 {% endblock %}
 
