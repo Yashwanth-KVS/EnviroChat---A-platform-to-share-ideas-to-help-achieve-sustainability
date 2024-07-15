@@ -2,74 +2,131 @@
 
 {% block body_block %}
     <style>
-    input[type=text], select {
-      width: 100%;
-      padding: 12px 20px;
-      margin: 8px 0;
-      display: inline-block;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
+    /* Updated CSS for a more eye-catching form */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .topnav {
+        overflow: hidden;
+        background-color: #333;
+    }
+
+    .topnav a {
+        float: left;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+    .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+    }
+
+    h2 {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px;
+        border-radius: 4px;
+        margin-top: 0;
+    }
+
+    input[type=text], input[type=file], select {
+        width: 100%;
+        padding: 12px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
     }
 
     input[type=submit] {
-      width: 100%;
-      background-color: #4CAF50;
-      color: white;
-      padding: 14px 20px;
-      margin: 8px 0;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
+        width: 100%;
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 12px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
     }
 
     input[type=submit]:hover {
-      background-color: #45a049;
+        background-color: #45a049;
     }
 
-    div {
-      border-radius: 5px;
-      background-color: #f2f2f2;
-      padding: 20px;
+    .form-group {
+        margin-bottom: 20px;
+    }
 
+    label {
+        font-weight: bold;
+        display: block;
     }
     </style>
+
     <div class="topnav">
-      <a class="active" href="#home">Home</a>
-      <a href="#news">News</a>
-      <a href="#contact">Contact</a>
-      <a href="#about">About</a>
+        <a class="active" href="#home">Home</a>
+        <a href="#news">News</a>
+        <a href="#contact">Contact</a>
+        <a href="#about">About</a>
     </div>
-    <div>
-    <h2 style="background-color:green;">Enter the Page Details</h2>
+
+    <div class="container">
+        <h2>Enter the Page Details</h2>
         <form method="post">
             {% csrf_token %}
-                <p>
-                <label for="title">Enter a title for the page:</label>
-                <input type="text" id="title" name="title" placeholder="Ex: Green Energy, Farms..">
-                </p>
-                <p>
-                <label for="title_img">Enter the image for title:</label>
-                <input type="file" id="title_img" name="title_img">
-                </p>
-                <p>
-                <label for="content">Enter the content for the page:</label>
-                <input type="text" id="content" name="content" placeholder="Ex: There should be more utilisation of wind energy..">
-                </p>
-                <p>
-                <label for="content_img">Enter the image for content:</label>
-                <input type="file" id="content_img" name="content_img">
-                </p>
-                <p>
-                <label for="about_page">Enter the about you info:</label>
-                <input type="text" id="about_page" name="about_page" placeholder="Ex: I am brand ambassador for green energy..">
-                </p>
-                <p>
-                <label for="about_img">Enter the image for about:</label>
-                <input type="file" id="about_img" name="about_img">
-                </p>
 
+            <div class="form-group">
+                <label for="title">Enter a title for the page:</label>
+                <input type="text" id="title" name="title" placeholder="Example: Green Energy, Farms.." required>
+            </div>
+
+            <div class="form-group">
+                <label for="title_img">Upload an image for the title:</label>
+                <input type="file" id="title_img" name="title_img" accept="image/*" required>
+            </div>
+
+            <div class="form-group">
+                <label for="content">Enter the content for the page:</label>
+                <input type="text" id="content" name="content" placeholder="Example: Utilization of wind energy.." required>
+            </div>
+
+            <div class="form-group">
+                <label for="content_img">Upload an image for the content:</label>
+                <input type="file" id="content_img" name="content_img" accept="image/*" required>
+            </div>
+
+            <div class="form-group">
+                <label for="about_page">Enter information about you:</label>
+                <input type="text" id="about_page" name="about_page" placeholder="Example: I am a green energy advocate.." required>
+            </div>
+
+            <div class="form-group">
+                <label for="about_img">Upload an image for the about section:</label>
+                <input type="file" id="about_img" name="about_img" accept="image/*" required>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Submit">
+            </div>
         </form>
     </div>
 {% endblock %}
-
