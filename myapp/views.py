@@ -114,7 +114,14 @@ def create_pages(request):
             now = datetime.datetime.now()
             new_page.page_id = int(now.strftime('%Y%m%d%H%M%S') + form.cleaned_data['user_id'])
             new_page.save()
-            return render(request, template_name='view_page_home.html')
+            print(new_page.page_id)
+            print(form.cleaned_data['user_id'])
+            print(form.cleaned_data['title'])
+            print(form.cleaned_data['content'])
+            print(form.cleaned_data['about_page'])
+
+            print('Form saved successfully')
+            return render(request, template_name='create_page.html')
 
         else:
             return render(request, template_name='create_page.html', context={'form': form})

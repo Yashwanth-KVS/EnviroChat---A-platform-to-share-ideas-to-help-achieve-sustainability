@@ -54,8 +54,8 @@
         box-sizing: border-box;
     }
 
-    input[type=submit] {
-        width: 100%;
+    input[type=submit], input[type=button] {
+        width: 49%;
         background-color: #4CAF50;
         color: white;
         padding: 14px 20px;
@@ -64,11 +64,9 @@
         border-radius: 4px;
         cursor: pointer;
         font-size: 16px;
-        font-weight: bold;
         transition: background-color 0.3s ease;
     }
-
-    input[type=submit]:hover {
+    input[type=submit]:hover, input[type=button]:hover {
         background-color: #45a049;
     }
 
@@ -91,7 +89,7 @@
 
     <div class="container">
         <h2>Enter the Page Details</h2>
-        <form method="post">
+        <form action="myapp:create_pages" id="pageDetailsForm" method="post">
             {% csrf_token %}
 
             <div class="form-group">
@@ -126,7 +124,14 @@
 
             <div class="form-group">
                 <input type="submit" value="Submit">
+                <input type="button" value="Clear Form" onclick="clearForm()">
             </div>
         </form>
     </div>
+
+    <script>
+    function clearForm() {
+        document.getElementById("pageDetailsForm").reset();
+    }
+    </script>
 {% endblock %}
