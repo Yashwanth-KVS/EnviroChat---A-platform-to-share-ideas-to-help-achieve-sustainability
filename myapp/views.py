@@ -112,7 +112,10 @@ def create_pages(request):
         if form.is_valid():
             new_page = form.save(commit=False)
             now = datetime.datetime.now()
-            new_page.page_id = int(now.strftime('%Y%m%d%H%M%S') + form.cleaned_data['user_id'])
+            user_id = Member.objects.filter(user_id = 1).values_list('id', flat=True)[0]
+            print(user_id)
+            form.cleaned_data['user_id'] = user_id
+            new_page.page_id = int(now.strftime('%Y%m%d%H%M%S')+str(user_id))#+ form.cleaned_data['user_id'])
             new_page.save()
             print(new_page.page_id)
             print(form.cleaned_data['user_id'])
@@ -121,7 +124,7 @@ def create_pages(request):
             print(form.cleaned_data['about_page'])
 
             print('Form saved successfully')
-            return render(request, template_name='create_page.html')
+            return render(request, template_name='page_home.html', )
 
         else:
             return render(request, template_name='create_page.html', context={'form': form})

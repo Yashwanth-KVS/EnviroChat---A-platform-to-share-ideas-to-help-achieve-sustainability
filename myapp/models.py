@@ -16,7 +16,7 @@ class Member(User):
     interests = models.TextField(blank=True)
 
     def __str__(self):
-        return self.first_name
+        return str(self.user_id)
 
 
 class Followers(models.Model):
@@ -82,7 +82,7 @@ class FeedsPosts(models.Model):
 
 class Pages(models.Model):
     page_id = models.IntegerField(primary_key=True)
-    user_id = models.ForeignKey(to=Member, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(to=Member, on_delete=models.CASCADE, blank=True, null=True)
     title = models.TextField()
     content = models.TextField()
     title_img = models.FileField(upload_to='title_imgs',default='title_page.jpg')
