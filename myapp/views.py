@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .forms import UserRegisterForm, PageCreateForm
 from django.http import JsonResponse
-from .models import Member
+from .models import Member, Pages
 from django.shortcuts import render
 
 import datetime
@@ -108,7 +108,7 @@ def member_details(request, member_id):
 
 def create_pages(request):
     if request.method == 'POST':
-        form = PageCreateForm(request.POST)
+        form = PageCreateForm(request.POST, request.FILES)
         if form.is_valid():
             new_page = form.save(commit=False)
             now = datetime.datetime.now()
@@ -122,9 +122,13 @@ def create_pages(request):
             print(form.cleaned_data['title'])
             print(form.cleaned_data['content'])
             print(form.cleaned_data['about_page'])
+            print(form.cleaned_data['title_img'])
+            print(form.cleaned_data['about_img'])
+            print(form.cleaned_data['content_img'])
 
             print('Form saved successfully')
-            return render(request, template_name='page_home.html', )
+            pages = Pages.objects.all().order_by('-updated_at')
+            return redirect(request, template_name='view_pages.html', context={'pages': pages})
 
         else:
             return render(request, template_name='create_page.html', context={'form': form})
@@ -133,3 +137,17 @@ def create_pages(request):
         form = PageCreateForm()
         return render(request, template_name='create_page.html', context={'form': form})
 
+
+def view_pages(request):
+    if request.method == 'GET':
+        pages = Pages.objects.all().order_by('-updated_at')
+        for page in pages:
+            print(page.page_id)
+            print(page.title)
+            print(page.content)
+            print(page.about_page)
+            print(page.title_img.url)
+            print(page.content_img.url)
+            print(page.about_img.url)
+        # Render the template with the fetched pages
+        return render(request, 'view_pages.html', {'pages': pages})

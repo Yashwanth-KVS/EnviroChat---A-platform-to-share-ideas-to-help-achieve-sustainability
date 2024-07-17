@@ -10,5 +10,6 @@ urlpatterns = [
     path('search/', views.search_members, name='search_members'),
     path('details/<int:member_id>/', views.member_details, name='member_details'),
     path('create_page/', views.create_pages, name='create_pages'),
+    path('view_pages/', views.view_pages, name='view_pages'),
 
 ]

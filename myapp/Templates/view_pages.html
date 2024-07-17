@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        .page-list {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start; /* Adjusted to start from the left */
+            gap: 20px; /* Adds gap between cards */
+        }
+
+        .page-item {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            width: calc(33.33% - 20px); /* Adjust width to fit 3 cards per row */
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .page-item h2 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .page-item p {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        .page-item img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .page-item .author {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .page-item .author img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .go-to-button {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .go-to-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Responsive adjustments */
+        @media screen and (max-width: 992px) {
+            .page-item {
+                width: calc(50% - 20px); /* Adjust width to fit 2 cards per row on medium screens */
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .page-item {
+                width: calc(100% - 20px); /* Adjust width to fit 1 card per row on smaller screens */
+            }
+        }
+    </style>
+
+    <h1>List of Pages</h1>
+    <ul class="page-list">
+        {% for page in pages %}
+            <li class="page-item">
+                <h2>{{ page.title }}</h2>
+                {% if page.title_img %}
+                    <img src="{{ page.title_img.url }}" alt="Title Image">
+                {% endif %}
+                <div class="author">
+                    {% if page.about_img %}
+                        <img src="{{ page.about_img.url }}" alt="Author Image">
+                    {% endif %}
+                    <p>{{ page.about_page }}</p>
+                </div>
+                <button class="go-to-button">Go to Page</button>
+            </li>
+        {% empty %}
+            <li>No pages found.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
