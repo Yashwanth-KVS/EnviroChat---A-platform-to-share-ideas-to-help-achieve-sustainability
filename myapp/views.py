@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import UserRegisterForm
 from django.contrib.auth.forms import PasswordResetForm
+from django.urls import reverse_lazy
+from django.contrib.auth.views import PasswordResetConfirmView, LoginView, PasswordResetView
 
 import logging
 
@@ -38,21 +40,20 @@ def user_login(request):
             messages.error(request, 'Invalid username or password')
     return render(request, 'myapp/login.html')
 
-def password_reset(request):
-    if request.method == 'POST':
-        form = PasswordResetForm(request.POST)
-        if form.is_valid():
-            form.save(
-                request=request,
-                use_https=request.is_secure(),
-                email_template_name='myapp/password_reset_email.html',
-                subject_template_name='myapp/password_reset_subject.txt'
-            )
-            messages.success(request, 'Password reset link has been sent to your email.')
-            return redirect('myapp:login')
-    else:
-        form = PasswordResetForm()
-    return render(request, 'myapp/password_reset.html', {'form': form})
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = 'myapp/password_reset_confirm.html'
+    success_url = reverse_lazy('myapp:login')
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Your password was successfully changed.')
+        return super().form_valid(form)
+
+class CustomPasswordResetView(PasswordResetView):
+    template_name = 'myapp/password_reset.html'
+    email_template_name = 'myapp/password_reset_email.html'
+    subject_template_name = 'myapp/password_reset_subject.txt'
+    success_url = reverse_lazy('myapp:password_reset_done')
+    success_message = "Password reset link has been sent to your email."
 
 @login_required
 def dashboard(request):
