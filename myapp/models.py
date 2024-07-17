@@ -126,3 +126,7 @@ class Pages_followers(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+
+class SiteVisit(models.Model):
+    visit_count = models.PositiveIntegerField(default=0)

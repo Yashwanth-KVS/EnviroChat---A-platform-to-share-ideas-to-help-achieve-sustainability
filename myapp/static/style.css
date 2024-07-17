@@ -33,9 +33,11 @@
     animation: fadeIn 1s ease-in-out;
 }
 
-blockquote {
+.blockquote {
     animation: fadeIn 1s ease-in-out;
 }
+
+
 
 /*footer {*/
 /*    background-color: #333;*/
@@ -96,7 +98,7 @@ footer {
 }
 
 .footer-content {
-
+    margin: 5px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -167,3 +169,17 @@ article {
     display: block;
     unicode-bidi: isolate;
 }
+
+.cont {
+            display: flex;
+            justify-content: space-between;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+.colms {
+            width: 45%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
