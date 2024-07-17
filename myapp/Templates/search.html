@@ -34,6 +34,7 @@
         }
 
         #results {
+            display: none; /* Initially hidden */
             border: 1px solid #ced4da;
             border-radius: 4px;
             background-color: #fff;
@@ -61,21 +62,69 @@
 </head>
 <body>
     <h1>Search Members</h1>
-    <form method="GET" action="{% url 'search_members' %}">
-        <input type="text" id="searchInput" name="query" placeholder="Search by name..." class="form-control" value="{{ query }}">
+    <form>
+        <div class="dropdown">
+            <input type="text" id="searchInput" name="query" placeholder="Search by name..." class="form-control" autocomplete="off">
+            <div id="results" class="dropdown-menu" aria-labelledby="searchInput">
+                <!-- Dynamic data will be appended here -->
+            </div>
+        </div>
     </form>
 
-    {% if results %}
-        <ul id="results">
-            {% for result in results %}
-                <li class="dropdown-item">
-                    <span>{{ result.name }}</span>
-                    <a href="{% url 'member_details' result.id %}" class="btn btn-primary btn-follow">Follow</a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No results found</p>
-    {% endif %}
+    <script>
+        $(document).ready(function() {
+            const members = [
+                {id: 1, name: 'Michael Johnson'},
+                {id: 2, name: 'John Doe'},
+                {id: 3, name: 'Jane Smith'},
+                {id: 4, name: 'Emily Davis'},
+                {id: 5, name: 'David Brown'}
+            ];
+
+            $('#searchInput').on('input', function() {
+                let query = $(this).val().toLowerCase();
+                $('#results').empty();
+                if (query.length > 0) {
+                    let filteredMembers = members.filter(member => member.name.toLowerCase().includes(query));
+
+                    // Sort by exact match at the beginning, then by occurrence later in the name
+                    filteredMembers.sort((a, b) => {
+                        let aIndex = a.name.toLowerCase().indexOf(query);
+                        let bIndex = b.name.toLowerCase().indexOf(query);
+
+                        if (aIndex === 0 && bIndex !== 0) return -1;
+                        if (aIndex !== 0 && bIndex === 0) return 1;
+                        return aIndex - bIndex;
+                    });
+
+                    if (filteredMembers.length > 0) {
+                        filteredMembers.forEach(function(item) {
+                            let memberDetailsUrl = `/myapp/details/${item.id}/`;
+                            $('#results').append('<a class="dropdown-item"><span>' + item.name + '</span><a href="' + memberDetailsUrl + '" class="btn btn-primary btn-follow">Follow</a></a>');
+                        });
+                        $('#results').show();
+                    } else {
+                        $('#results').append('<a class="dropdown-item">No results found</a>').show();
+                    }
+                } else {
+                    $('#results').hide();
+                }
+            });
+
+            // Hide the results when clicking outside
+            $(document).click(function(event) {
+                if (!$(event.target).closest('#searchInput, #results').length) {
+                    $('#results').hide();
+                }
+            });
+
+            // Hide the results when pressing escape
+            $(document).keydown(function(event) {
+                if (event.key === "Escape") {
+                    $('#results').hide();
+                }
+            });
+        });
+    </script>
 </body>
 </html>

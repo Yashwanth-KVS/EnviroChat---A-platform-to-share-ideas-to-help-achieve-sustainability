@@ -19,13 +19,20 @@
             margin-top: -75px;
             border: 5px solid #fff;
         }
+        .mutual-follower-photo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin: 5px;
+            border: 2px solid #fff;
+        }
         .interests {
             list-style-type: none;
             padding: 0;
         }
         .interests li {
             display: inline-block;
-            background-color: #007bff;
+            background-color: #28a745; /* Green color */
             color: white;
             padding: 5px 10px;
             margin: 5px;
@@ -48,6 +55,20 @@
                         <li>{{ interest }}</li>
                     {% endfor %}
                 </ul>
+                <form action="{% url 'myapp:follow_member' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="member_id" value="{{ member.id }}">
+                    <input type="submit" value="Follow" class="btn btn-primary">
+                </form>
+                <h3>Mutual Followers</h3>
+                <div class="d-flex justify-content-center">
+                    {% for follower in mutual_followers %}
+                        <div class="text-center">
+                            <img src="{{ follower.profile_pic }}" alt="Mutual Follower" class="mutual-follower-photo">
+                            <p>{{ follower.name }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>

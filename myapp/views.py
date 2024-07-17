@@ -40,14 +40,15 @@ def user_login(request):
 
 
 # Create your views here.
-def followers(request, latest_tweets=None):
-    follow_request = followers.objects.filter(STATUS_CHOICES=1)
-    context = {'latest_tweets': latest_tweets}
-    return render(request, 'myapp/templates/myapp/tweet.html', context)
+# views.py
+from django.shortcuts import render, redirect
 
+# views.py
+# views.py
+from django.shortcuts import render, redirect
 
-
-
+# views.py
+from django.shortcuts import render, redirect
 
 
 def search_members(request):
@@ -58,23 +59,56 @@ def search_members(request):
         results = [{'id': member.user_id, 'name': member.first_name} for member in members]
     else:
         results = [
-            {'id': 1, 'name': 'John Doe'},
-            {'id': 2, 'name': 'Jane Smith'},
-            {'id': 3, 'name': 'Michael Johnson'},
+            {'id': 1, 'name': 'Michael Johnson'},
+            {'id': 2, 'name': 'John Doe'},
+            {'id': 3, 'name': 'Jane Smith'},
             {'id': 4, 'name': 'Emily Davis'},
             {'id': 5, 'name': 'David Brown'},
         ]
     return render(request, 'search.html', {'results': results, 'query': query})
 
+
 def member_details(request, member_id):
     # Static data for demonstration
     member_data = {
-        1: {'name': 'John Doe', 'age': 30, 'email': 'john@example.com', 'profile_pic': 'https://randomuser.me/api/portraits/men/1.jpg', 'cover_pic': 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0', 'interests': ['Reading', 'Traveling', 'Swimming']},
-        2: {'name': 'Jane Smith', 'age': 25, 'email': 'jane@example.com', 'profile_pic': 'https://randomuser.me/api/portraits/women/2.jpg', 'cover_pic': 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86', 'interests': ['Cooking', 'Hiking', 'Gardening']},
-        3: {'name': 'Michael Johnson', 'age': 28, 'email': 'michael@example.com', 'profile_pic': 'https://randomuser.me/api/portraits/men/3.jpg', 'cover_pic': 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0', 'interests': ['Cycling', 'Photography', 'Gaming']},
-        4: {'name': 'Emily Davis', 'age': 22, 'email': 'emily@example.com', 'profile_pic': 'https://randomuser.me/api/portraits/women/4.jpg', 'cover_pic': 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86', 'interests': ['Painting', 'Running', 'Yoga']},
-        5: {'name': 'David Brown', 'age': 35, 'email': 'david@example.com', 'profile_pic': 'https://randomuser.me/api/portraits/men/5.jpg', 'cover_pic': 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0', 'interests': ['Writing', 'Fishing', 'Golfing']},
+        1: {'name': 'John Doe', 'age': 30, 'email': 'john@example.com',
+            'profile_pic': 'https://randomuser.me/api/portraits/men/1.jpg',
+            'cover_pic': 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0',
+            'interests': ['Reading', 'Traveling', 'Swimming']},
+        2: {'name': 'Jane Smith', 'age': 25, 'email': 'jane@example.com',
+            'profile_pic': 'https://randomuser.me/api/portraits/women/2.jpg',
+            'cover_pic': 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86',
+            'interests': ['Cooking', 'Hiking', 'Gardening']},
+        3: {'name': 'Michael Johnson', 'age': 28, 'email': 'michael@example.com',
+            'profile_pic': 'https://randomuser.me/api/portraits/men/3.jpg',
+            'cover_pic': 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0',
+            'interests': ['Cycling', 'Photography', 'Gaming']},
+        4: {'name': 'Emily Davis', 'age': 22, 'email': 'emily@example.com',
+            'profile_pic': 'https://randomuser.me/api/portraits/women/4.jpg',
+            'cover_pic': 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86',
+            'interests': ['Painting', 'Running', 'Yoga']},
+        5: {'name': 'David Brown', 'age': 35, 'email': 'david@example.com',
+            'profile_pic': 'https://randomuser.me/api/portraits/men/5.jpg',
+            'cover_pic': 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0',
+            'interests': ['Writing', 'Fishing', 'Golfing']},
     }
 
-    member = member_data.get(member_id, {'name': 'Unknown', 'age': 'Unknown', 'email': 'Unknown', 'profile_pic': 'https://via.placeholder.com/150', 'cover_pic': 'https://via.placeholder.com/800x200', 'interests': []})
-    return render(request, 'details.html', {'member': member})
+    mutual_followers = [
+        {'name': 'Alice Johnson', 'profile_pic': 'https://randomuser.me/api/portraits/women/5.jpg'},
+        {'name': 'Bob Smith', 'profile_pic': 'https://randomuser.me/api/portraits/men/6.jpg'},
+        {'name': 'Carol Williams', 'profile_pic': 'https://randomuser.me/api/portraits/women/6.jpg'},
+    ]
+
+    member = member_data.get(member_id, {'name': 'Unknown', 'age': 'Unknown', 'email': 'Unknown',
+                                         'profile_pic': 'https://via.placeholder.com/150',
+                                         'cover_pic': 'https://via.placeholder.com/800x200', 'interests': []})
+    return render(request, 'details.html', {'member': member, 'mutual_followers': mutual_followers})
+
+
+def follow_member(request):
+    if request.method == 'POST':
+        # Handle the follow logic here
+        print(f"Followed member with id: {request.POST['member_id']}")
+        return redirect('myapp:member_details',
+                        member_id=request.POST['member_id'])  # Redirect back to the details page
+    return redirect('myapp:search_members')
