@@ -151,3 +151,8 @@ def view_pages(request):
             print(page.about_img.url)
         # Render the template with the fetched pages
         return render(request, 'view_pages.html', {'pages': pages})
+
+
+def go_to_single_page(request, page_id):
+    page = Pages.objects.get(pk=page_id)
+    return render(request, 'go_to_selected_page.html', {'pages': page})

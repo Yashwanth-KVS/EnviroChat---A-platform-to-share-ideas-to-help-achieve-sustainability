@@ -11,5 +11,6 @@ urlpatterns = [
     path('details/<int:member_id>/', views.member_details, name='member_details'),
     path('create_page/', views.create_pages, name='create_pages'),
     path('view_pages/', views.view_pages, name='view_pages'),
+    path('view_single_page<int:page_id>/', views.go_to_single_page, name='go_to_single_page'),
 
 ]
