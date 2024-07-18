@@ -155,4 +155,4 @@ def view_pages(request):
 
 def go_to_single_page(request, page_id):
     page = Pages.objects.get(pk=page_id)
-    return render(request, 'go_to_selected_page.html', {'pages': page})
+    return render(request, 'go_to_selected_page.html', {'page': page})
