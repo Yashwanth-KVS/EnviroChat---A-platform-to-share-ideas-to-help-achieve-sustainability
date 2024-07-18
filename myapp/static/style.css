@@ -1,4 +1,6 @@
 /* styles.css */
+
+@import url('about.css');
 @keyframes scale-up {
     0% {
         transform: scale(1);
@@ -87,11 +89,18 @@
 /*    text-decoration: underline;*/
 /*}*/
 
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 footer {
     background-color: #333;
     color: white;
     padding: 10px 20px;
-    position: fixed;
+    position: relative;
+    z-index: 1;
     left: 0;
     bottom: 0;
     width: 100%;
@@ -183,3 +192,24 @@ article {
             border: 1px solid #ddd;
             border-radius: 5px;
         }
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/*.grid-container {*/
+/*  display: grid;*/
+/*  grid-template-columns: auto auto auto auto;*/
+/*  gap: 10px;*/
+/*  background-color: #2196F3;*/
+/*  padding: 10px;*/
+/*}*/
+
+/*.grid-container > div {*/
+/*  background-color: rgba(255, 255, 255, 0.8);*/
+/*  text-align: center;*/
+/*  padding: 20px 0;*/
+/*  font-size: 30px;*/
+/*}*/

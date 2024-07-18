@@ -1,20 +1,179 @@
 <!DOCTYPE html>
 {% extends 'base.html' %}
+{% load static %}
+{#<link rel="stylesheet" href="{% static 'about.css' %}" type="text/css" />#}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>About US</title>
 </head>
 {% block body_block %}
-
+<div class="content clearfix">
 
 <div>
         <h3>Our Aim</h3>
         <div class="bg-image hover-zoom">
-            <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/053.webp" class="w-100" style="width:100px;height:128px;"
-                 alt="image"/>
+{#            <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/053.webp" class="w-100" style="width:100px;height:128px;"#}
+{#                 alt="image"/>#}
+</div>
+<div>
+    <h1>Know our Team</h1>
+{#    <div class="grid-container">#}
+{#      <div class=" avatars mt-5 mb-5">#}
+{#          <img src="{% static 'Himadhar.jpg' %}" alt="Himadhar" class="rounded-circle"  width="204" height="200">#}
+{##}
+{#      </div>#}
+{#      <div>#}
+{#          <img src="{% static 'Bosun.jpg' %}" alt="Bosun">#}
+{#      </div>#}
+{#      <div>3</div>#}
+{#      <div>4</div>#}
+{#      <div>5</div>#}
+{#      <div>6</div>#}
+{#      <div>7</div>#}
+{#      <div>8</div>#}
+{#</div>#}
+    <section class="d-flex align-items-center justify-content-center flex-column bg-white mt-4">
+    <div class="text-center founders mt-4 mb-4">
+      <h1>Know our Team</h1>
+    </div>
+    <div class="avatars mt-5 mb-5">
+      <img class="avatar" src="{% static 'Himadhar.jpg' %}" alt="Himadhar Reddy Marreddy"
+      data-bs-toggle="collapse" data-bs-target="#detailsHimadhar" aria-expanded="false" aria-controls="detailsHimadhar">
+        <div class="collapse" id="detailsHimadhar">
+            <div class="card card-body">
+                  <h6>Himadhar Reddy Marreddy</h6>
+                  <p>Organization: MAC Student, University of Windsor</p>
+            </div>
+        </div>
+      <img class="avatar" src="{% static 'Bosun.jpg' %}" alt="Bosun"
+        data-bs-toggle="collapse" data-bs-target="#detailsBosun" aria-expanded="false" aria-controls="detailsBosun">
+        <div class="collapse" id="detailsBosun">
+            <div class="card card-body">
+              <h6>Bosun</h6>
+              <p>Organization: MAC Student, University of Windsor</p>
+            </div>
+        </div>
+      <img class="avatar" src="{% static 'Yashwanth.jpg' %}" alt="Yashwanth Kukkala"
+        data-bs-toggle="collapse" data-bs-target="#detailsYashwanth" aria-expanded="false" aria-controls="detailsYashwanth">
+        <div class="collapse" id="detailsYashwanth">
+            <div class="card card-body">
+                <h6>Yashwanth Kukkala</h6>
+                <p>Organization: MAC Student, University of Windsor</p>
+            </div>
+        </div>
+      <img class="avatar" src="{% static 'Ammar.jpg' %}" alt="Mohammad Ammar"
+        data-bs-toggle="collapse" data-bs-target="#detailsAmmar" aria-expanded="false" aria-controls="detailsAmmar">
+        <div class="collapse" id="detailsAmmar">
+            <div class="card card-body">
+                <h6>Mohammad Ammar</h6>
+                <p>Organization: MAC Student, University of Windsor</p>
+            </div>
+        </div>
+      <img class="avatar" src="{% static 'Kavya.jpg' %}" alt="Kavya Chirag Shah"
+        data-bs-toggle="collapse" data-bs-target="#detailsKavya" aria-expanded="false" aria-controls="detailsKavya">
+        <div class="collapse" id="detailsKavya">
+            <div class="card card-body">
+                <h6>Kavya Chirag Shah</h6>
+                <p>Organization: MAC Student, University of Windsor</p>
+            </div>
+        </div>
+      <img class="avatar" src="{% static 'Anjani.jpg' %}" alt="Anjani Kumar Kandula"
+        data-bs-toggle="collapse" data-bs-target="#detailsAnjani" aria-expanded="false" aria-controls="detailsAnjani">
+        <div class="collapse" id="detailsAnjani">
+            <div class="card card-body">
+                <h6>Anjani Kumar Kandula</h6>
+                <p>Organization: MAC Student, University of Windsor</p>
+            </div>
+        </div>
+        <img src="{% static 'subhram1.jpg' %}" alt="Subhram Satyajeet" class="avatar"
+            data-bs-toggle="collapse" data-bs-target="#detailsSubhram" aria-expanded="false" aria-controls="detailsSubhram">
+            <div class="collapse" id="detailsSubhram">
+            <div class="card card-body">
+                <h6>Subhram Satyajeet</h6>
+                <p>Organization: MAC Student, University of Windsor</p>
+            </div>
+        </div>
+      <img class="avatar" src="{% static 'login.png' %}" alt="Bhavisha"
+        data-bs-toggle="collapse" data-bs-target="#detailsBhavisha" aria-expanded="false" aria-controls="detailsBhavisha">
+        <div class="collapse" id="detailsBhavisha">
+            <div class="card card-body">
+                <h6>Bhavisha</h6>
+                <p>Organization: MAC Student, University of Windsor</p>
+            </div>
+        </div>
+
+    </div>
+  </section>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const avatars = document.querySelectorAll('.avatar');
+    let currentOpenCollapse = null;
+
+    avatars.forEach(avatar => {
+      avatar.addEventListener('click', function () {
+        const targetId = this.getAttribute('data-bs-target');
+        const targetElement = document.querySelector(targetId);
+
+        if (currentOpenCollapse && currentOpenCollapse !== targetElement) {
+          const bsCollapse = new bootstrap.Collapse(currentOpenCollapse, {
+            toggle: true
+          });
+        }
+
+        if (currentOpenCollapse !== targetElement) {
+          currentOpenCollapse = targetElement;
+          new bootstrap.Collapse(currentOpenCollapse, {
+            toggle: true
+          });
+        }
+      });
+
+      avatar.addEventListener('mouseenter', function () {
+        if (currentOpenCollapse) {
+          const bsCollapse = new bootstrap.Collapse(currentOpenCollapse, {
+            toggle: true
+          });
+          currentOpenCollapse = null;
+        }
+      });
+
+      avatar.addEventListener('mouseleave', function () {
+        if (currentOpenCollapse) {
+          const bsCollapse = new bootstrap.Collapse(currentOpenCollapse, {
+            toggle: true
+          });
+          currentOpenCollapse = null;
+        }
+      });
+
+      // Handle click on collapse content
+      const collapseContents = document.querySelectorAll('.collapse');
+      collapseContents.forEach(content => {
+        content.addEventListener('click', function (event) {
+          // Prevent the event from bubbling up to the avatar click handler
+          event.stopPropagation();
+
+          // Close the currently open collapse
+          if (currentOpenCollapse === this) {
+            const bsCollapse = new bootstrap.Collapse(currentOpenCollapse, {
+              toggle: true
+            });
+            currentOpenCollapse = null;
+          }
+        });
+
+        // Close collapse on hidden event (Bootstrap 5 specific)
+        content.addEventListener('hidden.bs.collapse', function () {
+          currentOpenCollapse = null;
+        });
+      });
+    });
+  });
+</script>
 </div>
 
+    </div>
     </div>
 {% endblock %}
 </html>
