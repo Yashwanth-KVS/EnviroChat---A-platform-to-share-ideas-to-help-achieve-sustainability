@@ -46,7 +46,7 @@
     width: calc(var(--avatar-size) * 1.0); /* Adjust width for portrait mode */
     height: calc(var(--avatar-size) * 1.3);  /* Adjust height for portrait mode */
     z-index: 2;
-    border-color: greenyellow;
+    border-color: slategray;
 }
 
 .founders {
