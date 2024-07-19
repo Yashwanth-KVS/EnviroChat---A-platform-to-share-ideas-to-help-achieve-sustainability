@@ -15,6 +15,7 @@ def events(request):
         form=VideoUploadForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return render((request, 'events.html')
+            videos=form.cleaned_data['video']
+            return render(request, 'video.html',context={'videos':videos})
     else:
         return render(request, 'events.html')
