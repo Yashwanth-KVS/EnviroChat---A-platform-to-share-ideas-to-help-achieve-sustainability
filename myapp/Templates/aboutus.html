@@ -11,32 +11,21 @@
 <div class="content clearfix">
 
 <div>
-        <h3>Our Aim</h3>
-        <div class="bg-image hover-zoom">
-{#            <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/053.webp" class="w-100" style="width:100px;height:128px;"#}
-{#                 alt="image"/>#}
-</div>
+        <h3 style="font-size: 3vw;text-align: center;font-family: Forte,sans-serif;">Our Aim</h3>
+        <p style="text-align: center">To develop an engaging and informative online platform where individuals passionate<br>
+            about environmental issues can connect, discuss, share knowledge, and collaborate on solutions <br>
+            to promote sustainability and environmental conservation.</p>
 <div>
-    <h1>Know our Team</h1>
-{#    <div class="grid-container">#}
-{#      <div class=" avatars mt-5 mb-5">#}
-{#          <img src="{% static 'Himadhar.jpg' %}" alt="Himadhar" class="rounded-circle"  width="204" height="200">#}
-{##}
-{#      </div>#}
-{#      <div>#}
-{#          <img src="{% static 'Bosun.jpg' %}" alt="Bosun">#}
-{#      </div>#}
-{#      <div>3</div>#}
-{#      <div>4</div>#}
-{#      <div>5</div>#}
-{#      <div>6</div>#}
-{#      <div>7</div>#}
-{#      <div>8</div>#}
-{#</div>#}
+
     <section class="d-flex align-items-center justify-content-center flex-column bg-white mt-4">
     <div class="text-center founders mt-4 mb-4">
-      <h1>Know our Team</h1>
+      <h1 style="font-size: 3vw;text-align: center;font-family: Forte,sans-serif;">Know our Team</h1>
     </div>
+        <div>
+        <a href="{% url 'myapp:Contactus' %}"  >
+    <button type="submit" style="font-family: Forte,sans-serif; font-size: 2vw" class="btn transparent-btn align-center "
+            value="Done">Contact Us</button></a>
+            </div>
     <div class="avatars mt-5 mb-5">
       <img class="avatar" src="{% static 'Himadhar.jpg' %}" alt="Himadhar Reddy Marreddy"
       data-bs-toggle="collapse" data-bs-target="#detailsHimadhar" aria-expanded="false" aria-controls="detailsHimadhar">
@@ -46,11 +35,11 @@
                   <p>Organization: MAC Student, University of Windsor</p>
             </div>
         </div>
-      <img class="avatar" src="{% static 'Bosun.jpg' %}" alt="Bosun"
+      <img class="avatar" src="{% static 'Bosun.jpg' %}" alt="Bosun Oke"
         data-bs-toggle="collapse" data-bs-target="#detailsBosun" aria-expanded="false" aria-controls="detailsBosun">
         <div class="collapse" id="detailsBosun">
             <div class="card card-body">
-              <h6>Bosun</h6>
+              <h6>Bosun Oke</h6>
               <p>Organization: MAC Student, University of Windsor</p>
             </div>
         </div>
@@ -105,6 +94,7 @@
 
     </div>
   </section>
+
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const avatars = document.querySelectorAll('.avatar');

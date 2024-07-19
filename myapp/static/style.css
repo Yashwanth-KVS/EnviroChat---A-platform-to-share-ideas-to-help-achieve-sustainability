@@ -39,7 +39,27 @@
     animation: fadeIn 1s ease-in-out;
 }
 
+.offcanvas-body .btn-custom {
+    display: block; /* Ensure buttons stack vertically */
+    margin-bottom: 1rem; /* Add space between buttons */
+    background-color: transparent; /* Transparent background by default */
+    border: 1px solid transparent; /* Transparent border */
+    color: #000; /* Default text color */
+    text-align: center; /* Center align text */
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Smooth transition for hover effect */
+    /*width: 100%; !* Full width *!*/
+    /*padding: 1rem; !* Add some padding *!*/
+}
 
+.offcanvas-body .btn-custom:hover {
+    background-color: #28a745; /* Green background on hover */
+    color: #fff; /* White text color on hover */
+    border-color: #28a745; /* Green border on hover */
+}
+
+.offcanvas-body .btn-custom:focus {
+    outline: none; /* Remove default outline on focus */
+}
 
 /*footer {*/
 /*    background-color: #333;*/

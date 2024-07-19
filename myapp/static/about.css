@@ -62,3 +62,18 @@
     color: rgba(24, 8, 36, .6);
     font-size: 20px;
 }
+
+.transparent-btn {
+    background-color: transparent;
+    border: 2px solid transparent; /* No border by default */
+    color: #28a745; /* Green text */
+    /*font-size: 4vw; !* Set the font size *!*/
+     /* Set the font family */
+    transition: background-color 0.3s, color 0.3s, border 0.3s; /* Smooth transition */
+}
+
+.transparent-btn:hover {
+    background-color: #28a745; /* Green background on hover */
+    color: white; /* White text on hover */
+    border: 2px solid #28a745; /* Green border on hover */
+}
