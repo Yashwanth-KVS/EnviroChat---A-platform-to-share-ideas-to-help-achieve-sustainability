@@ -18,5 +18,8 @@ def events(request):
             videos=form.cleaned_data['video']
             form.save()
             return render(request, 'video.html',context={'Title':title,'videos':videos})
+        else:
+            return render(request,'events.html')
     else:
+        form = VideoUploadForm()
         return render(request, 'events.html')
