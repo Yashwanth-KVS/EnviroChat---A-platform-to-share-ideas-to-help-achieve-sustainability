@@ -1,17 +1,17 @@
-{% extends 'base.html'%}
+{% extends 'base.html' %}
 {% load static %}
+
 {% block body_block %}
-<h1>Uploaded Videos</h1>
+    <h1>Uploaded Videos</h1>
     <ul>
         {% for video in videos %}
-        <li>
-            <h1>{{ video.Title }}</h1>
-            <video width="320" height="240" controls>
-                <source src= "{{media_url}}{{ video.video }}" type="video/mp4">
-
-            </video>
-        </li>
+            <li>
+                <h1>{{ video.Title }}</h1>
+                <video id="{{ video.video_id }}" width="320" height="240" controls>
+                    <source src="{{ MEDIA_URL }}{{ video.video.url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </li>
         {% endfor %}
     </ul>
-
 {% endblock %}
