@@ -1,24 +1,21 @@
 {% extends 'base.html' %}
 {% load static %}
+
+<style>
+    .myCanvas {
+        background-image: url("{% url 'myapp:video_feed' %}");
+        /* Adjust other styles as needed */
+    }
+</style>
+
 {% block body_block %}
-    <h1>Uploaded Videos</h1>
+
     <h1>Live Video Stream</h1>
-    <img id="video-stream" src="{{ MEDIA_URL }}{% url 'myapp:video_feed' %}" width="640" height="480">
-    <button onclick="stopStream()">Exit</button>
 
-    <script>
-        function stopStream() {
-            fetch('{% url 'myapp:stop_stream' %}')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Failed to stop stream');
-                    }
-                    console.log('Stream stopped successfully');
-                })
-                .catch(error => {
-                    console.error('Error stopping stream:', error);
-                });
-        }
-    </script>
+    <img id="video-stream" src="{{ MEDIA_URL }}{% url 'myapp:video_feed' %}" alt="Live Video Stream" height="500" width="600" >
+
+   <form action="{% url 'myapp:stop_stream' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Stop Stream">
+    </form>
 {% endblock %}
-
