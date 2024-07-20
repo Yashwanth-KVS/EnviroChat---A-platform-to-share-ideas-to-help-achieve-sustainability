@@ -1,7 +1,8 @@
 /* styles.css */
 @import "myapp/static";
 @import url('about.css');
-@import "profile.css";
+@import url("profile.css");
+@import url("notification.css");
 @keyframes scale-up {
     0% {
         transform: scale(1);

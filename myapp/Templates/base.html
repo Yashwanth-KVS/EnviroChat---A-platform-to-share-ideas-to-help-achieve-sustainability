@@ -39,6 +39,15 @@
             </h1>
             <div class="d-flex">
                     <!-- Button to toggle Offcanvas Sidebar -->
+{#                <div class="notification-icon position-absolute">#}
+{#                      <a href="{% url 'accounts:notifications' %}"#}
+{#                        class="icon-button position-relative d-flex align-items-center justify-content-center" id="notificationdrop">#}
+{#                        <span class="material-symbols-outlined notification-svg">#}
+{#                          notifications#}
+{#                        </span>#}
+{#                        <span class="icon-button__badge">{% live_notify_badge %}</span>#}
+{#                      </a>#}
+{#                </div>#}
                 <a href="{% url 'myapp:home' %}" class="btn btn-success me-2 align-content-center">Home</a>
                 <button class="btn btn-success align-content-center" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                     Menu
