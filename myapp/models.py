@@ -103,7 +103,7 @@ class Pages_comments(models.Model):
         (1, 'No'),
     ]
     page_id = models.ForeignKey(to=Pages, on_delete=models.CASCADE)
-    pages_comment_id = models.IntegerField(primary_key=True)
+    pages_comment_id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(to=Member, on_delete=models.CASCADE, null=True, blank=True)
     comment = models.TextField()
     upvote = models.IntegerField(choices=choices, default=0)

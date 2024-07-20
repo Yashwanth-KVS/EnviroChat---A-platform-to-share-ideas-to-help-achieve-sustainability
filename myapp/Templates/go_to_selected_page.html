@@ -1,10 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}
-    {{ page.title }} Details
-{% endblock %}
-
-{% block styles %}
+{% block body_block %}
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,167 +8,197 @@
             padding: 20px;
         }
 
-        .page-details {
-            display: flex;
-            justify-content: space-between;
-            max-width: 900px;
-            margin: 20px auto;
+
+        .page-detail {
             background-color: #fff;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        .blog-content {
-            flex: 1;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             padding: 20px;
+            max-width: 800px;
+            margin: auto;
         }
 
-        .blog-content h1 {
-            font-size: 32px;
-            margin-bottom: 16px;
-            color: #333;
-            text-align: center;
-        }
-
-        .blog-content p {
-            font-size: 18px;
-            line-height: 1.8;
-            color: #555;
+        .page-detail h1 {
+            font-size: 36px;
             margin-bottom: 20px;
-            text-align: justify;
         }
 
-        .blog-content img {
+        .page-detail img {
             max-width: 100%;
             border-radius: 8px;
             margin-bottom: 20px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .interaction-section {
-            width: 300px;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .page-detail p {
+            font-size: 18px;
+            line-height: 1.6;
         }
 
-        .interaction-section h2 {
-            font-size: 24px;
-            color: #333;
-            margin-bottom: 16px;
+        .page-detail .author {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .page-detail .author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+
+        .page-detail .author p {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .interaction-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .interaction-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
             text-align: center;
+            font-size: 16px;
         }
 
-        .like-share {
-            text-align: center;
+        .interaction-button:hover {
+            background-color: #45a049;
+        }
+
+        .comments-section {
+            margin-top: 40px;
+        }
+
+        .comments-section h2 {
+            font-size: 28px;
             margin-bottom: 20px;
         }
 
-        .like-share a {
-            display: inline-block;
-            text-decoration: none;
-            color: #333;
-            font-weight: bold;
-            padding: 10px 20px;
-            margin-right: 10px;
-            border: 2px solid #333;
-            border-radius: 20px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .like-share a:hover {
-            background-color: #333;
-            color: #fff;
-        }
-
-        .comment-section {
-            margin-top: 20px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
         .comment {
+            background-color: #f9f9f9;
             padding: 15px;
-            background-color: #f0f0f0;
             border-radius: 8px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .comment .comment-header {
-            display: flex;
-            align-items: center;
             margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .comment .comment-header img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-right: 10px;
+        .comment .author {
+            font-weight: bold;
+            margin-bottom: 5px;
         }
 
-        .comment .comment-header h3 {
-            font-size: 18px;
-            color: #333;
+        .comment p {
             margin: 0;
         }
 
-        .comment .comment-text {
+        .add-comment {
+            margin-top: 20px;
+        }
+
+        .add-comment textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
             font-size: 16px;
-            color: #555;
-            line-height: 1.6;
+        }
+
+        .add-comment button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+        }
+
+        .add-comment button:hover {
+            background-color: #45a049;
         }
     </style>
-{% endblock %}
 
-{% block body_block %}
-    <div class="page-details">
-        <div class="blog-content">
-            <h1>{{ page.title }}</h1>
-            {% if page.title_img %}
-                <img src="{{ page.title_img.url }}" alt="Blog Image">
+
+    <div class="page-detail">
+        <h1>{{ page.title }}</h1>
+        {% if page.title_img %}
+            <img src="{{ page.title_img.url }}" alt="Title Image">
+        {% endif %}
+        <p>{{ page.content }}</p> <!-- Assuming the Page model has a content field -->
+        {% if page.content_img %}
+                <img src="{{ page.content_img.url }}" alt="Content Image">
+        {% endif %}
+        <div class="author">
+            {% if page.about_img %}
+                <img src="{{ page.about_img.url }}" alt="Author Image">
             {% endif %}
-            <p>{{ page.content }}</p>
-            {% if page.content_img %}
-                <img src="{{ page.content_img.url }}" alt="Additional Image">
-            {% endif %}
+            <p>{{ page.about_page }}</p>
+        </div>
+        <div class="interaction-buttons">
+            <button class="interaction-button" onclick="handleLike()">Upvote</button>
+            <button class="interaction-button" onclick="handleComment()">Comment</button>
+            <button class="interaction-button" onclick="handleShare()">Downvote</button>
         </div>
 
-        <div class="interaction-section">
-            <h2>Interactions</h2>
-            <div class="like-share">
-                <a href="#" class="like-button">Like</a>
-                <a href="#" class="share-button">Share</a>
-            </div>
+        <div class="comments-section">
+            <h2>Comments</h2>
+            {% for comment in comments %}
+                <div class="comment">
+                    <div class="author">{{ comment.author }}</div>
+                    <p>{{ comment.text }}</p>
+                </div>
+            {% empty %}
+                <p>No comments yet. Be the first to comment!</p>
+            {% endfor %}
 
-            <div class="comment-section">
-                <h2>Comments</h2>
-                <div class="comment">
-                    <div class="comment-header">
-{#                        <img src="{% static 'img/profile1.jpg' %}" alt="User Image">#}
-                        <h3>User Name</h3>
-                    </div>
-                    <div class="comment-text">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis libero non nunc interdum euismod.</p>
-                    </div>
-                </div>
-                <div class="comment">
-                    <div class="comment-header">
-{#                        <img src="{% static 'img/profile2.jpg' %}" alt="User Image">#}
-                        <h3>Another User</h3>
-                    </div>
-                    <div class="comment-text">
-                        <p>Integer eget tortor nunc. Morbi finibus metus a lorem maximus, ac facilisis nisl volutpat.</p>
-                    </div>
-                </div>
-                <!-- Add more comments dynamically if needed -->
+            <div class="add-comment">
+                <form method="post" action="{% url 'myapp:add_comment' page.page_id %}">
+                    {% csrf_token %}
+                    <textarea name="text" rows="4" placeholder="Add a comment..."></textarea>
+                    <button type="submit">Submit</button>
+                </form>
             </div>
         </div>
     </div>
+
+    <script>
+        function handleLike() {
+            const pageId = {{ page.page_id }};
+            fetch(`/page/${pageId}/like/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(`Page upvoted! Total likes: ${data.upvote}`);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function handleComment() {
+            document.querySelector('.add-comment textarea').focus();
+        }
+
+        function handleShare() {
+            alert('Downvote button clicked!');
+            // Add your share functionality here
+        }
+    </script>
+
 {% endblock %}

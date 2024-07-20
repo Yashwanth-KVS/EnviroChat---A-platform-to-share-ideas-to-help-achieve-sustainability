@@ -1,6 +1,7 @@
+import uuid
 from datetime import datetime
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 
@@ -11,7 +12,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .forms import UserRegisterForm, PageCreateForm
 from django.http import JsonResponse
-from .models import Member, Pages
+from .models import Member, Pages, Pages_comments
 from django.shortcuts import render
 
 import datetime
@@ -156,3 +157,21 @@ def view_pages(request):
 def go_to_single_page(request, page_id):
     page = Pages.objects.get(pk=page_id)
     return render(request, 'go_to_selected_page.html', {'page': page})
+
+
+def like_page(request, page_id):
+    page = get_object_or_404(Pages, pk=page_id)
+    page.upvote += 1
+    page.save()
+    return JsonResponse({'likes': page.upvote})
+
+def add_comment(request, page_id):
+    page = get_object_or_404(Pages, pk=page_id)
+    if request.method == 'POST':
+        comment = request.POST.get('text')
+        # author = request.user.username if request.user.is_authenticated else 'Anonymous'
+        author = Member.objects.get(pk=1)
+        now = datetime.datetime.now()
+        # comment_id = int(str(author.user_id)+str(page.page_id))
+        Pages_comments.objects.create(page_id=page, user_id=author, comment=comment)
+    return redirect('myapp:go_to_single_page', page_id=page.page_id)
