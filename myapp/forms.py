@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from ipywidgets import Video
-from .models import video
+from .models import Video
 
 
 class UserRegisterForm(UserCreationForm):
@@ -12,7 +12,10 @@ class UserRegisterForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
+
 class VideoUploadForm(forms.ModelForm):
     class Meta:
-        model = video
+        model = Video
+
         fields = ['Title', 'video']
+        ##labels = {'Title': 'Title', 'video': 'Video'}

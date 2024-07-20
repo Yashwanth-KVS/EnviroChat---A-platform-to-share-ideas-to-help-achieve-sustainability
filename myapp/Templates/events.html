@@ -1,11 +1,12 @@
 {% extends 'base.html'%}
 {% load static %}
+
+
 {% block body_block %}
 <h1>Upload Video</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Upload Video</button>
     </form>
 
 {% endblock %}
