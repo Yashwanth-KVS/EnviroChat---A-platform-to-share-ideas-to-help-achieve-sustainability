@@ -1,6 +1,7 @@
 /* styles.css */
-
+@import "myapp/static";
 @import url('about.css');
+@import "profile.css";
 @keyframes scale-up {
     0% {
         transform: scale(1);
@@ -20,6 +21,17 @@
 
 .h2{
     align-content: center;
+}
+
+/*.btn-custom.active {*/
+/*    background-color: #28a745;*/
+/*    color: #fff;*/
+/*}*/
+
+.offcanvas-body .btn-custom.active {
+    background-color: #28a745 !important; /* Green background on active */
+    color: #fff !important; /* White text color on active */
+    border-color: #28a745 !important; /* Green border on active */
 }
 
 @keyframes fadeIn {
@@ -60,6 +72,32 @@
 .offcanvas-body .btn-custom:focus {
     outline: none; /* Remove default outline on focus */
 }
+
+.collapse .card-body {
+    border: none; /* Remove border from card body */
+    padding: 0.5rem 0; /* Add padding to card body */
+}
+
+.input-group {
+    max-width: 500px; /* Set maximum width for search input group */
+    margin: 0 auto; /* Center align input group */
+}
+
+.input-group .form-control {
+    border-radius: 0; /* Remove border radius from input */
+}
+
+.input-group .btn-success {
+    border-radius: 0; /* Remove border radius from button */
+}
+
+/*body {*/
+/*    background-image: url('dreamstime_m_16461382.jpg'); !* Replace with the path to your image *!*/
+/*    background-size: cover; !* Ensures the image covers the entire viewport *!*/
+/*    background-position: center; !* Centers the image *!*/
+/*    background-repeat: no-repeat; !* Prevents the image from repeating *!*/
+/*    background-attachment: fixed; !* Keeps the image fixed in place *!*/
+/*}*/
 
 /*footer {*/
 /*    background-color: #333;*/
