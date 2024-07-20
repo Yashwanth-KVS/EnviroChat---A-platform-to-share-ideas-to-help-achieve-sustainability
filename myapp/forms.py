@@ -16,6 +16,5 @@ class UserRegisterForm(UserCreationForm):
 class VideoUploadForm(forms.ModelForm):
     class Meta:
         model = Video
-
         fields = ['Title', 'video']
         ##labels = {'Title': 'Title', 'video': 'Video'}

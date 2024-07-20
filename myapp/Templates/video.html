@@ -5,7 +5,7 @@
     <ul>
         {% for video in videos %}
         <li>
-            <h3>{{ video.title }}</h3>
+            <h3>{{ video}}</h3>
             <video width="320" height="240" controls>
                 <source src="{{ video.video_file.url }}" type="video/mp4">
                 Your browser does not support the video tag.
