@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Content - Enviro Chat{% endblock %}
+
+{% block content %}
+    <h1>Upload Content</h1>
+    <form action="{% url 'tweets:User_post' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-group">
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+{% endblock %}

@@ -1,11 +1,48 @@
-# from django.db import models
+from django.db import models
+
+# Create your models here.
+from django.db import models
+import datetime
+from django.contrib.auth.models import User
+from django.utils import timezone
+import PIL
+from django.db import models
+from PIL import Image
+
+
+class MediaContent(models.Model):
+    content = models.TextField()
+    image = models.ImageField(upload_to='images/%y', blank=True, null=True)
+    video = models.FileField(upload_to='videos/%y', blank=True, null=True)
+
+    def __str__(self):
+        return f"MediaContent {self.id}"
+
+
 #
-# # Create your models here.
-# from django.db import models
-# import datetime
-# from django.contrib.auth.models import User
-# from django.utils import timezone
+
+
+# # Create the first static entry
+# MediaContent.objects.create(
+#     content="This is the first test post content.",
+#     image="uploads/test_image_1.jpg",  # Ensure this path matches your MEDIA_ROOT settings
+#     video="uploads/test_video_1.mp4"  # Ensure this path matches your MEDIA_ROOT settings
+# )
 #
+# # Create the second static entry
+# MediaContent.objects.create(
+#     content="This is the second test post content.",
+#     image="uploads/test_image_2.jpg",  # Ensure this path matches your MEDIA_ROOT settings
+#     video=None
+# )
+#
+# # Create the third static entry
+# MediaContent.objects.create(
+#     content="This is the third test post content.",
+#     image=None,
+#     video="uploads/test_video_2.mp4"  # Ensure this path matches your MEDIA_ROOT settings
+# )
+
 # class Member(User):
 #     user_id = models.IntegerField(unique=True, primary_key=True)
 #     email_id = models.EmailField(unique=True)

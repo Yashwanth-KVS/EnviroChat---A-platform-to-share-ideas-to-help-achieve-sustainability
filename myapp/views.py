@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from .models import Followers
+# from .models import Followers
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .forms import UserRegisterForm
+
 
 def register(request):
     if request.method == 'POST':
@@ -34,4 +35,4 @@ def user_login(request):
 def followers(request, latest_tweets=None):
     follow_request = followers.objects.filter(STATUS_CHOICES=1)
     context = {'latest_tweets': latest_tweets}
-    return render(request, 'myapp/templates/myapp/tweet.html', context)
+    return render(request, 'myapp/tweet.html', context)
