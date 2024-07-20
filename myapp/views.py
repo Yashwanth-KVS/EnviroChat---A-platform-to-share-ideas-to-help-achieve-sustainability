@@ -1,7 +1,7 @@
 from django.http import StreamingHttpResponse, HttpResponse
 from django.shortcuts import render, redirect, HttpResponseRedirect, reverse
 from flask import Response
-
+from myapp.video import VideoCamera,IPWebCam
 from .forms import VideoUploadForm
 from .models import Video
 from django.conf import settings
@@ -56,7 +56,7 @@ def video_feed(request):
     global camera
     try:
         if camera is None:
-            camera = VideoCamera()  # Initialize the camera if not already initialized
+            camera = VideoCamera() # Initialize the camera if not already initialized
 
         return StreamingHttpResponse(gen(camera), content_type='multipart/x-mixed-replace; boundary=frame')
 
