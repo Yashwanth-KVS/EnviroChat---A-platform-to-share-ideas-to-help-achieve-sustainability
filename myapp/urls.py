@@ -1,4 +1,8 @@
+from django.template.context_processors import static
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+from EnviroChat import settings
 from myapp import views
 
 app_name = 'myapp'
@@ -8,3 +12,5 @@ urlpatterns = [
     path('events/', views.events, name='events'),
     path('myvideos/', views.myvideos, name='myvideos'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

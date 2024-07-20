@@ -1,17 +1,11 @@
 <!DOCTYPE html>
 {% extends 'base.html' %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>About US</title>
-</head>
+{% load static %}
 {% block body_block %}
 
+<video width="320" height="240" controls>
+  <source src="{% static '_Beautiful Sunrise & The Flowers - NO COPYRIGHT VIDEO - NATURE.mp4' %}" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
-<div>
-        <h3>Our Aim</h3>
-        <p></p>
-
-    </div>
 {% endblock %}
-</html>
