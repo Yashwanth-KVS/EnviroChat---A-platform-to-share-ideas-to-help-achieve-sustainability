@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect, reverse
 from .forms import VideoUploadForm
 from .models import Video
+from django.conf import settings
+from django.conf.urls.static import static
 # Create your views here.
 
 def home(request):
@@ -27,5 +29,5 @@ def events(request):
 
 def myvideos(request):
     videos = Video.objects.all()
-    return render(request,'video.html',{'videos':videos})
+    return render(request,'video.html',{'videos':videos,'media_url':settings.MEDIA_URL})
 
