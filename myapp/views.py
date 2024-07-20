@@ -4,6 +4,8 @@ from .forms import VideoUploadForm
 from .models import Video
 from django.conf import settings
 from django.conf.urls.static import static
+from django.http import HttpResponseServerError
+import traceback
 
 from .video import VideoCamera
 
@@ -46,4 +48,9 @@ def gen(camera):
 
 
 def video_feed(request):
-    return StreamingHttpResponse(gen(VideoCamera()),content_type='multipart/x-mixed-replace; boundary=frame')
+    try:
+        return StreamingHttpResponse(gen(VideoCamera()),
+                                     content_type='multipart/x-mixed-replace; boundary=frame')
+    except Exception as e:
+        traceback.print_exc()  # Print traceback to console for debugging
+        return HttpResponseServerError('Internal Server Error')

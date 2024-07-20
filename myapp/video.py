@@ -5,6 +5,7 @@ import numpy as np
 from django.conf import settings
 
 
+
 class VideoCamera(object):
     def __init__(self):
         self.video = cv2.VideoCapture(0)
