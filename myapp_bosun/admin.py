@@ -1,5 +1,5 @@
 from django.contrib import admin
-from myapp.models import Member, PagesComments, PagesFollowers, ThreadComments, Threads, Followers, Favorites, Feeds, Pages, Posts, PostComments, PostLikes
+from myapp_bosun.models import Member, PagesComments, PagesFollowers, ThreadComments, Threads, Followers, Favorites, Feeds, Pages, Posts, PostComments, PostLikes
 
 # Register your models here.
 admin.site.register(Pages)

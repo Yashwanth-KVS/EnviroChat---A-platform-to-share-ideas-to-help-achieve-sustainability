@@ -70,19 +70,19 @@ class Migration(migrations.Migration):
                 (
                     "followee_id",
                     models.ManyToManyField(
-                        blank=True, related_name="following", to="myapp.member"
+                        blank=True, related_name="following", to="myapp_bosun.member"
                     ),
                 ),
                 (
                     "follower_id",
                     models.ManyToManyField(
-                        blank=True, related_name="followers", to="myapp.member"
+                        blank=True, related_name="followers", to="myapp_bosun.member"
                     ),
                 ),
                 (
                     "requests",
                     models.ManyToManyField(
-                        blank=True, related_name="requests_received", to="myapp.member"
+                        blank=True, related_name="requests_received", to="myapp_bosun.member"
                     ),
                 ),
             ],
@@ -106,7 +106,7 @@ class Migration(migrations.Migration):
                 (
                     "user_id",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="myapp.member"
+                        on_delete=django.db.models.deletion.CASCADE, to="myapp_bosun.member"
                     ),
                 ),
             ],
@@ -128,13 +128,13 @@ class Migration(migrations.Migration):
                         default=1,
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="pages",
-                        to="myapp.feeds",
+                        to="myapp_bosun.feeds",
                     ),
                 ),
                 (
                     "user_id",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="myapp.member"
+                        on_delete=django.db.models.deletion.CASCADE, to="myapp_bosun.member"
                     ),
                 ),
             ],
@@ -155,13 +155,13 @@ class Migration(migrations.Migration):
                 (
                     "page_id",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="myapp.pages"
+                        on_delete=django.db.models.deletion.CASCADE, to="myapp_bosun.pages"
                     ),
                 ),
                 (
                     "user_id",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="myapp.member"
+                        on_delete=django.db.models.deletion.CASCADE, to="myapp_bosun.member"
                     ),
                 ),
             ],
@@ -176,13 +176,13 @@ class Migration(migrations.Migration):
                 (
                     "follower_id",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="myapp.member"
+                        on_delete=django.db.models.deletion.CASCADE, to="myapp_bosun.member"
                     ),
                 ),
                 (
                     "page_id",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="myapp.pages"
+                        on_delete=django.db.models.deletion.CASCADE, to="myapp_bosun.pages"
                     ),
                 ),
             ],
@@ -207,13 +207,13 @@ class Migration(migrations.Migration):
                         default=1,
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="posts",
-                        to="myapp.feeds",
+                        to="myapp_bosun.feeds",
                     ),
                 ),
                 (
                     "user_id",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="myapp.member"
+                        on_delete=django.db.models.deletion.CASCADE, to="myapp_bosun.member"
                     ),
                 ),
             ],
@@ -231,13 +231,13 @@ class Migration(migrations.Migration):
                     models.ForeignKey(
                         default=1,
                         on_delete=django.db.models.deletion.CASCADE,
-                        to="myapp.feeds",
+                        to="myapp_bosun.feeds",
                     ),
                 ),
                 (
                     "user_id",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="myapp.member"
+                        on_delete=django.db.models.deletion.CASCADE, to="myapp_bosun.member"
                     ),
                 ),
                 (
@@ -245,7 +245,7 @@ class Migration(migrations.Migration):
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="likes",
-                        to="myapp.posts",
+                        to="myapp_bosun.posts",
                     ),
                 ),
             ],
@@ -263,7 +263,7 @@ class Migration(migrations.Migration):
                 (
                     "user_id",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="myapp.member"
+                        on_delete=django.db.models.deletion.CASCADE, to="myapp_bosun.member"
                     ),
                 ),
                 (
@@ -271,7 +271,7 @@ class Migration(migrations.Migration):
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="comments",
-                        to="myapp.posts",
+                        to="myapp_bosun.posts",
                     ),
                 ),
             ],
@@ -295,13 +295,13 @@ class Migration(migrations.Migration):
                 (
                     "feed",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="myapp.feeds"
+                        on_delete=django.db.models.deletion.CASCADE, to="myapp_bosun.feeds"
                     ),
                 ),
                 (
                     "user_id",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="myapp.member"
+                        on_delete=django.db.models.deletion.CASCADE, to="myapp_bosun.member"
                     ),
                 ),
             ],
@@ -322,13 +322,13 @@ class Migration(migrations.Migration):
                 (
                     "user_id",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="myapp.member"
+                        on_delete=django.db.models.deletion.CASCADE, to="myapp_bosun.member"
                     ),
                 ),
                 (
                     "thread_id",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="myapp.threads"
+                        on_delete=django.db.models.deletion.CASCADE, to="myapp_bosun.threads"
                     ),
                 ),
             ],
@@ -345,13 +345,13 @@ class Migration(migrations.Migration):
                 (
                     "user_id",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="myapp.member"
+                        on_delete=django.db.models.deletion.CASCADE, to="myapp_bosun.member"
                     ),
                 ),
                 (
                     "thread_id",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="myapp.threads"
+                        on_delete=django.db.models.deletion.CASCADE, to="myapp_bosun.threads"
                     ),
                 ),
             ],

@@ -6,7 +6,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("myapp", "0001_initial"),
+        ("myapp_bosun", "0001_initial"),
     ]
 
     operations = [
@@ -14,21 +14,21 @@ class Migration(migrations.Migration):
             model_name="feeds",
             name="pages",
             field=models.ManyToManyField(
-                blank=True, related_name="feeds_pages", to="myapp.pages"
+                blank=True, related_name="feeds_pages", to="myapp_bosun.pages"
             ),
         ),
         migrations.AddField(
             model_name="feeds",
             name="posts",
             field=models.ManyToManyField(
-                blank=True, related_name="feeds_posts", to="myapp.posts"
+                blank=True, related_name="feeds_posts", to="myapp_bosun.posts"
             ),
         ),
         migrations.AddField(
             model_name="feeds",
             name="threads",
             field=models.ManyToManyField(
-                blank=True, related_name="feeds_threads", to="myapp.threads"
+                blank=True, related_name="feeds_threads", to="myapp_bosun.threads"
             ),
         ),
         migrations.AddField(
@@ -39,7 +39,7 @@ class Migration(migrations.Migration):
                 null=True,
                 on_delete=django.db.models.deletion.CASCADE,
                 related_name="pages_comments",
-                to="myapp.feeds",
+                to="myapp_bosun.feeds",
             ),
         ),
         migrations.AddField(
@@ -50,7 +50,7 @@ class Migration(migrations.Migration):
                 null=True,
                 on_delete=django.db.models.deletion.CASCADE,
                 related_name="posts_comments",
-                to="myapp.feeds",
+                to="myapp_bosun.feeds",
             ),
         ),
         migrations.AddField(
@@ -61,7 +61,7 @@ class Migration(migrations.Migration):
                 null=True,
                 on_delete=django.db.models.deletion.CASCADE,
                 related_name="threads_comments",
-                to="myapp.feeds",
+                to="myapp_bosun.feeds",
             ),
         ),
         migrations.AlterField(
@@ -71,7 +71,7 @@ class Migration(migrations.Migration):
                 default=1,
                 on_delete=django.db.models.deletion.CASCADE,
                 related_name="pages_related",
-                to="myapp.feeds",
+                to="myapp_bosun.feeds",
             ),
         ),
         migrations.AlterField(
@@ -81,7 +81,7 @@ class Migration(migrations.Migration):
                 default=1,
                 on_delete=django.db.models.deletion.CASCADE,
                 related_name="posts_related",
-                to="myapp.feeds",
+                to="myapp_bosun.feeds",
             ),
         ),
         migrations.AlterField(
@@ -90,7 +90,7 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(
                 on_delete=django.db.models.deletion.CASCADE,
                 related_name="threads_related",
-                to="myapp.feeds",
+                to="myapp_bosun.feeds",
             ),
         ),
     ]
