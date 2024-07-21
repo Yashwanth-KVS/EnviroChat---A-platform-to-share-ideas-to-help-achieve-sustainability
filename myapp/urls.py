@@ -14,6 +14,7 @@ urlpatterns = [
     path('video_feed/', views.streaming, name='steam'),
     path('video',views.video_feed,name='video_feed'),
     path('stop_stream/', views.stop_stream, name='stop_stream'),
+    path('delete/<int:video_id>/', views.delete_video, name='delete_video'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

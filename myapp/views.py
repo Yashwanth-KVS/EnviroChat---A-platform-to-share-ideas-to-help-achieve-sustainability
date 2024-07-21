@@ -1,5 +1,5 @@
 from django.http import StreamingHttpResponse, HttpResponse
-from django.shortcuts import render, redirect, HttpResponseRedirect, reverse
+from django.shortcuts import render, redirect, HttpResponseRedirect, reverse, get_object_or_404
 from flask import Response
 from myapp.video import VideoCamera,IPWebCam
 from .forms import VideoUploadForm
@@ -38,9 +38,21 @@ def events(request):
 
 
 def myvideos(request):
+    print("myvideos")
     videos = Video.objects.all()
     return render(request, 'video.html', {'videos': videos, 'media_url': settings.MEDIA_URL})
 
+
+def delete_video(request, video_id):
+    print('delete_video')
+    video = get_object_or_404(Video, pk=video_id)
+    if request.method == 'POST':
+        video.delete()
+        print('Video deleted')
+        # Optionally, redirect to a different URL after deletion
+        return redirect('myapp:myvideos')
+    # Handle GET request (if any)
+    return redirect('myapp:myvideos')
 
 def gen(camera):
     while True:
@@ -75,7 +87,7 @@ def stop_stream(request):
         if camera is not None:
             del camera  # Release the camera instance
             camera = None  # Reset camera variable to None
-        return HttpResponse('Stream stopped successfully', status=200)
+        return render(request, 'home.html')
 
     except Exception as e:
         print(e)

@@ -2,16 +2,29 @@
 {% load static %}
 
 {% block body_block %}
+<div class="container mt-5">
     <h1>Uploaded Videos</h1>
-    <ul>
+
+    <div class="row mt-4">
         {% for video in videos %}
-            <li>
-                <h1>{{ video.Title }}</h1>
-                <video id="{{ video.video_id }}" width="320" height="240" controls>
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ video.Title }}</h5>
+                </div>
+                <video id="{{ video.video_id }}" class="card-img-top" width="100%" controls>
                     <source src="{{ MEDIA_URL }}{{ video.video.url }}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
-            </li>
+                <div class="card-footer">
+                    <form action="{% url 'myapp:delete_video' video.video_id %}" method="post">
+                        {% csrf_token %}
+                       <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+
+                </div>
+            </div>
+        </div>
         {% endfor %}
-    </ul>
+    </div>
+</div>
 {% endblock %}
