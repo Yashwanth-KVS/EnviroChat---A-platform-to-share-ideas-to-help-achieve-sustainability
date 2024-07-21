@@ -37,14 +37,29 @@
 {#        </ul>#}
 {##}
 {#    </div>#}
+    <div class="container mt-4">
+        <h2 class="text-center" style="font-size: 2vw; font-family: Forte, sans-serif;">Goals</h2>
+        <div class="row">
+            {% for goal in goals%}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ goal.title }}</h5>
+                            <p class="card-text">{{ goal.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
     <div class="container mt-5">
     <h2 class="text-center" style="font-size: 2vw; font-family: Forte, sans-serif;">Trending</h2>
     <ul class="list-unstyled row app-trending-row">
         <li class="app-trending-row__link col-md-3 text-center mb-4">
             <a href="https://www.canada.ca/en/environment-climate-change/services/climate-change/canadian-centre-climate-services/basics/trends-projections.html" class="d-block">
-                <div class="bg-image hover-zoom">
-                    <img src="{% static 'twitter-logo.png' %}" alt="Article 1" class="w-100">
-                </div>
+{#                <div class="bg-image hover-zoom">#}
+{#                    <img src="{% static 'twitter-logo.png' %}" alt="Article 1" class="w-100">#}
+{#                </div>#}
                 <span>Article 1</span>
             </a>
         </li>

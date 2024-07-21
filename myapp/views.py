@@ -3,23 +3,32 @@ from django.contrib.sessions.models import Session
 from django.contrib.auth.models import User
 from django.utils import timezone
 from .utils import active_sessions_count
-from .middleware import VisitCounterMiddleware
 import random
 from datetime import datetime, timedelta
-from .models import SiteVisit
-
+from django.http import JsonResponse
 from myapp.models import SiteVisit
-
 
 # Create your views here.
 
 
 def home(request):
+    goals = [
+        {"title": "Foster a Strong Community",
+         "description": "Create a vibrant online community where individuals passionate about environmental issues "
+                        "can connect, share experiences, and build lasting relationships."
+         },
+        {"title": "Facilitate Knowledge Exchange",
+         "description": "Provide a platform for members to share articles, resources, and insights on various environmental topics, promoting continuous learning and awareness."},
+        {"title": "Encourage Collaborative Initiatives",
+         "description": "Support and promote collaborative projects and initiatives that aim to address environmental challenges and promote sustainable practices."},
+        {"title": "Raise Environmental Awareness",
+         "description": "Launch and support awareness campaigns that educate the public about pressing environmental issues and inspire positive action."},
+        {"title": "Enhance Accessibility to Resources",
+         "description": "Curate and provide easy access to valuable resources, including research papers, toolkits, and best practices for sustainability and environmental conservation."},
+        {"title": "Advocate for Policy Change",
+         "description": "Mobilize the community to advocate for environmental policies and influence decision-makers to implement sustainable practices and regulations."}
+    ]
     total_visits = request.session.get('total_visits', 0)
-    # site_visit = SiteVisit.objects.get(id=1)
-    # global_visit_count = site_visit.visit_count
-    # print(site_visit.visit_count)
-    # print(f"Global visit count: {global_visit_count}")
     site_visit, created = SiteVisit.objects.get_or_create(id=1)
     site_visit.visit_count += 1
     site_visit.save()
@@ -34,11 +43,17 @@ def home(request):
     # print(response)
     active_sessions = active_sessions_count()
     # print("viewcount", view_count)
-    return render(request, 'home.html', {'view_count': view_count, 'active_sessions': active_sessions})
+    return render(request, 'home.html', {'view_count': view_count, 'active_sessions': active_sessions
+                                         ,'goals': goals})
 
 
 def aboutus(request):
     return render(request, 'aboutus.html')
+
+
+# def goals_view(request):
+#
+#     return render(request, 'home.html', {'goals': goals})
 
 
 def contactus(request):
@@ -96,4 +111,18 @@ def contactus(request):
     return render(request, 'Contactus.html', {'team': team})
 
 
-
+# def get_active_sessions(request):
+#     # Filter sessions that have not expired
+#     active_sessions = Session.objects.filter(expire_date__gte=timezone.now())
+#
+#     # Extract session keys and other desired info
+#     sessions_data = []
+#     for session in active_sessions:
+#         data = {
+#             'session_key': session.session_key,
+#             'expire_date': session.expire_date,
+#             # Add more session details if needed
+#         }
+#         sessions_data.append(data)
+#
+#     return JsonResponse({'active_sessions': sessions_data})
