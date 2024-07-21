@@ -116,7 +116,7 @@ class Pages_comments(models.Model):
 class Pages_followers(models.Model):
     id = models.AutoField(primary_key=True)
     page_id = models.ForeignKey(to=Pages, on_delete=models.CASCADE, default=202407171858142)
-    follower_id = models.ManyToManyField(Member, related_name='followers_pages')
+    follower_id = models.ForeignKey(to=Member, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return str(self.id)
