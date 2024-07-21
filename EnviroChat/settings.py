@@ -124,7 +124,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #
 # DEBUG = True
 #
-# MEDIA_ROOT = '/media/'
-# MEDIA_URL = os.path.join(BASE_DIR,'media')
+MEDIA_ROOT = 'C:/super_sacred/Django-project-IADS'
+MEDIA_URL = os.path.join(BASE_DIR,'/')
 # STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
 

@@ -24,7 +24,7 @@ def search_name(request):
     payload = []
     for obj in objs:
         payload.append({
-            'id': obj.pk,
+            'id': obj.id,
             'name': obj.username
         })
     return JsonResponse({
