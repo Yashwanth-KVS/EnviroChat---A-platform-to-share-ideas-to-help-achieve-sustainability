@@ -1,0 +1,53 @@
+/* styles.css */
+
+.feed-container {
+    background-color: #f0f8f0; /* Light green background for the whole container */
+    padding: 20px;
+}
+
+.feed-item {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #ffffff;
+}
+
+.feed-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.feed-block {
+    background-color: #eafaf0; /* Light green background for feed block */
+    border: 1px solid #d0f0c0;
+}
+
+.threads-block {
+    background-color: #d9f7d9; /* Light green for threads block */
+    border: 1px solid #b2f2b2;
+}
+
+.pages-block {
+    background-color: #d0f0c0; /* Slightly different green for pages block */
+    border: 1px solid #a1e2a1;
+}
+
+.posts-block {
+    background-color: #c0f0a1; /* Different green for posts block */
+    border: 1px solid #8bc34a;
+}
+
+h2, h3 {
+    margin-top: 0;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+li {
+    padding: 5px 0;
+}
