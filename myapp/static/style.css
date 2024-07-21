@@ -56,28 +56,62 @@
 
 .card {
             margin-bottom: 20px;
+
         }
 
-@keyframes float-horizontal {
-    0% {
-        transform: translateX(0px);
-    }
-    50% {
-        transform: translateX(10px);
-    }
-    100% {
-        transform: translateX(0px);
-    }
-    }
-    .card {
-        animation: float-horizontal 3s ease-in-out infinite;
-        transition: transform 0.3s;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Default shadow */
-    }
-    .card:hover {
-        transform: translateX(15px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Shadow on hover */
-    }
+/*@keyframes float-horizontal {*/
+/*    0% {*/
+/*        transform: translateX(0px);*/
+/*    }*/
+/*    50% {*/
+/*        transform: translateX(10px);*/
+/*    }*/
+/*    100% {*/
+/*        transform: translateX(0px);*/
+/*    }*/
+/*    }*/
+/*    .card {*/
+/*        animation: float-horizontal 3s ease-in-out infinite;*/
+/*        transition: transform 0.3s;*/
+/*        align-content: center;*/
+/*        justify-content: center;*/
+/*        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); !* Default shadow *!*/
+/*    }*/
+/*    .card:hover {*/
+/*        transform: translateX(15px);*/
+/*        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); !* Shadow on hover *!*/
+/*    }*/
+/*    .goals-card {*/
+/*            background-color: forestgreen; !* Change card background to green *!*/
+/*            color: white; !* Change text color to white *!*/
+/*        }*/
+/*    .goals-card .card-title,*/
+/*    .goals-card .card-text {*/
+/*        color: whitesmoke; !* Ensure all text within the card is white *!*/
+/*    }*/
+
+ @keyframes float-horizontal {
+            0% { transform: translateX(0px); }
+            50% { transform: translateX(10px); }
+            100% { transform: translateX(0px); }
+        }
+        .goals-card {
+            animation: float-horizontal 3s ease-in-out infinite;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Default shadow */
+            background-color: green; /* Change card background to green */
+            color: white; /* Change text color to white */
+            padding: 20px; /* Add padding to the card */
+            border-radius: 8px;
+        }
+        .goals-card:hover {
+            transform: translateX(15px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Shadow on hover */
+        }
+        .goals-card .card-title,
+        .goals-card .card-text {
+            color: white; /* Ensure all text within the card is white */
+        }
 
 .offcanvas-body .btn-custom {
     display: block; /* Ensure buttons stack vertically */
@@ -103,6 +137,7 @@
 
 .collapse .card-body {
     border: none; /* Remove border from card body */
+    align-content: center;
     padding: 0.5rem 0; /* Add padding to card body */
 }
 
@@ -119,6 +154,15 @@
     border-radius: 0; /* Remove border radius from button */
 }
 
+.btn-success {
+    background-color: forestgreen !important; /* Light green */
+    color: whitesmoke !important;
+    border: none !important;
+}
+
+.btn-success:hover {
+    background-color: forestgreen !important; /* Slightly darker green on hover */
+}
 /*body {*/
 /*    background-image: url('dreamstime_m_16461382.jpg'); !* Replace with the path to your image *!*/
 /*    background-size: cover; !* Ensures the image covers the entire viewport *!*/
@@ -212,6 +256,7 @@ footer {
     margin: 5px 0;
     display: flex;
     justify-content: space-between;
+
     align-items: center;
 }
 

@@ -130,3 +130,11 @@ class Pages_followers(models.Model):
 
 class SiteVisit(models.Model):
     visit_count = models.PositiveIntegerField(default=0)
+
+
+class SessionCount(models.Model):
+    count = models.IntegerField(default=0)
+
+    def increment_count(self):
+        self.count += 1
+        self.save()

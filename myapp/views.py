@@ -6,7 +6,8 @@ from .utils import active_sessions_count
 import random
 from datetime import datetime, timedelta
 from django.http import JsonResponse
-from myapp.models import SiteVisit
+from myapp.models import SiteVisit, SessionCount
+
 
 # Create your views here.
 
@@ -44,7 +45,7 @@ def home(request):
     active_sessions = active_sessions_count()
     # print("viewcount", view_count)
     return render(request, 'home.html', {'view_count': view_count, 'active_sessions': active_sessions
-                                         ,'goals': goals})
+        , 'goals': goals})
 
 
 def aboutus(request):
@@ -126,3 +127,23 @@ def contactus(request):
 #         sessions_data.append(data)
 #
 #     return JsonResponse({'active_sessions': sessions_data})
+def check_session(request):
+    # Check if the cookie is present
+    print("Checking session...")
+    if 'session_cookie' in request.COOKIES:
+        # Cookie exists, do not count the session
+        print("Cookie exists. Fetching session count.")
+        session_count = SessionCount.objects.first()
+        print(session_count)
+    else:
+        print("Cookie does not exist. Counting session.")
+        # Cookie does not exist, count the session
+        session_count, created = SessionCount.objects.get_or_create(id=1)  # Using a fixed id for simplicity
+        session_count.increment_count()
+
+        # Set the cookie
+        response = render(request, 'home.html')
+        response.set_cookie('session_cookie', 'exists', max_age=3600)  # Cookie lasts for 1 hour
+        return response
+
+    return render(request, 'home.html', {'session_count': session_count})

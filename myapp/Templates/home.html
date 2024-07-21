@@ -16,7 +16,7 @@
         <h2>Welcome to EnviroChat</h2>
     </div>
     <div style="text-align: center">
-    <blockquote id="quote-block" class="fade-in">
+    <blockquote style="font-family: 'Comic Sans MS',serif" id="quote-block" class="fade-in">
         "In the face of impending catastrophe, whose warning signs are already unbearably disastrous,
         weak action is unwise. No action is dangerous." <br>
         — William Ruto, President of Kenya
@@ -39,13 +39,13 @@
 {#    </div>#}
     <div class="container mt-4">
         <h2 class="text-center" style="font-size: 2vw; font-family: Forte, sans-serif;">Goals</h2>
-        <div class="row">
+        <div style="padding-top: 10px" class="row">
             {% for goal in goals%}
                 <div class="col-md-4 mb-4">
-                    <div class="card">
+                    <div class="goals-card">
                         <div class="card-body">
-                            <h5 class="card-title">{{ goal.title }}</h5>
-                            <p class="card-text">{{ goal.description }}</p>
+                            <h5 style="font-family:'Berlin Sans FB',serif; font-weight: normal" class="card-title">{{ goal.title }}</h5>
+                            <p style="font-family: 'Bradley Hand ITC',serif; font-weight: bold " class="card-text">{{ goal.description }}</p>
                         </div>
                     </div>
                 </div>
@@ -53,32 +53,32 @@
         </div>
     </div>
     <div class="container mt-5">
-    <h2 class="text-center" style="font-size: 2vw; font-family: Forte, sans-serif;">Trending</h2>
+    <h2 id="trending-section" class="text-center" style="font-size: 2vw; font-family: Forte, sans-serif;">Trending</h2>
     <ul class="list-unstyled row app-trending-row">
         <li class="app-trending-row__link col-md-3 text-center mb-4">
             <a href="https://www.canada.ca/en/environment-climate-change/services/climate-change/canadian-centre-climate-services/basics/trends-projections.html" class="d-block">
 {#                <div class="bg-image hover-zoom">#}
 {#                    <img src="{% static 'twitter-logo.png' %}" alt="Article 1" class="w-100">#}
 {#                </div>#}
-                <span>Article 1</span>
+                <span>Candian Climate change Trends projection</span>
             </a>
         </li>
         <li class="app-trending-row__link col-md-3 text-center mb-4">
-            <a href="https://example.com/article2" class="d-block">
-                <img src="https://example.com/image2.jpg" alt="Article 2" class="img-fluid">
-                <span>Article 2</span>
+            <a href="https://www.nature.com/articles/s41586-024-07609-4" class="d-block">
+{#                <img src="https://example.com/image2.jpg" alt="Article 2" class="img-fluid">#}
+                <span>Sunlight-powered sustained flight of an ultralight micro aerial vehicle</span>
             </a>
         </li>
         <li class="app-trending-row__link col-md-3 text-center mb-4">
-            <a href="https://example.com/article3" class="d-block">
-                <img src="https://example.com/image3.jpg" alt="Article 3" class="img-fluid">
-                <span>Article 3</span>
+            <a href="https://www.forbes.com/sites/johnwerner/2024/07/19/sustainability-in-business-what-were-looking-for-in-todays-enterprise-climate/" class="d-block">
+{#                <img src="https://example.com/image3.jpg" alt="Article 3" class="img-fluid">#}
+                <span>Sustainability In Business: What We’re Looking For In Today’s Enterprise Climate</span>
             </a>
         </li>
         <li class="app-trending-row__link col-md-3 text-center mb-4">
-            <a href="https://example.com/article4" class="d-block">
-                <img src="https://example.com/image4.jpg" alt="Article 4" class="img-fluid">
-                <span>Article 4</span>
+            <a href="https://www.nature.com/articles/d41586-024-02230-x" class="d-block">
+{#                <img src="https://example.com/image4.jpg" alt="Article 4" class="img-fluid">#}
+                <span>The death forecast: how weather affects human mortality</span>
             </a>
         </li>
     </ul>

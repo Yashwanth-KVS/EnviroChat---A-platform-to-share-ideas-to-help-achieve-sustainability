@@ -48,13 +48,13 @@
 {#                        <span class="icon-button__badge">{% live_notify_badge %}</span>#}
 {#                      </a>#}
 {#                </div>#}
-                <a href="{% url 'myapp:home' %}" class="btn btn-success me-2 align-content-center">Home</a>
-                <button class="btn btn-success align-content-center" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                <a href="{% url 'myapp:home' %}" style="font-family: 'Berlin Sans FB',serif" class="btn btn-success me-2 align-content-center">Home</a>
+                <button style="font-family: 'Berlin Sans FB',serif" class="btn btn-success align-content-center" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                     Menu
                 </button>
 {#                {% if user.is_authenticated %} should be used only once user is logged in#}
                 <div class="profile-pic-container dropdown">
-                    <button class="profile-img btn-success" style=""><img src="{% static 'login.png' %}" style="width: 40px; height: 40px" alt="Profile"></button>
+                    <button class="profile-img " style=""><img src="{% static 'login.png' %}" style="width: 40px; height: 40px" alt="Profile"></button>
 {#                        <img src="{% static 'login.png' %}" style="width: 40px; height: 40px" alt="Profile">#}
 
                         <div class="dropdown-content">
@@ -125,7 +125,7 @@
             <a href="#" class="btn btn-custom w-100 {% if request.path == "#" %}active{% endif %}">
                 <button type="submit" style="width: 100%;" class="btn transparent-btn align-center " value="Done">Events</button></a>
 
-            <a href="#" class="btn btn-custom w-100">
+            <a href="{% url 'myapp:home' %}#trending-section" class="btn btn-custom w-100">
                 <button type="submit" style="width: 100%;" class="btn transparent-btn align-center " value="Done">Trending</button></a>
 
             <a href="#" class="btn btn-custom w-100">
@@ -164,8 +164,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <footer>
         <div class="footer-content">
-            <p>&copy; 2024 EnviroChat. All rights reserved.</p>
-            <p><a href="/privacy-policy">Privacy Policy</a> | <a href="/terms-of-service">Terms of Service</a></p>
+            <p style="padding-left: 10px">&copy; 2024 EnviroChat. All rights reserved.</p>
+            <p style="align-content: center"><a href="/privacy-policy">Privacy Policy</a> | <a href="/terms-of-service">Terms of Service</a></p>
             <div class="footer-links">
                 <a href="{% url 'myapp:aboutus' %}">About Us</a>
                 <a href="https://www.instagram.com" target="_blank">
@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <a href="https://www.twitter.com" target="_blank">
                     <img src="{% static 'twitter-logo.png' %}" alt="X.com" />
                 </a>
-                <a href="https://www.facebook.com" target="_blank">
+                <a style="padding-right: 10px" href="https://www.facebook.com" target="_blank">
                     <img src="{% static 'facebook-logo.png' %}" alt="Facebook" />
                 </a>
 
