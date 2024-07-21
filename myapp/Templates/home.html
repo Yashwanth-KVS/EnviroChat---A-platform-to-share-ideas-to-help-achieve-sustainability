@@ -16,11 +16,103 @@
         <h2>Welcome to EnviroChat</h2>
     </div>
     <div style="text-align: center">
-    <blockquote id="quote-block">
+    <blockquote style="font-family: 'Comic Sans MS',serif" id="quote-block" class="fade-in">
         "In the face of impending catastrophe, whose warning signs are already unbearably disastrous,
         weak action is unwise. No action is dangerous." <br>
         — William Ruto, President of Kenya
     </blockquote>
+    </div>
+
+{#    <div class="u-container">#}
+{#        <h2 style="font-size: 2vw;text-align: center;font-family: Forte,sans-serif" >Trending</h2>#}
+{#        <ul class="app-trending-row">#}
+{#            <li class="app-trending-row__link">#}
+{#                <img src=""#}
+{#                     alt="Score 1733" class="u-mb-8" width="55" height="55" itemprop="image">#}
+{#            </li>#}
+{#            <li>2</li>#}
+{#            <li>3</li>#}
+{#            <li>4</li>#}
+{##}
+{#        </ul>#}
+{##}
+{#    </div>#}
+    <div class="container mt-4">
+        <h2 class="text-center" style="font-size: 2vw; font-family: Forte, sans-serif;">Goals</h2>
+        <div style="padding-top: 10px" class="row">
+            {% for goal in goals%}
+                <div class="col-md-4 mb-4">
+                    <div class="goals-card">
+                        <div class="card-body">
+                            <h5 style="font-family:'Berlin Sans FB',serif; font-weight: normal" class="card-title">{{ goal.title }}</h5>
+                            <p style="font-family: 'Bradley Hand ITC',serif; font-weight: bold " class="card-text">{{ goal.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="container mt-5">
+    <h2 id="trending-section" class="text-center" style="font-size: 2vw; font-family: Forte, sans-serif;">Trending</h2>
+    <ul class="list-unstyled row app-trending-row">
+        <li class="app-trending-row__link col-md-3 text-center mb-4">
+            <a href="https://www.canada.ca/en/environment-climate-change/services/climate-change/canadian-centre-climate-services/basics/trends-projections.html" class="d-block">
+{#                <div class="bg-image hover-zoom">#}
+{#                    <img src="{% static 'twitter-logo.png' %}" alt="Article 1" class="w-100">#}
+{#                </div>#}
+                <span>Candian Climate change Trends projection</span>
+            </a>
+        </li>
+        <li class="app-trending-row__link col-md-3 text-center mb-4">
+            <a href="https://www.nature.com/articles/s41586-024-07609-4" class="d-block">
+{#                <img src="https://example.com/image2.jpg" alt="Article 2" class="img-fluid">#}
+                <span>Sunlight-powered sustained flight of an ultralight micro aerial vehicle</span>
+            </a>
+        </li>
+        <li class="app-trending-row__link col-md-3 text-center mb-4">
+            <a href="https://www.forbes.com/sites/johnwerner/2024/07/19/sustainability-in-business-what-were-looking-for-in-todays-enterprise-climate/" class="d-block">
+{#                <img src="https://example.com/image3.jpg" alt="Article 3" class="img-fluid">#}
+                <span>Sustainability In Business: What We’re Looking For In Today’s Enterprise Climate</span>
+            </a>
+        </li>
+        <li class="app-trending-row__link col-md-3 text-center mb-4">
+            <a href="https://www.nature.com/articles/d41586-024-02230-x" class="d-block">
+{#                <img src="https://example.com/image4.jpg" alt="Article 4" class="img-fluid">#}
+                <span>The death forecast: how weather affects human mortality</span>
+            </a>
+        </li>
+    </ul>
+    </div>
+    <div class="container">
+    <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Site Visits</h5>
+                        <p class="card-text">{{ view_count }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Active Sessions</h5>
+                        <p class="card-text">{{ active_sessions }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{#    <div class="cont">#}
+{#        <div class="colms">#}
+{#            <p>Total visits to site are: </p>#}
+{#            <p>{{ view_count}}</p>#}
+{#        </div>#}
+{#            <div class="colms">#}
+{#                <p>Active sessions count: </p>#}
+{#                <p>{{ active_sessions }}</p>#}
+{#            </div>#}
+{#    </div>#}
     </div>
 
 
@@ -58,8 +150,31 @@
             }
         ];
 
-        let currentQuoteIndex = 0;
+        {#const articles = [#}
+        {#    {#}
+        {#        title: "Article 1",#}
+        {#        url: "https://example.com/article1",#}
+        {#        image: "https://example.com/image1.jpg"#}
+        {#    },#}
+        {#    {#}
+        {#        title: "Article 2",#}
+        {#        url: "https://example.com/article2",#}
+        {#        image: "https://example.com/image2.jpg"#}
+        {#    },#}
+        {#    {#}
+        {#        title: "Article 3",#}
+        {#        url: "https://example.com/article3",#}
+        {#        image: "https://example.com/image3.jpg"#}
+        {#    },#}
+        {#    {#}
+        {#        title: "Article 4",#}
+        {#        url: "https://example.com/article4",#}
+        {#        image: "{% static 'twitter-logo.png' %}"#}
+        {#    }#}
+        {#];#}
 
+    {#    let currentQuoteIndex = 0;#}
+    {##}
     {#    function changeQuote() {#}
     {#        currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;#}
     {#        const quoteBlock = document.getElementById('quote-block');#}
@@ -69,29 +184,63 @@
     {#            quoteBlock.innerHTML = `"${quotes[currentQuoteIndex].text}" <br> — ${quotes[currentQuoteIndex].author}`;#}
     {#            quoteBlock.style.display = 'block';#}
     {#        }, 0);#}
-            {#quoteBlock.innerHTML = `"${quotes[currentQuoteIndex].text}" <br> — ${quotes[currentQuoteIndex].author}`;#}
+    {#        quoteBlock.innerHTML = `"${quotes[currentQuoteIndex].text}" <br> — ${quotes[currentQuoteIndex].author}`;#}
     {#    }#}
     {##}
     {#    setInterval(changeQuote, 3000);#}
     {#</script>#}
-    function changeQuote() {
+
+        let currentQuoteIndex = 0;
+
+        function changeQuote() {
             currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
             const quoteBlock = document.getElementById('quote-block');
-
-            // Re-trigger the animation by removing and re-adding the class
-            quoteBlock.classList.remove('fade-in');
-            void quoteBlock.offsetWidth; // Trigger a reflow
-            quoteBlock.classList.add('fade-in');
 
             // Change the quote
             quoteBlock.innerHTML = `"${quotes[currentQuoteIndex].text}" <br> — ${quotes[currentQuoteIndex].author}`;
 
+            // Remove the fade-in class to re-trigger the animation
+            quoteBlock.classList.remove('fade-in');
+
+            // Use requestAnimationFrame to ensure the browser has finished rendering
+            requestAnimationFrame(() => {
+                quoteBlock.classList.add('fade-in');
+            });
         }
 
         setInterval(changeQuote, 5000);
     </script>
 
 
+        {#window.onload = function() {#}
+        {## this javascript is for articles#}
+    {#    const trendingRow = document.querySelector('.app-trending-row');#}
+    {#    trendingRow.innerHTML = '';  // Clear existing items#}
+    {##}
+    {#    articles.forEach(article => {#}
+    {#        const listItem = document.createElement('li');#}
+    {#        listItem.className = 'app-trending-row__link';#}
+    {##}
+    {#        const link = document.createElement('a');#}
+    {#        link.href = article.url;#}
+    {#        link.style.display = 'block';  // Make link block-level to ensure image and text stack#}
+    {##}
+    {#        const image = document.createElement('img');#}
+    {#        image.src = article.image;#}
+    {#        image.alt = article.title;#}
+    {#        image.width = 55;  // Set width and height as per your requirement#}
+    {#        image.height = 55;#}
+    {##}
+    {#        const title = document.createElement('span');#}
+    {#        title.textContent = article.title;#}
+    {#        title.style.display = 'block';  // Make title block-level to appear below the image#}
+    {#        title.style.marginTop = '5px';  // Add some space between the image and the title#}
+    {##}
+    {#        link.appendChild(image);#}
+    {#        link.appendChild(title);#}
+    {#        listItem.appendChild(link);#}
+    {#        trendingRow.appendChild(listItem);#}
+    {#    });#}
 
 {% endblock %}
 {#</div>#}

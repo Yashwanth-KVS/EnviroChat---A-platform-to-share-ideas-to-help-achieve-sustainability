@@ -8,14 +8,34 @@
             padding: 20px;
         }
 
+        .container {
+            display: flex;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .content-wrapper {
+            display: flex;
+            max-width: 1200px;
+            width: 100%;
+        }
 
         .page-detail {
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             padding: 20px;
-            max-width: 800px;
-            margin: auto;
+            flex: 2;
+            margin-right: 20px; /* Space between page detail and comments section */
+        }
+
+        .comments-section {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            width: 300px;
+            flex-shrink: 0; /* Prevent shrinking */
         }
 
         .page-detail h1 {
@@ -27,6 +47,8 @@
             max-width: 100%;
             border-radius: 8px;
             margin-bottom: 20px;
+            display: block;
+            margin: 0 auto; /* Center the images */
         }
 
         .page-detail p {
@@ -34,20 +56,21 @@
             line-height: 1.6;
         }
 
-        .page-detail .author {
+        .author {
             display: flex;
             align-items: center;
             margin-top: 20px;
+            margin-bottom: 20px;
         }
 
-        .page-detail .author img {
+        .author img {
             width: 50px;
             height: 50px;
             border-radius: 50%;
             margin-right: 15px;
         }
 
-        .page-detail .author p {
+        .author .about-content {
             font-size: 16px;
             color: #666;
         }
@@ -70,12 +93,13 @@
             font-size: 16px;
         }
 
-        .interaction-button:hover {
-            background-color: #45a049;
+        .interaction-button.disabled {
+            background-color: #ddd;
+            cursor: not-allowed;
         }
 
-        .comments-section {
-            margin-top: 40px;
+        .interaction-button:hover:not(.disabled) {
+            background-color: #45a049;
         }
 
         .comments-section h2 {
@@ -127,78 +151,217 @@
         .add-comment button:hover {
             background-color: #45a049;
         }
+
+        .votes-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .votes-section div {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+        }
+
+        .votes-section span {
+            font-weight: bold;
+            margin-left: 5px;
+        }
     </style>
-
-
-    <div class="page-detail">
-        <h1>{{ page.title }}</h1>
-        {% if page.title_img %}
-            <img src="{{ page.title_img.url }}" alt="Title Image">
-        {% endif %}
-        <p>{{ page.content }}</p> <!-- Assuming the Page model has a content field -->
-        {% if page.content_img %}
-                <img src="{{ page.content_img.url }}" alt="Content Image">
-        {% endif %}
-        <div class="author">
-            {% if page.about_img %}
-                <img src="{{ page.about_img.url }}" alt="Author Image">
-            {% endif %}
-            <p>{{ page.about_page }}</p>
-        </div>
-        <div class="interaction-buttons">
-            <button class="interaction-button" onclick="handleLike()">Upvote</button>
-            <button class="interaction-button" onclick="handleComment()">Comment</button>
-            <button class="interaction-button" onclick="handleShare()">Downvote</button>
-        </div>
-
-        <div class="comments-section">
-            <h2>Comments</h2>
-            {% for comment in comments %}
-                <div class="comment">
-                    <div class="author">{{ comment.author }}</div>
-                    <p>{{ comment.text }}</p>
+    <br>
+    <br>
+    <div class="container">
+        <div class="content-wrapper">
+            <div class="page-detail">
+                <h1>{{ page.title }}</h1>
+                {% if page.title_img %}
+                    <img src="{{ page.title_img.url }}" alt="Title Image">
+                {% endif %}
+                <p>{{ page.content }}</p> <!-- Assuming the Page model has a content field -->
+                {% if page.content_img %}
+                    <img src="{{ page.content_img.url }}" alt="Content Image">
+                {% endif %}
+                <div class="author">
+                    {% if page.about_img %}
+                        <img src="{{ page.about_img.url }}" alt="Author Image">
+                    {% endif %}
+                    <div class="about-content">
+                        <p>{{ page.about_page }}</p>
+                    </div>
                 </div>
-            {% empty %}
-                <p>No comments yet. Be the first to comment!</p>
-            {% endfor %}
+                <div class="interaction-buttons">
+                    <button id="follow-btn" class="interaction-button" onclick="handleFollow()">Follow</button>
+                    <button id="like-btn" class="interaction-button" onclick="handleLike()">Upvote</button>
+                    <button id="dislike-btn" class="interaction-button" onclick="handleDisLike()">Downvote</button>
+                </div>
+                <div class="votes-section">
+                    <div>Upvoted by <span id="upvotes-count">{{ num_upvotes }}</span></div>
+                    <div>Downvoted by <span id="downvotes-count">{{ num_downvotes }}</span></div>
+                </div>
+            </div>
 
-            <div class="add-comment">
-                <form method="post" action="{% url 'myapp:add_comment' page.page_id %}">
-                    {% csrf_token %}
-                    <textarea name="text" rows="4" placeholder="Add a comment..."></textarea>
-                    <button type="submit">Submit</button>
-                </form>
+            <div class="comments-section">
+                <h2>Comments</h2>
+                {% for comment in page_comments|slice:":10" %}
+                    <div class="comment">
+                        <div class="author">{{ comment.user_name }}</div>
+                        <p>{{ comment.comment }}</p>
+                    </div>
+                {% empty %}
+                    <p>No comments yet. Be the first to comment!</p>
+                {% endfor %}
+
+                <div class="add-comment">
+                    <form method="post" action="{% url 'myapp:add_comment' page.page_id %}">
+                        {% csrf_token %}
+                        <textarea name="text" rows="4" placeholder="Add a comment..."></textarea>
+                        <button type="submit">Submit</button>
+                        <br>
+                        <br>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-
+    <br>
+    <br>
+    <br>
+    <br>
     <script>
+        let upvoted = false;
+        let downvoted = false;
+        let followed = false; // Add a state for follow
+
         function handleLike() {
             const pageId = {{ page.page_id }};
-            fetch(`/page/${pageId}/like/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}',
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert(`Page upvoted! Total likes: ${data.upvote}`);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+            const likeBtn = document.getElementById('like-btn');
+
+            if (!upvoted) {
+                fetch(`/page/${pageId}/like/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    likeBtn.classList.add('disabled');
+                    upvoted = true;
+                    document.getElementById('upvotes-count').textContent = data.likes;
+                    alert(`Page upvoted! Total likes: ${data.likes}`);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            } else {
+                fetch(`/page/${pageId}/unlike/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    likeBtn.classList.remove('disabled');
+                    upvoted = false;
+                    document.getElementById('upvotes-count').textContent = data.likes;
+                    alert(`Page unvoted! Total likes: ${data.likes}`);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
         }
 
-        function handleComment() {
-            document.querySelector('.add-comment textarea').focus();
+        function handleDisLike() {
+            const pageId = {{ page.page_id }};
+            const dislikeBtn = document.getElementById('dislike-btn');
+
+            if (!downvoted) {
+                fetch(`/page/${pageId}/dislike/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    dislikeBtn.classList.add('disabled');
+                    downvoted = true;
+                    document.getElementById('downvotes-count').textContent = data.dislikes;
+                    alert(`Page downvoted! Total downvotes: ${data.dislikes}`);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            } else {
+                fetch(`/page/${pageId}/undislike/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    dislikeBtn.classList.remove('disabled');
+                    downvoted = false;
+                    document.getElementById('downvotes-count').textContent = data.dislikes;
+                    alert(`Page undisliked! Total downvotes: ${data.dislikes}`);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
         }
 
-        function handleShare() {
-            alert('Downvote button clicked!');
-            // Add your share functionality here
+        function handleFollow() {
+            const pageId = {{ page.page_id }};
+            const followBtn = document.getElementById('follow-btn');
+
+            if (!followed) {
+                fetch(`/page/${pageId}/follow/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    followBtn.textContent = 'Followed';
+                    followBtn.classList.add('disabled');
+                    followed = true;
+                    alert(`Page followed!`);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            } else {
+                fetch(`/page/${pageId}/unfollow/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    followBtn.textContent = 'Follow';
+                    followBtn.classList.remove('disabled');
+                    followed = false;
+                    alert(`Page unfollowed!`);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
         }
     </script>
-
 {% endblock %}

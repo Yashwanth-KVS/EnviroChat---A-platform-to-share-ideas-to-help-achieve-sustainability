@@ -12,7 +12,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .forms import UserRegisterForm, PageCreateForm
 from django.http import JsonResponse
-from .models import Member, Pages, Pages_comments
+from .models import Member, Pages, Pages_comments, Pages_followers
 from django.shortcuts import render
 
 import datetime
@@ -156,14 +156,45 @@ def view_pages(request):
 
 def go_to_single_page(request, page_id):
     page = Pages.objects.get(pk=page_id)
-    return render(request, 'go_to_selected_page.html', {'page': page})
+    print(page)
+    page_filtered_comments = []
+    num_upvotes = 0
+    num_downvotes = 0
+    page_comments = Pages_comments.objects.filter(page_id = page_id).values()
+    for single_page in page_comments:
+        if single_page['comment']:
+            page_filtered_comments.append(single_page)
+            print(single_page)
+            user_name = Member.objects.get(pk = single_page['user_id_id']).first_name
+            single_page['user_name'] = user_name
+        if single_page['upvote'] == 0:
+            num_upvotes += 1
+        if single_page['downvote'] == 0:
+            num_downvotes += 1
+    return render(request, 'go_to_selected_page.html', {'page': page, 'page_comments': page_filtered_comments, 'num_upvotes':num_upvotes, 'num_downvotes':num_downvotes})
 
 
 def like_page(request, page_id):
     page = get_object_or_404(Pages, pk=page_id)
-    page.upvote += 1
-    page.save()
-    return JsonResponse({'likes': page.upvote})
+    author = Member.objects.get(pk=1)
+    num_upvotes = 0
+    Pages_comments.objects.create(page_id=page, user_id=author, upvote=0)
+    pages_likes = Pages_comments.objects.filter(page_id = page_id).values()
+    for page_com in pages_likes:
+        if page_com['upvote'] == 0:
+            num_upvotes += 1
+    return JsonResponse({'likes': num_upvotes})
+
+def dislike_page(request, page_id):
+    page = get_object_or_404(Pages, pk=page_id)
+    author = Member.objects.get(pk=1)
+    num_downvotes = 0
+    Pages_comments.objects.create(page_id=page, user_id=author, upvote=0)
+    pages_likes = Pages_comments.objects.filter(page_id = page_id).values()
+    for page_com in pages_likes:
+        if page_com['downvote'] == 0:
+            num_downvotes += 1
+    return JsonResponse({'dislikes': num_downvotes})
 
 def add_comment(request, page_id):
     page = get_object_or_404(Pages, pk=page_id)
@@ -175,3 +206,12 @@ def add_comment(request, page_id):
         # comment_id = int(str(author.user_id)+str(page.page_id))
         Pages_comments.objects.create(page_id=page, user_id=author, comment=comment)
     return redirect('myapp:go_to_single_page', page_id=page.page_id)
+
+def follow_page(request, page_id):
+    page = get_object_or_404(Pages, pk=page_id)
+    if request.method == 'POST':
+        author = Member.objects.get(pk=1)
+        Pages_followers.objects.create(page_id=page, follower_id=author)
+        num_pages_followers = Pages_followers.objects.filter(page_id=page).values()
+        followed_by = num_pages_followers.count()
+        return JsonResponse({'followed by': followed_by})

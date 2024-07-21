@@ -93,7 +93,7 @@ class Pages(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return str(self.title)
+        return str(self.page_id)
 
 
 
@@ -106,15 +106,16 @@ class Pages_comments(models.Model):
     pages_comment_id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(to=Member, on_delete=models.CASCADE, null=True, blank=True)
     comment = models.TextField()
-    upvote = models.IntegerField(choices=choices, default=0)
-    downvote = models.IntegerField(choices=choices, default=0)
+    upvote = models.IntegerField(choices=choices, default=1)
+    downvote = models.IntegerField(choices=choices, default=1)
 
     def __str__(self):
         return str(self.comment)
 
 
 class Pages_followers(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
+    page_id = models.ForeignKey(to=Pages, on_delete=models.CASCADE, default=202407171858142)
     follower_id = models.ManyToManyField(Member, related_name='followers_pages')
 
     def __str__(self):

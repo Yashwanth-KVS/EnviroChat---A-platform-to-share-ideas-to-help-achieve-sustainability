@@ -1,4 +1,8 @@
 /* styles.css */
+@import "myapp/static";
+@import url('about.css');
+@import url("profile.css");
+@import url("notification.css");
 @keyframes scale-up {
     0% {
         transform: scale(1);
@@ -20,6 +24,19 @@
     align-content: center;
 }
 
+
+
+/*.btn-custom.active {*/
+/*    background-color: #28a745;*/
+/*    color: #fff;*/
+/*}*/
+
+.offcanvas-body .btn-custom.active {
+    background-color: #28a745 !important; /* Green background on active */
+    color: #fff !important; /* White text color on active */
+    border-color: #28a745 !important; /* Green border on active */
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -33,9 +50,126 @@
     animation: fadeIn 1s ease-in-out;
 }
 
-blockquote {
+.blockquote {
     animation: fadeIn 1s ease-in-out;
 }
+
+.card {
+            margin-bottom: 20px;
+
+        }
+
+/*@keyframes float-horizontal {*/
+/*    0% {*/
+/*        transform: translateX(0px);*/
+/*    }*/
+/*    50% {*/
+/*        transform: translateX(10px);*/
+/*    }*/
+/*    100% {*/
+/*        transform: translateX(0px);*/
+/*    }*/
+/*    }*/
+/*    .card {*/
+/*        animation: float-horizontal 3s ease-in-out infinite;*/
+/*        transition: transform 0.3s;*/
+/*        align-content: center;*/
+/*        justify-content: center;*/
+/*        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); !* Default shadow *!*/
+/*    }*/
+/*    .card:hover {*/
+/*        transform: translateX(15px);*/
+/*        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); !* Shadow on hover *!*/
+/*    }*/
+/*    .goals-card {*/
+/*            background-color: forestgreen; !* Change card background to green *!*/
+/*            color: white; !* Change text color to white *!*/
+/*        }*/
+/*    .goals-card .card-title,*/
+/*    .goals-card .card-text {*/
+/*        color: whitesmoke; !* Ensure all text within the card is white *!*/
+/*    }*/
+
+ @keyframes float-horizontal {
+            0% { transform: translateX(0px); }
+            50% { transform: translateX(10px); }
+            100% { transform: translateX(0px); }
+        }
+        .goals-card {
+            animation: float-horizontal 3s ease-in-out infinite;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Default shadow */
+            background-color: green; /* Change card background to green */
+            color: white; /* Change text color to white */
+            padding: 20px; /* Add padding to the card */
+            border-radius: 8px;
+        }
+        .goals-card:hover {
+            transform: translateX(15px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Shadow on hover */
+        }
+        .goals-card .card-title,
+        .goals-card .card-text {
+            color: white; /* Ensure all text within the card is white */
+        }
+
+.offcanvas-body .btn-custom {
+    display: block; /* Ensure buttons stack vertically */
+    margin-bottom: 1rem; /* Add space between buttons */
+    background-color: transparent; /* Transparent background by default */
+    border: 1px solid transparent; /* Transparent border */
+    color: #000; /* Default text color */
+    text-align: center; /* Center align text */
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Smooth transition for hover effect */
+    /*width: 100%; !* Full width *!*/
+    /*padding: 1rem; !* Add some padding *!*/
+}
+
+.offcanvas-body .btn-custom:hover {
+    background-color: #28a745; /* Green background on hover */
+    color: #fff; /* White text color on hover */
+    border-color: #28a745; /* Green border on hover */
+}
+
+.offcanvas-body .btn-custom:focus {
+    outline: none; /* Remove default outline on focus */
+}
+
+.collapse .card-body {
+    border: none; /* Remove border from card body */
+    align-content: center;
+    padding: 0.5rem 0; /* Add padding to card body */
+}
+
+.input-group {
+    max-width: 500px; /* Set maximum width for search input group */
+    margin: 0 auto; /* Center align input group */
+}
+
+.input-group .form-control {
+    border-radius: 0; /* Remove border radius from input */
+}
+
+.input-group .btn-success {
+    border-radius: 0; /* Remove border radius from button */
+}
+
+.btn-success {
+    background-color: forestgreen !important; /* Light green */
+    color: whitesmoke !important;
+    border: none !important;
+}
+
+.btn-success:hover {
+    background-color: forestgreen !important; /* Slightly darker green on hover */
+}
+/*body {*/
+/*    background-image: url('dreamstime_m_16461382.jpg'); !* Replace with the path to your image *!*/
+/*    background-size: cover; !* Ensures the image covers the entire viewport *!*/
+/*    background-position: center; !* Centers the image *!*/
+/*    background-repeat: no-repeat; !* Prevents the image from repeating *!*/
+/*    background-attachment: fixed; !* Keeps the image fixed in place *!*/
+/*}*/
 
 /*footer {*/
 /*    background-color: #333;*/
@@ -84,21 +218,45 @@ blockquote {
 /*.footer-links a:hover {*/
 /*    text-decoration: underline;*/
 /*}*/
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content {
+    flex: 1;
+    padding-bottom: 60px; /* Adjust based on the height of your footer */
+}
+body {
+    padding-bottom: 60px; /* Adjust based on the height of your footer */
+    display: flex;
+    flex-direction: column;
+}
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 
 footer {
     background-color: #333;
     color: white;
-    padding: 10px 20px;
-    position: fixed;
+    padding: 10px 0;
+    position: relative;
+    z-index: 1;
     left: 0;
     bottom: 0;
     width: 100%;
 }
 
 .footer-content {
-
+    margin: 5px 0;
     display: flex;
     justify-content: space-between;
+
     align-items: center;
 }
 
@@ -144,3 +302,61 @@ footer {
     right: 20px;
     gap: 10px; /* Optional: Adds spacing between buttons */
 }
+
+.u-container {
+        margin: 0 auto;
+        max-width: 1280px;
+        padding: 0 16px;
+    }
+
+.app-trending-row {
+            display: grid;
+            grid-column-gap: 16px;
+            grid-template-columns: repeat(2, 1fr);
+            row-gap: 16px;
+        }
+
+.app-trending-row__link {
+        color: inherit;
+        display: block;
+    }
+
+article {
+    display: block;
+    unicode-bidi: isolate;
+}
+
+.cont {
+            display: flex;
+            justify-content: space-between;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+.colms {
+            width: 45%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/*.grid-container {*/
+/*  display: grid;*/
+/*  grid-template-columns: auto auto auto auto;*/
+/*  gap: 10px;*/
+/*  background-color: #2196F3;*/
+/*  padding: 10px;*/
+/*}*/
+
+/*.grid-container > div {*/
+/*  background-color: rgba(255, 255, 255, 0.8);*/
+/*  text-align: center;*/
+/*  padding: 20px 0;*/
+/*  font-size: 30px;*/
+/*}*/

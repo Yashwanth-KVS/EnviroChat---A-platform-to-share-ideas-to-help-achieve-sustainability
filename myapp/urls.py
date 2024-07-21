@@ -13,5 +13,7 @@ urlpatterns = [
     path('view_pages/', views.view_pages, name='view_pages'),
     path('view_single_page<int:page_id>/', views.go_to_single_page, name='go_to_single_page'),
     path('add_comment/<int:page_id>/', views.add_comment, name='add_comment'),
-
+    path('page/<int:page_id>/like/', views.like_page, name='like_page'),
+    path('page/<int:page_id>/dislike/', views.dislike_page, name='dislike_page'),
+    path('page/<int:page_id>/follow/', views.follow_page, name='follow_page'),
 ]
