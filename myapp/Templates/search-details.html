@@ -1,5 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
+
+{% block content %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,14 +37,22 @@
 <body>
     <div class="container mt-5">
         <div class="card">
-            <img src="{{ member.cover_picture.url }}" alt="Cover Picture" class="card-img-top cover-picture">
+            <!-- Cover Picture -->
+            <img src="{{ member.cover_picture.url }}" alt="Cover Picture" class="card-img-top cover-picture" onerror="this.onerror=null; this.src='/path/to/default-cover.jpg'">
+            <!-- Debugging URL -->
+            <p>Cover Picture URL: {{ member.cover_picture.url }}</p>
             <div class="card-body text-center">
-                <img src="{{ member.profile_picture.url }}" alt="Profile Picture" class="profile-picture img-thumbnail">
+                <!-- Profile Picture -->
+                <img src="{{ member.profile_picture.url }}" alt="Profile Picture" class="profile-picture img-thumbnail" onerror="this.onerror=null; this.src='/path/to/default-profile.jpg'">
+                <!-- Debugging URL -->
+                <p>Profile Picture URL: {{ member.profile_picture.url }}</p>
+                <!-- User Details -->
                 <h2 class="card-title mt-3">{{ member.username }}</h2>
                 <p class="card-text">{{ member.email_id }}</p>
                 <p class="card-text"><strong>Date of Birth:</strong> {{ member.dob }}</p>
                 <p class="card-text"><strong>Interests:</strong> {{ member.interests }}</p>
                 <p class="card-text"><strong>Joined:</strong> {{ member.created_at }}</p>
+                <!-- Follow Button -->
                 <button class="btn btn-primary follow-btn">Follow</button>
             </div>
         </div>
@@ -53,4 +62,4 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-</html>
+{% endblock %}
