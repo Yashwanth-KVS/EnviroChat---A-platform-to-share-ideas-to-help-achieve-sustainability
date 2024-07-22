@@ -2,6 +2,7 @@ import uuid
 from datetime import datetime
 
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.http import StreamingHttpResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.urls import reverse, reverse_lazy
@@ -35,6 +36,7 @@ from .video import VideoCamera
 
 logger = logging.getLogger(__name__)
 
+
 def register(request):
     logger.debug("Register view called")
     if request.method == 'POST':
@@ -52,6 +54,7 @@ def register(request):
         form = UserRegisterForm()
     return render(request, 'register.html', {'form': form})
 
+
 def user_login(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -59,10 +62,11 @@ def user_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('myapp:dashboard')
+            return redirect('myapp:home')
         else:
             messages.error(request, 'Invalid username or password')
     return render(request, 'login.html')
+
 
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     template_name = 'password_reset_confirm.html'
@@ -71,6 +75,7 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     def form_valid(self, form):
         messages.success(self.request, 'Your password was successfully changed.')
         return super().form_valid(form)
+
 
 class CustomPasswordResetView(PasswordResetView):
     template_name = 'password_reset.html'
@@ -229,6 +234,7 @@ def create_pages(request):
         return render(request, template_name='create_page.html', context={'form': form})
 
 
+@login_required(login_url='/login/')
 def view_pages(request):
     if request.method == 'GET':
         pages = Pages.objects.all().order_by('-updated_at')
@@ -454,3 +460,32 @@ def add_comment_videos(request, video_id):
         # comment_id = int(str(author.user_id)+str(page.page_id))
         Video_comments.objects.create(video_id=video, user_id=author, comment=comment)
     return redirect('myapp:video_detail', video_id=video.video_id)
+
+
+@login_required
+def dashboard(request):
+    return render(request, 'dashboard.html')
+
+
+def search_list(request):
+    return render(request, 'search.html')
+
+
+def search_name(request):
+    query = request.GET.get('search', '')
+    objs = Member.objects.filter(username__startswith=query)
+    payload = []
+    for obj in objs:
+        payload.append({
+            'id': obj.id,
+            'name': obj.username
+        })
+    return JsonResponse({
+        'status': True,
+        'payload': payload
+    })
+
+
+def search_detail(request, id):
+    mem = get_object_or_404(Member, id=id)
+    return render(request, "search-details.html", {"member": mem})

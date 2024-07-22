@@ -1,5 +1,5 @@
 /* styles.css */
-@import "myapp/static";
+/*@import "myapp/static";*/
 @import url('about.css');
 @import url("profile.css");
 @import url("notification.css");
@@ -245,11 +245,13 @@ footer {
     background-color: #333;
     color: white;
     padding: 10px 0;
-    position: relative;
+    position: sticky;
     z-index: 1;
     left: 0;
     bottom: 0;
     width: 100%;
+    flex-shrink: 0;
+    margin-top:auto;
 }
 
 .footer-content {

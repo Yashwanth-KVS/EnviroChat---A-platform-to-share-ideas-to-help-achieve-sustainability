@@ -16,7 +16,7 @@ class Member(User):
     interests = models.TextField(blank=True)
 
     def __str__(self):
-        return str(self.user_id)
+        return str(self.username)
 
 
 class Followers(models.Model):
@@ -25,12 +25,12 @@ class Followers(models.Model):
         (2, 'Following'),
     ]
     id = models.AutoField(primary_key=True)
-    follower = models.ForeignKey(Member, related_name='followers', on_delete=models.CASCADE)
-    followee = models.ForeignKey(Member, related_name='following', on_delete=models.CASCADE)
-    status = models.IntegerField(choices=STATUS_CHOICES)
+    follower_id = models.ForeignKey(Member, related_name='followers', on_delete=models.CASCADE)
+    followee_id = models.ForeignKey(Member, related_name='following', on_delete=models.CASCADE)
+    request_id = models.ManyToManyField(Member, related_name='requests')
 
     def __str__(self):
-        return f'Follower: {self.follower.username}, Followee: {self.followee.username}'
+        return str(self.follower_id)
 
 
 class Feeds(models.Model):

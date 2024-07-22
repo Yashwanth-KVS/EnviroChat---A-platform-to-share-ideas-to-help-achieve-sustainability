@@ -65,11 +65,11 @@
                                                                                                            style="padding-right: 10px">Upload</span>My Uploads</a></li>
                                 <li><a class="dropdown-item py-2 d-flex align-items-center" href="#"><span class="material-symbols-outlined"
                                                                                                            style="padding-right: 10px">History</span>Login History</a></li>
-                                <li><a class="dropdown-item py-2 d-flex align-items-center" href="#"><span class="material-symbols-outlined"
+                                <li><a class="dropdown-item py-2 d-flex align-items-center" href="{% url 'myapp:search' %}"><span class="material-symbols-outlined"
                                                                                                            style="padding-right: 10px">search</span>Search</a></li>
                                 <li><a class="dropdown-item py-2 d-flex align-items-center" href="#"><span class="material-symbols-outlined"
                                                                                                            style="padding-right: 10px">lock_reset</span>Reset Password</a></li>
-                                <li><a class="dropdown-item py-2 d-flex align-items-center" href="#"><span class="material-symbols-outlined"
+                                <li><a class="dropdown-item py-2 d-flex align-items-center" href="{% url 'myapp:logout' %}"><span class="material-symbols-outlined"
                                                                                                            style="padding-right: 10px">Logout</span>SignOut</a></li>
                             </ul>
                         </div>
@@ -132,7 +132,7 @@
                 <button type="submit" style="width: 100%;" class="btn transparent-btn align-center " value="Done">Contribute</button></a>
             <a href="#" class="btn btn-custom w-100">
                 <button type="submit" style="width: 100%;" class="btn transparent-btn align-center " value="Done">Search</button></a>
-            <a href="#" class="btn btn-custom w-100">
+            <a href="{% url 'myapp:login' %}" class="btn btn-custom w-100">
                 <button type="submit" style="width: 100%;" class="btn transparent-btn align-center " value="Done">Login/Register</button></a>
         </div>
     </div>
