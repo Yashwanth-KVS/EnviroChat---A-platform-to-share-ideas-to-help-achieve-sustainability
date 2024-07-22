@@ -5,14 +5,96 @@
 {% load static %}
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EnviroChat-Home</title>
+{#    #}
 </head>
 
 {% block body_block %}
 
 {#    <p>Sharing Ideas for Shaping a Sustainable Future</p>#}
 {#    <div class="container">#}
-    <div style="font-size: 5vw;text-align: center;font-family: Forte,sans-serif;">
+{#    <<div class="carousel-container">#}
+{#        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">#}
+{#            <div class="carousel-inner">#}
+{#                <div class="carousel-item active">#}
+{#                    <img src="{% static 'earth-day-slide-sample1.jpg' %}" class="d-block w-100" alt="Image 1">#}
+{#                </div>#}
+{#                <div class="carousel-item">#}
+{#                    <img src="{% static 'dreamstime_m_16461382.jpg' %}" class="d-block w-100" alt="Image 2">#}
+{#                </div>#}
+{#                <div class="carousel-item">#}
+{#                    <img src="image3.jpg" class="d-block w-100" alt="Image 3">#}
+{#                </div>#}
+{#                <div class="carousel-item">#}
+{#                    <img src="image4.jpg" class="d-block w-100" alt="Image 4">#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#    <div class="slideshow-container">#}
+{##}
+{#<div class="mySlides fade">#}
+{#  <div class="numbertext">1 / 3</div>#}
+{#  <img src="{% static 'earth-day-slide-sample1.jpg' %}" style="width:100%; height: 30%" alt="image1">#}
+{#  <div class="text">Caption Text</div>#}
+{#</div>#}
+{##}
+{#<div class="mySlides fade">#}
+{#  <div class="numbertext">2 / 3</div>#}
+{#  <img src="{% static 'dreamstime_m_16461382.jpg' %}" style="width:100%" alt="image">#}
+{#  <div class="text">Caption Two</div>#}
+{#</div>#}
+{##}
+{#<div class="mySlides fade">#}
+{#  <div class="numbertext">3 / 3</div>#}
+{#  <img src="img_mountains_wide.jpg" style="width:100%">#}
+{#  <div class="text">Caption Three</div>#}
+{#</div>#}
+{##}
+{#</div>#}
+{#<br>#}
+{##}
+{#<div style="text-align:center">#}
+{#  <span class="dot"></span>#}
+{#  <span class="dot"></span>#}
+{#  <span class="dot"></span>#}
+{#</div>#}
+{##}
+{#<script>#}
+{#let slideIndex = 0;#}
+{#showSlides();#}
+{##}
+{#function showSlides() {#}
+{#  let i;#}
+{#  let slides = document.getElementsByClassName("mySlides");#}
+{#  let dots = document.getElementsByClassName("dot");#}
+{#  for (i = 0; i < slides.length; i++) {#}
+{#    slides[i].style.display = "none";#}
+{#  }#}
+{#  slideIndex++;#}
+{#  if (slideIndex > slides.length) {slideIndex = 1}#}
+{#  for (i = 0; i < dots.length; i++) {#}
+{#    dots[i].className = dots[i].className.replace(" active", "");#}
+{#  }#}
+{#  slides[slideIndex-1].style.display = "block";#}
+{#  dots[slideIndex-1].className += " active";#}
+{#  setTimeout(showSlides, 2000); // Change image every 2 seconds#}
+{#}#}
+{#</script>#}
+    <div class="container mt-4 divider2"></div>
+    <div class="d-flex justify-content-center align-items-center vh-100 ">
+{#            <div class="carousel-inner">#}
+{#                <div class="image-container2">#}
+{#                    <div class="carousel-item active">#}
+                        <div class="image-container2">
+                            <img src="{% static 'earth-day-slide-sample1.jpg' %}" class="img-fluid w-100" alt="test" style="align-content: center !important;
+                        width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+
+    </div>
+    </div>
+    <div style="font-size: 5vw;text-align: center;font-family: Forte,sans-serif;padding-top: 10px;  ">
         <h2>Welcome to EnviroChat</h2>
     </div>
     <div style="text-align: center">
@@ -22,6 +104,7 @@
         — William Ruto, President of Kenya
     </blockquote>
     </div>
+
 
 {#    <div class="u-container">#}
 {#        <h2 style="font-size: 2vw;text-align: center;font-family: Forte,sans-serif" >Trending</h2>#}
@@ -209,6 +292,14 @@
         }
 
         setInterval(changeQuote, 5000);
+    </script>
+    <script>
+        // Ensure the carousel slides every 5 seconds
+        const myCarousel = document.getElementById('carouselExample');
+        const carousel = new bootstrap.Carousel(myCarousel, {
+            interval: 5000,
+            ride: 'carousel'
+        });
     </script>
 
 

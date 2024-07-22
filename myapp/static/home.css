@@ -1,0 +1,68 @@
+/*.carousel {*/
+/*    width: 100%;*/
+/*    position: fixed;*/
+/*    top: 60px; !* Adjust based on the height of your header *!*/
+/*    left: 0;*/
+/*    overflow: hidden;*/
+/*    z-index: 999;*/
+/*    border: 2px solid #ccc;*/
+/*    border-radius: 10px;*/
+/*    background-color: #fff;*/
+/*}*/
+/*.carousel-container {*/
+/*            position: fixed;*/
+/*            top: 60px; !* Adjust based on the height of your header *!*/
+/*            width: 100%;*/
+/*            height: 300px; !* Set the desired height for the carousel *!*/
+/*            z-index: 999;*/
+/*        }*/
+/*header {*/
+/*            z-index: 1000;*/
+/*        }*/
+
+/*.carousel-inner {*/
+/*    display: flex;*/
+/*    transition: transform 1s ease-in-out;*/
+/*}*/
+
+/*.carousel-item {*/
+/*    min-width: 100%;*/
+/*    transition: transform 1s ease-in-out;*/
+/*}*/
+/*.carousel-inner img {*/
+/*            height: 100%;*/
+/*            object-fit: cover;*/
+/*        }*/
+/*.carousel img {*/
+/*    !*width: 100%;*!*/
+/*    border-radius: 10px;*/
+/*}*/
+/*.content {*/
+/*            margin-top: 360px; !* Adjust based on the height of the header and carousel *!*/
+/*            text-align: center;*/
+/*            padding: 20px;*/
+/*        }*/
+ .divider2 {
+            width: 100%;
+            height: 1px;
+            background-color: forestgreen; /* Change the color as needed */
+            margin-bottom: 20px; /* Adjust the padding as needed */
+            padding-bottom: 1px;
+        }
+
+.image-container2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%; /* Adjust as needed */
+        height: 400px; /* Adjust as needed */
+        margin: auto;
+        /*padding-top: 10px;*/
+    }
+
+    .responsive-img1 {
+        height: 200px; /* Adjust as needed */
+        width: auto;
+        max-width: 100%; /* Ensure the image doesn't overflow the container */
+        display: block;
+    }
