@@ -1,32 +1,290 @@
-{% extends "base.html" %}
+{#{% extends "tweets/base.html" %}#}
+{##}
+{#{% block title %}Post Responses - Enviro Chat{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#<div class="container mt-5">#}
+{#    <h1 class="text-center mb-4">Post Responses</h1>#}
+{#    {% for post in posts %}#}
+{#        <div class="post mb-4 p-3 border rounded shadow-sm">#}
+{#            <div class="post-content">#}
+{#                {% if post.image %}#}
+{#                    <div class="image-container">#}
+{#                        <img src="{{ post.image.url }}" alt="Uploaded Image">#}
+{#                    </div>#}
+{#                {% endif %}#}
+{#                <p class="content-text">{{ post.content }}</p>#}
+{#                {% if post.video %}#}
+{#                    <div class="video-container mt-2">#}
+{#                        <video controls>#}
+{#                            <source src="{{ post.video.url }}" type="video/mp4">#}
+{#                            Your browser does not support the video tag.#}
+{#                        </video>#}
+{#                    </div>#}
+{#                {% endif %}#}
+{#            </div>#}
+{#            <div class="post-buttons mt-3 text-center">#}
+{#                <button class="btn btn-primary">Upvote</button>#}
+{#                <button class="btn btn-secondary">Downvote</button>#}
+{#            </div>#}
+{#        </div>#}
+{#    {% endfor %}#}
+{#</div>#}
+{#{% endblock %}#}
+
+
+{#VERTICAL SCROLL CODE#}
+{#{% extends "tweets/base.html" %}#}
+{##}
+{#{% block title %}Post Responses - Enviro Chat{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#<div class="container mt-5">#}
+{#    <h1 class="text-center mb-4">Post Responses</h1>#}
+{#    {% for post in posts %}#}
+{#        <div class="post mb-4 p-3 border rounded shadow-sm">#}
+{#            <div class="scroll-container">#}
+{#                {% if post.image %}#}
+{#                    <div class="image-container">#}
+{#                        <img src="{{ post.image.url }}" alt="Uploaded Image">#}
+{#                    </div>#}
+{#                {% endif %}#}
+{#                {% if post.video %}#}
+{#                    <div class="video-container mt-2">#}
+{#                        <video controls>#}
+{#                            <source src="{{ post.video.url }}" type="video/mp4">#}
+{#                            Your browser does not support the video tag.#}
+{#                        </video>#}
+{#                    </div>#}
+{#                {% endif %}#}
+{#            </div>#}
+{#            <p class="content-text">{{ post.content }}</p>#}
+{#            <div class="post-buttons mt-3 text-center">#}
+{#                <button class="btn btn-primary">Upvote</button>#}
+{#                <button class="btn btn-secondary">Downvote</button>#}
+{#            </div>#}
+{#        </div>#}
+{#    {% endfor %}#}
+{#</div>#}
+{#{% endblock %}#}
+
+{#SIDE SCROLL CODE#}
+{#{% extends "tweets/base.html" %}#}
+{##}
+{#{% block title %}Post Responses - Enviro Chat{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#<div class="container mt-5">#}
+{#    <h1 class="text-center mb-4">Post Responses</h1>#}
+{#    {% for post in posts %}#}
+{#        <div class="post mb-4 p-3 border rounded shadow-sm">#}
+{#            <div class="scroll-container">#}
+{#                {% if post.image %}#}
+{#                    <img src="{{ post.image.url }}" alt="Uploaded Image">#}
+{#                {% endif %}#}
+{#                {% if post.video %}#}
+{#                    <video controls>#}
+{#                        <source src="{{ post.video.url }}" type="video/mp4">#}
+{#                        Your browser does not support the video tag.#}
+{#                    </video>#}
+{#                {% endif %}#}
+{#            </div>#}
+{#            <p class="content-text">{{ post.content }}</p>#}
+{#            <div class="post-buttons mt-3 text-center">#}
+{#                <button class="btn btn-primary">Upvote</button>#}
+{#                <button class="btn btn-secondary">Downvote</button>#}
+{#            </div>#}
+{#        </div>#}
+{#    {% endfor %}#}
+{#</div>#}
+{#{% endblock %}#}
+
+
+{#{% extends "tweets/base.html" %}#}
+{##}
+{#{% block title %}Post Responses - Enviro Chat{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#<div class="container mt-5">#}
+{#    <h1 class="text-center mb-4">Post Responses</h1>#}
+{#    {% for content in contents %}#}
+{#        <div class="post mb-4 p-3 border rounded shadow-sm">#}
+{#            <div class="scroll-container">#}
+{#                {% if content.image %}#}
+{#                    <div class="image-container">#}
+{#                        <img src="{{ content.image.url }}" alt="Uploaded Image">#}
+{#                    </div>#}
+{#                {% endif %}#}
+{#                {% if content.video %}#}
+{#                    <div class="video-container mt-2">#}
+{#                        <video controls>#}
+{#                            <source src="{{ content.video.url }}" type="video/mp4">#}
+{#                            Your browser does not support the video tag.#}
+{#                        </video>#}
+{#                    </div>#}
+{#                {% endif %}#}
+{#            </div>#}
+{#            <p class="content-text">{{ content.content }}</p>#}
+{#            <div class="post-buttons mt-3 text-center">#}
+{#                <form action="{% url 'vote' content.id %}" method="post" class="d-inline">#}
+{#                    {% csrf_token %}#}
+{#                    <button type="submit" name="action" value="upvote" class="btn btn-link text-success">#}
+{#                        <i class="fas fa-thumbs-up"></i> {{ content.likes }}#}
+{#                    </button>#}
+{#                </form>#}
+{#                <form action="{% url 'vote' content.id %}" method="post" class="d-inline">#}
+{#                    {% csrf_token %}#}
+{#                    <button type="submit" name="action" value="downvote" class="btn btn-link text-danger">#}
+{#                        <i class="fas fa-thumbs-down"></i> {{ content.dislikes }}#}
+{#                    </button>#}
+{#                </form>#}
+{#            </div>#}
+{#        </div>#}
+{#    {% endfor %}#}
+{#</div>#}
+{#{% endblock %}#}
+
+{#{% extends "tweets/base.html" %}#}
+{##}
+{#{% block title %}Post Responses - Enviro Chat{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#<div class="container mt-5">#}
+{#    <h1 class="text-center mb-4">Post Responses</h1>#}
+{#    {% for post in posts %}#}
+{#        <div class="post mb-4 p-3 border rounded shadow-sm">#}
+{#            <div class="scroll-container">#}
+{#                {% if post.image %}#}
+{#                    <div class="image-container">#}
+{#                        <img src="{{ post.image.url }}" alt="Uploaded Image">#}
+{#                    </div>#}
+{#                {% endif %}#}
+{#                {% if post.video %}#}
+{#                    <div class="video-container mt-2">#}
+{#                        <video controls>#}
+{#                            <source src="{{ post.video.url }}" type="video/mp4">#}
+{#                            Your browser does not support the video tag.#}
+{#                        </video>#}
+{#                    </div>#}
+{#                {% endif %}#}
+{#            </div>#}
+{#            <p class="content-text">{{ post.content }}</p>#}
+{#            <div class="post-buttons mt-3 text-center">#}
+{#                <form action="{% url 'vote' content_id=post.id %}" method="post" class="d-inline">#}
+{#                    {% csrf_token %}#}
+{#                    <button type="submit" name="action" value="upvote" class="btn btn-primary">Upvote {{ post.likes }}</button>#}
+{#                </form>#}
+{#                <form action="{% url 'vote' content_id=post.id %}" method="post" class="d-inline">#}
+{#                    {% csrf_token %}#}
+{#                    <button type="submit" name="action" value="downvote" class="btn btn-secondary">Downvote {{ post.dislikes }}</button>#}
+{#                </form>#}
+{#            </div>#}
+{#        </div>#}
+{#    {% endfor %}#}
+{#</div>#}
+{#{% endblock %}#}
+
+
+{#{% extends "tweets/base.html" %}#}
+{##}
+{#{% block title %}Post Responses - Enviro Chat{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#<div class="container mt-5">#}
+{#    <h1 class="text-center mb-4">Post Responses</h1>#}
+{#    {% for post in posts %}#}
+{#        <div class="post mb-4 p-3 border rounded shadow-sm">#}
+{#            <div class="scroll-container">#}
+{#                {% if post.image %}#}
+{#                    <div class="image-container">#}
+{#                        <img src="{{ post.image.url }}" alt="Uploaded Image">#}
+{#                    </div>#}
+{#                {% endif %}#}
+{#                {% if post.video %}#}
+{#                    <div class="video-container mt-2">#}
+{#                        <video controls>#}
+{#                            <source src="{{ post.video.url }}" type="video/mp4">#}
+{#                            Your browser does not support the video tag.#}
+{#                        </video>#}
+{#                    </div>#}
+{#                {% endif %}#}
+{#            </div>#}
+{#            <p class="content-text">{{ post.content }}</p>#}
+{#            <div class="post-buttons mt-3 text-center">#}
+{#                <form action="{% url 'vote' post.id %}" method="post" class="d-inline">#}
+{#                    {% csrf_token %}#}
+{#                    <button type="submit" name="action" value="upvote" class="btn btn-primary">#}
+{#                        👍 {{ post.likes }}#}
+{#                    </button>#}
+{#                </form>#}
+{#                <form action="{% url 'vote' post.id %}" method="post" class="d-inline">#}
+{#                    {% csrf_token %}#}
+{#                    <button type="submit" name="action" value="downvote" class="btn btn-secondary">#}
+{#                        👎 {{ post.dislikes }}#}
+{#                    </button>#}
+{#                </form>#}
+{#            </div>#}
+{#        </div>#}
+{#    {% endfor %}#}
+{#</div>#}
+{#{% endblock %}#}
+
+
+<!-- templates/tweets/post_responses.html -->
+{% extends "tweets/base.html" %}
 
 {% block title %}Post Responses - Enviro Chat{% endblock %}
 
 {% block content %}
-    <h1>Post Responses</h1>
-    {% for post in posts %}
-        <div class="post">
-            <div class="post-content">
-                <p>{{ post.content }}</p>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Post Responses</h1>
+    <div class="scroll-container">
+        {% for post in posts %}
+            <div class="post">
+                <h5>Post #{{ post.id }}</h5>
                 {% if post.image %}
-                    <img src="media/{{ post.image.url }}" alt="Uploaded Image">
+                    <div class="image-container">
+                        <img src="{{ post.image.url }}" alt="Uploaded Image">
+                    </div>
                 {% endif %}
                 {% if post.video %}
-                    <video controls>
-                        <source src="{{ post.video.url }}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+                    <div class="video-container mt-2">
+                        <video controls>
+                            <source src="{{ post.video.url }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
                 {% endif %}
+                <p class="content-text">{{ post.content }}</p>
+                <div class="post-buttons text-center">
+                    <button class="btn btn-primary" onclick="vote('{{ post.id }}', 'upvote')">
+                        👍 <span id="likes-{{ post.id }}">{{ post.likes }}</span>
+                    </button>
+                    <button class="btn btn-secondary" onclick="vote('{{ post.id }}', 'downvote')">
+                        👎 <span id="dislikes-{{ post.id }}">{{ post.dislikes }}</span>
+                    </button>
+                </div>
             </div>
-            <div class="post-buttons">
-                <button>Upvote</button>
-                <button>Downvote</button>
-            </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+function vote(contentId, action) {
+    fetch(`/vote/${contentId}/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}',
+        },
+        body: JSON.stringify({ action: action }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById(`likes-${contentId}`).innerText = data.likes;
+        document.getElementById(`dislikes-${contentId}`).innerText = data.dislikes;
+    })
+    .catch(error => console.error('Error:', error));
+}
+</script>
 {% endblock %}
-
-
-
-
-

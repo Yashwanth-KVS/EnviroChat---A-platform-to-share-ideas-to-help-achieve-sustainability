@@ -13,6 +13,10 @@ from .forms import ContentUploadForm
 from django.shortcuts import render, redirect
 from .forms import ContentUploadForm
 from .models import MediaContent
+from django.shortcuts import get_object_or_404, redirect
+from django.views import View
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views import View
 
 
 def User_post(request):
@@ -23,22 +27,39 @@ def User_post(request):
         form = ContentUploadForm(request.POST, request.FILES)
 
         if form.is_valid():
+            new_post = form.save(commit=False)
             print(form.cleaned_data['content'])
             print(form.cleaned_data['image'])
             print("entered valid")
-            media_content = MediaContent(
-                content=form.cleaned_data['content'],
-                image=form.cleaned_data.get('image'),
-                video=form.cleaned_data.get('video')
-            )
-            print(media_content)
-            media_content.save()
+            # media_content = MediaContent(
+            #     content=form.cleaned_data['content'],
+            #     image=form.cleaned_data.get('image'),
+            #     video=form.cleaned_data.get('video')
+            # )
+            # print(media_content)
+            # media_content.save()
+            new_post.save()
 
             return redirect('tweets:post_response')
     else:
         print("entered else")
         form = ContentUploadForm()
     return render(request, 'tweets/User_post.html', {'form': form})
+
+
+class vote(View):
+    @staticmethod
+    def post(request, content_id):
+        content = get_object_or_404(MediaContent, id=content_id)
+        action = request.POST.get('action')
+
+        if action == 'upvote':
+            content.likes += 1
+        elif action == 'downvote':
+            content.dislikes += 1
+
+        content.save()
+        return redirect('post_responses')
 
 
 def post_response(request):

@@ -14,6 +14,8 @@ class MediaContent(models.Model):
     content = models.TextField()
     image = models.ImageField(upload_to='images/%y', blank=True, null=True)
     video = models.FileField(upload_to='videos/%y', blank=True, null=True)
+    likes = models.IntegerField(default=0)
+    dislikes = models.IntegerField(default=0)
 
     def __str__(self):
         return f"MediaContent {self.id}"
