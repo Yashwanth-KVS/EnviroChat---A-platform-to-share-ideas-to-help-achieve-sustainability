@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+{% block body_block %}
+	 <section class="d-flex align-items-center justify-content-center flex-column bg-white mt-4">
+        <div class="text-center founders mt-4 mb-4">
+            <h1 style="font-size: 3vw; text-align: center; font-family: Forte, sans-serif;">Know our Team</h1>
+        </div>
+        <div class="container mt-5 mb-5">
+            <div class="row">
+                {% for member in team %}
+                <div class="col-md-3 mb-4">
+                    <div class="card text-center h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ member.name }}</h5>
+                            <p class="card-text"><a href="mailto:{{ member.email }}">{{ member.email }}</a></p>
+                            <p class="card-text"><a href="{{ member.linkedin }}" target="_blank">LinkedIn</a></p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="container text-center mt-3 mb-3">
+            <h2 style="font-size: 2vw; font-family: Forte, sans-serif;">Our Address</h2>
+            <p style="font-size: 1.5vw;">University of Windsor<br>
+                327 Ouellette Avenue<br>
+            Windsor, Ontario, N9A 4J1<br>
+            Canada</p>
+        </div>
+    </section>
+{% endblock %}
+
+
+</html>
