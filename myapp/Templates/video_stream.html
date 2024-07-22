@@ -1,21 +1,45 @@
 {% extends 'base.html' %}
 {% load static %}
 
-<style>
-    .myCanvas {
-        background-image: url("{% url 'myapp:video_feed' %}");
-        /* Adjust other styles as needed */
-    }
-</style>
-
 {% block body_block %}
 
-    <h1>Live Video Stream</h1>
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-title">Live Video Stream</h1>
 
-    <img id="video-stream" src="{{ MEDIA_URL }}{% url 'myapp:video_feed' %}" alt="Live Video Stream" height="500" width="600" >
+            <div class="card-text">
+                <img id="video-stream" class="card-img" src="{{ MEDIA_URL }}{% url 'myapp:video_feed' %}" alt="Live Video Stream">
+            </div>
 
-   <form action="{% url 'myapp:stop_stream' %}" method="post">
-        {% csrf_token %}
-        <input type="submit" value="Stop Stream">
-    </form>
+            <form action="{% url 'myapp:stop_stream' %}" method="post">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-success mt-3" value="Stop Stream"> <!-- Changed btn-danger to btn-success -->
+            </form>
+        </div>
+    </div>
+
+    <style>
+        .card {
+            max-width: 1100px; /* Increased maximum width of the card */
+            margin: 20px auto; /* Center the card horizontally */
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center; /* Center title */
+        }
+        .card-text {
+            text-align: center; /* Center the image within the card */
+        }
+        .card-img {
+            max-width: 100%; /* Ensure image stays within card boundaries */
+            height: auto; /* Maintain aspect ratio */
+            display: block; /* Remove extra space below image */
+            margin: 0 auto; /* Center image horizontally */
+        }
+    </style>
+
 {% endblock %}
