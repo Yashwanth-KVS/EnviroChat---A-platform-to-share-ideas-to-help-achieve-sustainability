@@ -51,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'myapp.middleware.VisitCounterMiddleware'
 ]
 
 ROOT_URLCONF = 'EnviroChat.urls'
@@ -128,3 +129,18 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DEBUG = True
+
+# Default primary key field type
+# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
+LOGIN_URL = 'myapp:login'
+LOGIN_REDIRECT_URL = 'myapp:dashboard'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Email settings for Sendinblue
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'mareddyhimadhar786@gmail.com'
+EMAIL_HOST_PASSWORD = 'vehf qfer hess rwwb'
+DEFAULT_FROM_EMAIL = 'mareddyhimadhar786@gmail.com'

@@ -1,6 +1,5 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
     padding: 20px;
 }
 
@@ -14,14 +13,14 @@ body {
 }
 
 .custom-page-item {
-    background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More noticeable shadow */
     padding: 20px;
-    width: calc(33.33% - 20px); /* Adjust width to fit 3 cards per row */
+    width: calc(45% - 20px); /* Adjust width to make cards smaller */
     box-sizing: border-box;
     margin-bottom: 20px;
     position: relative;
+    background-color: #fff;
 }
 
 .custom-page-item h2 {
@@ -64,6 +63,7 @@ body {
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    text-decoration: none;
 }
 
 .custom-go-to-button:hover {
@@ -73,7 +73,7 @@ body {
 /* Responsive adjustments */
 @media screen and (max-width: 992px) {
     .custom-page-item {
-        width: calc(50% - 20px); /* Adjust width to fit 2 cards per row on medium screens */
+        width: calc(48% - 20px); /* Adjust width to fit 2 cards per row on medium screens */
     }
 }
 

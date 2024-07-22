@@ -1,14 +1,17 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from myapp.models import Pages
+from myapp.models import Pages, Video
+
+
+
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
 
 
 class PageCreateForm(forms.ModelForm):
@@ -21,3 +24,10 @@ class PageCreateForm(forms.ModelForm):
             # content_img = forms.FileField(widget=forms.FileInput(attrs={'class': 'form-control'}))
             # about_page = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}))
             # about_img = forms.FileField(widget=forms.FileInput(attrs={'class': 'form-control'}))
+
+
+class VideoUploadForm(forms.ModelForm):
+    class Meta:
+        model = Video
+        fields = ['Title', 'video']
+        ##labels = {'Title': 'Title', 'video': 'Video'}

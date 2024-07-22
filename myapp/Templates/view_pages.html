@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 
-
+ {% load static %}
 {% block body_block %}
-    {% load static %}
+
     <link rel="stylesheet" type="text/css" href="{% static 'subhram_view_pages.css' %}">
+    <div class="container mt-4">
     <h1>List of Pages</h1>
     <ul class="custom-page-list">
         {% for page in pages %}
@@ -26,4 +27,5 @@
             <li>No pages found.</li>
         {% endfor %}
     </ul>
+    </div>
 {% endblock %}

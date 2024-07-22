@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+
+{% block body_block %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'subhram_view_pages.css' %}">
+<div class="container mt-5">
+    <h1>Uploaded Videos</h1>
+
+    <div class="custom-page-list">
+        {% for video in videos %}
+        <div class="custom-page-item">
+            <a href="{% url 'myapp:video_detail' video.video_id %}" class="custom-page-item-link">
+                <div class="card-body">
+                    <h5 class="custom-page-item-title">{{ video.Title }}</h5>
+                </div>
+                <video id="{{ video.video_id }}" class="custom-page-item-video" width="100%" controls>
+                    <source src="{{ MEDIA_URL }}{{ video.video.url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="custom-page-item-footer">
+                    <form action="{% url 'myapp:delete_video' video.video_id %}" method="post">
+                        {% csrf_token %}
+                        <br>
+                        <br>
+                        <button type="submit" class="custom-go-to-button">Delete</button>
+                    </form>
+                </div>
+
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

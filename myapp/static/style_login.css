@@ -1,0 +1,76 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff; /* Pure white background */
+}
+
+.bg-white {
+    background-color: #ffffff; /* Background color matching the EnviroChat logo */
+}
+
+.login-form-container {
+    background: white;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 400px; /* Make the form wider */
+}
+
+.form-control {
+    background: rgba(255, 255, 255, 1);
+    color: #000;
+    border: 1px solid #ced4da; /* Bootstrap default border color */
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+}
+
+.footer {
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
+    width: 100%;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-content a {
+    color: #007bff;
+}
+
+.footer-content p {
+    margin: 5px 0;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.footer-links a {
+    color: #007bff;
+    text-decoration: none;
+    margin: 0 15px;
+    display: flex;
+    align-items: center;
+}
+
+.footer-links img {
+    width: 30px;
+    height: 30px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}

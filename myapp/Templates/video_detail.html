@@ -10,22 +10,21 @@
         <div class="custom-container">
             <div class="custom-content-wrapper">
                 <div class="custom-page-detail">
-                    <h1>{{ page.title }}</h1>
-                    {% if page.title_img %}
-                        <img src="{{ page.title_img.url }}" alt="Title Image">
-                    {% endif %}
-                    <p>{{ page.content }}</p> <!-- Assuming the Page model has a content field -->
-                    {% if page.content_img %}
-                        <img src="{{ page.content_img.url }}" alt="Content Image">
-                    {% endif %}
-                    <div class="custom-author">
-                        {% if page.about_img %}
-                            <img src="{{ page.about_img.url }}" alt="Author Image">
-                        {% endif %}
-                        <div class="custom-about-content">
-                            <p>{{ page.about_page }}</p>
-                        </div>
-                    </div>
+                    <h1>{{ video.title }}</h1>
+
+                    <video id="{{ video.video_id }}" class="custom-page-item-video" width="100%" controls>
+                    <source src="{{ MEDIA_URL }}{{ video.video.url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                    </video>
+
+{#                    <div class="custom-author">#}
+{#                        {% if page.about_img %}#}
+{#                            <img src="{{ page.about_img.url }}" alt="Author Image">#}
+{#                        {% endif %}#}
+{#                        <div class="custom-about-content">#}
+{#                            <p>{{ page.about_page }}</p>#}
+{#                        </div>#}
+{#                    </div>#}
                     <div class="custom-interaction-buttons">
                         <button id="custom-follow-btn" class="custom-interaction-button" onclick="handleFollow()">Follow</button>
                         <button id="custom-like-btn" class="custom-interaction-button" onclick="handleLike()">Upvote</button>
@@ -49,7 +48,7 @@
                     {% endfor %}
 
                     <div class="custom-add-comment">
-                        <form method="post" action="{% url 'myapp:add_comment' page.page_id %}">
+                        <form method="post" action="{% url 'myapp:add_comment_videos' video_id %}">
                             {% csrf_token %}
                             <textarea name="text" rows="4" placeholder="Add a comment..."></textarea>
                             <button type="submit">Submit</button>
@@ -70,11 +69,11 @@
             let followed = false; // Add a state for follow
 
             function handleLike() {
-                const pageId = {{ page.page_id }};
+                const pageId = {{ video.video_id }};
                 const likeBtn = document.getElementById('custom-like-btn');
 
                 if (!upvoted) {
-                    fetch(`/page/${pageId}/like/`, {
+                    fetch(`/video/${pageId}/like/`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -92,7 +91,7 @@
                         console.error('Error:', error);
                     });
                 } else {
-                    fetch(`/page/${pageId}/unlike/`, {
+                    fetch(`/video/${pageId}/unlike/`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -113,7 +112,7 @@
             }
 
             function handleDisLike() {
-                const pageId = {{ page.page_id }};
+                const pageId = {{ video.video_id }};
                 const dislikeBtn = document.getElementById('custom-dislike-btn');
 
                 if (!downvoted) {

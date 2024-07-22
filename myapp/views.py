@@ -1,7 +1,10 @@
 import uuid
 from datetime import datetime
 
-from django.shortcuts import render, get_object_or_404
+from django.conf import settings
+from django.http import StreamingHttpResponse, HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404, HttpResponse
+from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from .utils import active_sessions_count
 import random
@@ -9,6 +12,7 @@ from datetime import datetime, timedelta
 from django.shortcuts import render
 from django.contrib.sessions.models import Session
 from django.contrib.auth.models import User
+from django.contrib.auth.views import PasswordResetConfirmView, LoginView, PasswordResetView
 
 # Create your views here.
 
@@ -17,25 +21,63 @@ from .models import Followers
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from .forms import UserRegisterForm, PageCreateForm
+from .forms import UserRegisterForm, PageCreateForm, VideoUploadForm
 from django.http import JsonResponse
-from .models import Member, Pages, Pages_comments, Pages_followers, SiteVisit, SessionCount
+from .models import Member, Pages, Pages_comments, Pages_followers, SiteVisit, SessionCount, Video, Video_comments
 from django.shortcuts import render
+from myapp.video import VideoCamera, IPWebCam
 
 import datetime
+from django.http import HttpResponseServerError
+import traceback
+import logging
+from .video import VideoCamera
 
+logger = logging.getLogger(__name__)
 
 def register(request):
+    logger.debug("Register view called")
     if request.method == 'POST':
+        logger.debug("POST request received in register view")
         form = UserRegisterForm(request.POST)
         if form.is_valid():
+            logger.debug("Form is valid in register view")
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created for {username}!')
-            return redirect('login')
+            logger.debug(f"Account created for {username}")
+            return redirect('myapp:login')
     else:
+        logger.debug("GET request received in register view")
         form = UserRegisterForm()
     return render(request, 'register.html', {'form': form})
+
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('myapp:dashboard')
+        else:
+            messages.error(request, 'Invalid username or password')
+    return render(request, 'login.html')
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = 'password_reset_confirm.html'
+    success_url = reverse_lazy('myapp:login')
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Your password was successfully changed.')
+        return super().form_valid(form)
+
+class CustomPasswordResetView(PasswordResetView):
+    template_name = 'password_reset.html'
+    email_template_name = 'password_reset_email.html'
+    subject_template_name = 'password_reset_subject.txt'
+    success_url = reverse_lazy('myapp:password_reset_done')
+    success_message = "Password reset link has been sent to your email."
 
 
 def home(request):
@@ -155,18 +197,16 @@ def contactus(request):
 #     return JsonResponse({'active_sessions': sessions_data})
 
 
-
-
 def create_pages(request):
     if request.method == 'POST':
         form = PageCreateForm(request.POST, request.FILES)
         if form.is_valid():
             new_page = form.save(commit=False)
             now = datetime.datetime.now()
-            user_id = Member.objects.filter(user_id = 1).values_list('id', flat=True)[0]
+            user_id = Member.objects.filter(user_id=1).values_list('id', flat=True)[0]
             print(user_id)
             form.cleaned_data['user_id'] = user_id
-            new_page.page_id = int(now.strftime('%Y%m%d%H%M%S')+str(user_id))#+ form.cleaned_data['user_id'])
+            new_page.page_id = int(now.strftime('%Y%m%d%H%M%S') + str(user_id))  #+ form.cleaned_data['user_id'])
             new_page.save()
             print(new_page.page_id)
             print(form.cleaned_data['user_id'])
@@ -210,18 +250,20 @@ def go_to_single_page(request, page_id):
     page_filtered_comments = []
     num_upvotes = 0
     num_downvotes = 0
-    page_comments = Pages_comments.objects.filter(page_id = page_id).values()
+    page_comments = Pages_comments.objects.filter(page_id=page_id).values()
     for single_page in page_comments:
         if single_page['comment']:
             page_filtered_comments.append(single_page)
             print(single_page)
-            user_name = Member.objects.get(pk = single_page['user_id_id']).first_name
+            user_name = Member.objects.get(pk=single_page['user_id_id']).first_name
             single_page['user_name'] = user_name
         if single_page['upvote'] == 0:
             num_upvotes += 1
         if single_page['downvote'] == 0:
             num_downvotes += 1
-    return render(request, 'go_to_selected_page.html', {'page': page, 'page_comments': page_filtered_comments, 'num_upvotes':num_upvotes, 'num_downvotes':num_downvotes})
+    return render(request, 'go_to_selected_page.html',
+                  {'page': page, 'page_comments': page_filtered_comments, 'num_upvotes': num_upvotes,
+                   'num_downvotes': num_downvotes})
 
 
 def like_page(request, page_id):
@@ -229,22 +271,24 @@ def like_page(request, page_id):
     author = Member.objects.get(pk=1)
     num_upvotes = 0
     Pages_comments.objects.create(page_id=page, user_id=author, upvote=0)
-    pages_likes = Pages_comments.objects.filter(page_id = page_id).values()
+    pages_likes = Pages_comments.objects.filter(page_id=page_id).values()
     for page_com in pages_likes:
         if page_com['upvote'] == 0:
             num_upvotes += 1
     return JsonResponse({'likes': num_upvotes})
 
+
 def dislike_page(request, page_id):
     page = get_object_or_404(Pages, pk=page_id)
     author = Member.objects.get(pk=1)
-    num_downvotes = 0
+    dislikes = 0
     Pages_comments.objects.create(page_id=page, user_id=author, upvote=0)
-    pages_likes = Pages_comments.objects.filter(page_id = page_id).values()
+    pages_likes = Pages_comments.objects.filter(page_id=page_id).values()
     for page_com in pages_likes:
         if page_com['downvote'] == 0:
-            num_downvotes += 1
-    return JsonResponse({'dislikes': num_downvotes})
+            dislikes += 1
+    return JsonResponse({'dislikes': dislikes})
+
 
 def add_comment(request, page_id):
     page = get_object_or_404(Pages, pk=page_id)
@@ -257,6 +301,7 @@ def add_comment(request, page_id):
         Pages_comments.objects.create(page_id=page, user_id=author, comment=comment)
     return redirect('myapp:go_to_single_page', page_id=page.page_id)
 
+
 def follow_page(request, page_id):
     page = get_object_or_404(Pages, pk=page_id)
     if request.method == 'POST':
@@ -265,6 +310,7 @@ def follow_page(request, page_id):
         num_pages_followers = Pages_followers.objects.filter(page_id=page).values()
         followed_by = num_pages_followers.count()
         return JsonResponse({'followed by': followed_by})
+
 
 def check_session(request):
     # Check if the cookie is present
@@ -287,3 +333,124 @@ def check_session(request):
 
     return render(request, 'home.html', {'session_count': session_count})
 
+
+def events(request):
+    if request.method == 'POST':
+        form = VideoUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            title = form.cleaned_data['Title']
+            videos = form.cleaned_data['video']
+            form.save()
+            return HttpResponseRedirect(reverse('myapp:events'))
+        else:
+            return render(request, 'events.html', {'form': form})
+    else:
+        form = VideoUploadForm()
+        return render(request, 'events.html')
+
+
+def myvideos(request):
+    print("myvideos")
+    videos = Video.objects.all()
+    return render(request, 'video.html', {'videos': videos, 'media_url': settings.MEDIA_URL})
+
+
+def delete_video(request, video_id):
+    print('delete_video')
+    video = get_object_or_404(Video, pk=video_id)
+    if request.method == 'POST':
+        video.delete()
+        print('Video deleted')
+        # Optionally, redirect to a different URL after deletion
+        return redirect('myapp:myvideos')
+    # Handle GET request (if any)
+    return redirect('myapp:myvideos')
+
+
+def gen(camera):
+    while True:
+        frame = camera.get_frame()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+
+
+camera = None  # Global variable to hold the camera instance
+
+
+def video_feed(request):
+    global camera
+    try:
+        if camera is None:
+            camera = VideoCamera()  # Initialize the camera if not already initialized
+
+        return StreamingHttpResponse(gen(camera), content_type='multipart/x-mixed-replace; boundary=frame')
+
+    except Exception as e:
+        traceback.print_exc()  # Print traceback to console for debugging
+        return HttpResponseServerError('Internal Server Error')
+
+
+def video_detail(request, video_id):
+    video = Video.objects.filter(video_id=video_id)
+    return render(request, 'video_detail.html', {'video': video, 'media_url': settings.MEDIA_URL})
+
+
+def streaming(request):
+    return render(request, 'video_stream.html')
+
+
+def stop_stream(request):
+    global camera
+    try:
+        if camera is not None:
+            del camera  # Release the camera instance
+            camera = None  # Reset camera variable to None
+        #return render(request, 'home.html')
+        return home(request)
+
+    except Exception as e:
+        print(e)
+        return HttpResponse('Failed to stop stream', status=500)
+
+
+def gen(camera):
+    while True:
+        frame = camera.get_frame()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+
+
+def like_videos(request, video_id):
+    video = get_object_or_404(Video, pk=video_id)
+    author = Member.objects.get(pk=1)
+    num_upvotes = 0
+    Video_comments.objects.create(video_id=video, user_id=author, upvote=0)
+    video_likes = Video_comments.objects.filter(video_id=video_id).values()
+    for page_com in video_likes:
+        if page_com['upvote'] == 0:
+            num_upvotes += 1
+    return JsonResponse({'likes': num_upvotes})
+
+
+def dislike_videos(request, video_id):
+    video = get_object_or_404(Video, pk=video_id)
+    author = Member.objects.get(pk=1)
+    dislikes = 0
+    Video_comments.objects.create(video_id=video, user_id=author, upvote=0)
+    video_likes = Video_comments.objects.filter(video_id=video_id).values()
+    for page_com in video_likes:
+        if page_com['downvote'] == 0:
+            dislikes += 1
+    return JsonResponse({'dislikes': dislikes})
+
+
+def add_comment_videos(request, video_id):
+    video = get_object_or_404(Video, pk=video_id)
+    if request.method == 'POST':
+        comment = request.POST.get('text')
+        # author = request.user.username if request.user.is_authenticated else 'Anonymous'
+        author = Member.objects.get(pk=1)
+        now = datetime.datetime.now()
+        # comment_id = int(str(author.user_id)+str(page.page_id))
+        Video_comments.objects.create(video_id=video, user_id=author, comment=comment)
+    return redirect('myapp:video_detail', video_id=video.video_id)

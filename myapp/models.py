@@ -131,3 +131,27 @@ class SessionCount(models.Model):
     def increment_count(self):
         self.count += 1
         self.save()
+
+class Video(models.Model):
+    Title = models.CharField(max_length=255)
+    video_id = models.IntegerField(primary_key=True)
+    video = models.FileField(upload_to='videos/%Y/%m/%d')
+    uploaded_by = models.ForeignKey(to=Member, on_delete=models.CASCADE, null=True, blank=True, default = 1)
+
+    def __str__(self):
+        return str(self.Title)
+
+class Video_comments(models.Model):
+    choices = [
+        (0, 'Yes'),
+        (1, 'No'),
+    ]
+    video_id = models.ForeignKey(to=Video, on_delete=models.CASCADE)
+    video_comment_id = models.AutoField(primary_key=True)
+    user_id = models.ForeignKey(to=Member, on_delete=models.CASCADE, null=True, blank=True)
+    comment = models.TextField()
+    upvote = models.IntegerField(choices=choices, default=1)
+    downvote = models.IntegerField(choices=choices, default=1)
+
+    def __str__(self):
+        return str(self.comment)
