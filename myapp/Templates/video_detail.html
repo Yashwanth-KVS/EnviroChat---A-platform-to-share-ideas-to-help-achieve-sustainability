@@ -48,7 +48,7 @@
                     {% endfor %}
 
                     <div class="custom-add-comment">
-                        <form method="post" action="{% url 'myapp:add_comment_videos' video_id %}">
+{#                        <form method="post" action="{% url 'myapp:add_comment_videos' video.video_id %}">#}
                             {% csrf_token %}
                             <textarea name="text" rows="4" placeholder="Add a comment..."></textarea>
                             <button type="submit">Submit</button>

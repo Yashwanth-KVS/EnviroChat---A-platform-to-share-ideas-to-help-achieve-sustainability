@@ -7,6 +7,8 @@ from django.http import StreamingHttpResponse, HttpResponse, HttpResponseRedirec
 from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
+from django.views import View
+
 from .utils import active_sessions_count
 import random
 from datetime import datetime, timedelta
@@ -14,6 +16,7 @@ from django.shortcuts import render
 from django.contrib.sessions.models import Session
 from django.contrib.auth.models import User
 from django.contrib.auth.views import PasswordResetConfirmView, LoginView, PasswordResetView
+from django.contrib.auth import logout as auth_logout
 
 # Create your views here.
 
@@ -22,9 +25,10 @@ from .models import Followers
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from .forms import UserRegisterForm, PageCreateForm, VideoUploadForm
+from .forms import UserRegisterForm, PageCreateForm, VideoUploadForm, ContentUploadForm
 from django.http import JsonResponse
-from .models import Member, Pages, Pages_comments, Pages_followers, SiteVisit, SessionCount, Video, Video_comments
+from .models import Member, Pages, Pages_comments, Pages_followers, SiteVisit, SessionCount, Video, Video_comments, Feeds, MediaContent
+
 from django.shortcuts import render
 from myapp.video import VideoCamera, IPWebCam
 
@@ -247,6 +251,7 @@ def view_pages(request):
             print(page.content_img.url)
             print(page.about_img.url)
         # Render the template with the fetched pages
+        print(pages)
         return render(request, 'view_pages.html', {'pages': pages})
 
 
@@ -397,7 +402,7 @@ def video_feed(request):
 
 
 def video_detail(request, video_id):
-    video = Video.objects.filter(video_id=video_id)
+    video = Video.objects.filter(video_id=video_id).values()
     return render(request, 'video_detail.html', {'video': video, 'media_url': settings.MEDIA_URL})
 
 
@@ -452,6 +457,7 @@ def dislike_videos(request, video_id):
 
 def add_comment_videos(request, video_id):
     video = get_object_or_404(Video, pk=video_id)
+    print(video)
     if request.method == 'POST':
         comment = request.POST.get('text')
         # author = request.user.username if request.user.is_authenticated else 'Anonymous'
@@ -459,6 +465,7 @@ def add_comment_videos(request, video_id):
         now = datetime.datetime.now()
         # comment_id = int(str(author.user_id)+str(page.page_id))
         Video_comments.objects.create(video_id=video, user_id=author, comment=comment)
+        print(video.video_id)
     return redirect('myapp:video_detail', video_id=video.video_id)
 
 
@@ -489,3 +496,92 @@ def search_name(request):
 def search_detail(request, id):
     mem = get_object_or_404(Member, id=id)
     return render(request, "search-details.html", {"member": mem})
+
+def feed_view(request):
+    # Query feeds and related objects
+    feed_items = []
+
+    feed_objects = Feeds.objects.all()[:10]  # Fetching top 10 feeds
+
+    for feed in feed_objects:
+        # Fetch related threads, pages, and posts for each feed
+        threads = feed.threads_related.all()[:3]  # Fetching top 3 related threads
+        pages = feed.pages_related.all().values()[:3]  # Fetching top 3 related pages
+        #pages = Pages.objects.all()
+        #posts = feed.posts_related.all()[:3]  # Fetching top 3 related posts
+        print(pages)
+        # Append to feed_items list
+        feed_items.append({
+            'feed': feed,
+            'threads': threads,
+            'pages': pages,
+            #'posts': posts
+        })
+
+    context = {'feed_items': feed_items}
+
+    print(context)
+
+    return render(request, 'feeds.html', context)
+
+
+def User_post(request):
+    print("entered")
+    print(request)
+    if request.method == 'POST':
+        print("entered post")
+        form = ContentUploadForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            new_post = form.save(commit=False)
+            print(form.cleaned_data['content'])
+            print(form.cleaned_data['image'])
+            print("entered valid")
+            # media_content = MediaContent(
+            #     content=form.cleaned_data['content'],
+            #     image=form.cleaned_data.get('image'),
+            #     video=form.cleaned_data.get('video')
+            # )
+            # print(media_content)
+            # media_content.save()
+            new_post.save()
+
+            return redirect('myapp:post_response')
+    else:
+        print("entered else")
+        form = ContentUploadForm()
+    return render(request, 'User_post.html', {'form': form})
+
+
+class vote(View):
+    @staticmethod
+    def post(request, content_id):
+        content = get_object_or_404(MediaContent, id=content_id)
+        action = request.POST.get('action')
+
+        if action == 'upvote':
+            content.likes += 1
+        elif action == 'downvote':
+            content.dislikes += 1
+
+        content.save()
+        return redirect('post_responses')
+
+
+def post_response(request):
+    print("entered post_resp")
+    posts = MediaContent.objects.all()
+    return render(request, 'post_response.html', {'posts': posts})
+
+
+def user_logout(request):
+    if request.method == "POST":
+        auth_logout(request)
+        messages.add_message(
+            request,
+            messages.SUCCESS,
+            "You have successfully logged out !!",
+            extra_tags="success",
+        )
+        return redirect("myapp:login")
+    return redirect("myapp:dashboard")

@@ -1,0 +1,113 @@
+{#{% extends "base.html" %}#}
+{##}
+{#{% block content %}#}
+{#<div class="feed-container">#}
+{#    {% for item in feed_items %}#}
+{#        <div class="feed-item">#}
+{#            <!-- Feed Block -->#}
+{#            <div class="feed-section feed-block">#}
+{#                <h2>{{ item.feed.title }}</h2>#}
+{#            </div>#}
+{##}
+{#            <!-- Threads Block -->#}
+{#            <div class="feed-section threads-block">#}
+{#                <h3>Threads:</h3>#}
+{#                {% if item.threads.count > 0 %}#}
+{#                    <ul>#}
+{#                        {% for thread in item.threads %}#}
+{#                            <li>{{ thread.query }}</li>#}
+{#                        {% endfor %}#}
+{#                    </ul>#}
+{#                {% else %}#}
+{#                    <p>No threads available.</p>#}
+{#                {% endif %}#}
+{#            </div>#}
+{##}
+{#            <!-- Pages Block -->#}
+{#            <div class="feed-section pages-block">#}
+{#                <h3>Pages:</h3>#}
+{#                {% if item.pages %}#}
+{#                    <ul>#}
+{#                        {% for page in item.pages %}#}
+{#                            <li>{{ page }}</li>#}
+{#                        {% endfor %}#}
+{#                    </ul>#}
+{#                {% else %}#}
+{#                    <p>No pages available.</p>#}
+{#                {% endif %}#}
+{#            </div>#}
+{##}
+{#            <!-- Posts Block -->#}
+{#            <div class="feed-section posts-block">#}
+{#                <h3>Posts:</h3>#}
+{#                {% if item.posts %}#}
+{#                    <ul>#}
+{#                        {% for post in item.posts %}#}
+{#                            <li>{{ post.content }}</li>#}
+{#                        {% endfor %}#}
+{#                    </ul>#}
+{#                {% else %}#}
+{#                    <p>No posts available.</p>#}
+{#                {% endif %}#}
+{#            </div>#}
+{#        </div>#}
+{#    {% empty %}#}
+{#        <p>No feeds available.</p>#}
+{#    {% endfor %}#}
+{#</div>#}
+{#{% endblock %}#}
+{% extends "base.html" %}
+{% load static %}
+
+{% block body_block %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bosun-style-sheet.css' %}">
+<div class="feed-container">
+    {% for item in feed_items %}
+        <div class="feed-item">
+            <!-- Feed Block -->
+            <div class="feed-section feed-block">
+                <h2>{{ item.feed.title }}</h2>
+            </div>
+
+            <!-- Threads Block -->
+            <div class="feed-section threads-block">
+                <h3>Threads:</h3>
+                {% if item.threads.count > 0 %}
+                    <ul>
+                        {% for thread in item.threads %}
+                            <li>{{ thread.query }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No threads available.</p>
+                {% endif %}
+            </div>
+
+            <!-- Pages Block -->
+            <div class="feed-section pages-block">
+                <h3>Pages:</h3>
+                {% if item.pages %}
+                    <ul>
+                        {% for page in item.pages %}
+                            <li>
+                                <h4>{{ page.title }}</h4>
+                                <p>{{ page.content }}</p>
+                                <img src="{{ page.title_img.url }}" alt="{{ page.title }}">
+                                <img src="{{ page.content_img.url }}" alt="Content Image">
+                                <p>About: {{ page.about_page }}</p>
+                                <img src="{{ page.about_img.url }}" alt="About Image">
+                                <p>Created At: {{ page.created_at }}</p>
+                                <p>Updated At: {{ page.updated_at }}</p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No pages available.</p>
+                {% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <p>No feeds available.</p>
+    {% endfor %}
+</div>
+{% endblock %}

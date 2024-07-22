@@ -3,7 +3,7 @@ from random import choices
 from django.db import models
 import datetime
 from django.contrib.auth.models import User
-
+from django.utils import timezone
 
 
 class Member(User):
@@ -34,13 +34,59 @@ class Followers(models.Model):
 
 
 class Feeds(models.Model):
-    id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(Member, on_delete=models.CASCADE)
-    updated_at = models.DateTimeField(auto_now=True)
+    # id = models.AutoField(primary_key=True)
+    # user = models.ForeignKey(Member, on_delete=models.CASCADE)
+    # updated_at = models.DateTimeField(auto_now=True)
+    #
+    # def __str__(self):
+    #     return str(self.id)
+    user_id = models.ForeignKey(to=Member, on_delete=models.CASCADE)
+    updated_at = models.DateTimeField(default=timezone.now)
+    threads = models.ManyToManyField('Threads', related_name='feeds_threads', blank=True)
+    pages = models.ManyToManyField('Pages', related_name='feeds_pages', blank=True)
+    posts = models.ManyToManyField('Posts', related_name='feeds_posts', blank=True)
+
+    class Meta:
+        verbose_name_plural = 'Feeds'
 
     def __str__(self):
         return str(self.id)
 
+
+class Threads(models.Model):
+    STATUS_CHOICES = [
+        (1, 'Open'),
+        (2, 'Closed'),
+    ]
+    thread_id = models.AutoField(primary_key=True)
+    user_id = models.ForeignKey(to=Member, on_delete=models.CASCADE)
+    feed = models.ForeignKey(to=Feeds, on_delete=models.CASCADE, related_name="threads_related")  # Only one ForeignKey to Feeds
+    category = models.IntegerField(choices=STATUS_CHOICES, default=1)
+    query = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = 'Threads'
+
+    def __str__(self):
+        return str(self.thread_id)
+
+
+class ThreadComments(models.Model):
+    thread_comment_id = models.AutoField(primary_key=True)
+    user_id = models.ForeignKey(to=Member, on_delete=models.CASCADE)
+    thread_id = models.ForeignKey(to=Threads, on_delete=models.CASCADE, default=1)
+    comment = models.TextField()
+    upvote = models.IntegerField(default=0)
+    downvote = models.IntegerField(default=0)
+    feed = models.ForeignKey(Feeds, on_delete=models.CASCADE, related_name='threads_comments', blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = 'ThreadComments'
+
+    def __str__(self):
+        return str(self.comment)
 
 class Posts(models.Model):
     STATUS_CHOICES = [
@@ -60,12 +106,25 @@ class Posts(models.Model):
         return str(self.id)
 
 
+# class Favorites(models.Model):
+#     id = models.AutoField(primary_key=True)
+#     user = models.ForeignKey(Member, on_delete=models.CASCADE)
+#     post = models.ForeignKey(Posts, on_delete=models.CASCADE)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+#
+#     def __str__(self):
+#         return str(self.id)
+
 class Favorites(models.Model):
     id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(Member, on_delete=models.CASCADE)
-    post = models.ForeignKey(Posts, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(to=Member, on_delete=models.CASCADE)
+    thread_id = models.ForeignKey(to=Threads, on_delete=models.CASCADE, default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = 'Favourites'
 
     def __str__(self):
         return str(self.id)
@@ -91,6 +150,8 @@ class Pages(models.Model):
     about_img = models.FileField(upload_to='about_imgs', default='content_page.jpg')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    feed = models.ForeignKey(Feeds, on_delete=models.CASCADE, related_name='pages_related',
+                             default=1)  # Added default value
 
     def __str__(self):
         return str(self.page_id)
@@ -155,3 +216,16 @@ class Video_comments(models.Model):
 
     def __str__(self):
         return str(self.comment)
+
+class MediaContent(models.Model):
+    content = models.TextField()
+    image = models.ImageField(upload_to='images/%y', blank=True, null=True)
+    video = models.FileField(upload_to='videos/%y', blank=True, null=True)
+    likes = models.IntegerField(default=0)
+    dislikes = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"MediaContent {self.id}"
+
+
+

@@ -1,9 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from myapp.models import Pages, Video
-
-
+from myapp.models import Pages, Video, MediaContent
 
 
 class UserRegisterForm(UserCreationForm):
@@ -31,3 +29,8 @@ class VideoUploadForm(forms.ModelForm):
         model = Video
         fields = ['Title', 'video']
         ##labels = {'Title': 'Title', 'video': 'Video'}
+
+class ContentUploadForm(forms.ModelForm):
+    class Meta:
+        model = MediaContent
+        fields = ['content', 'image', 'video']
