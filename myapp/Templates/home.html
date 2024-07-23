@@ -80,25 +80,90 @@
 {#  slides[slideIndex-1].style.display = "block";#}
 {#  dots[slideIndex-1].className += " active";#}
 {#  setTimeout(showSlides, 2000); // Change image every 2 seconds#}
-{#}#}
+
 {#</script>#}
-    <div class="container mt-4 divider2"></div>
-    <div class="d-flex justify-content-center align-items-center vh-100 ">
+{#    <div class="container mt-4 divider2"></div>#}
+{#    <div class="d-flex justify-content-center align-items-center vh-100 ">#}
 {#            <div class="carousel-inner">#}
 {#                <div class="image-container2">#}
 {#                    <div class="carousel-item active">#}
-                        <div class="image-container2">
-                            <img src="{% static 'earth-day-slide-sample1.jpg' %}" class="img-fluid w-100" alt="test" style="align-content: center !important;
-                        width: 100%; height: 100%; object-fit: cover;">
-                    </div>
+{#                        <div class="image-container2">#}
+{#                            <img src="{% static 'tree-6147402.jpg' %}" class="img-fluid w-100" alt="test" style="align-content: center !important;#}
+{#                        width: 100%; height: 100%; object-fit: cover;">#}
+{#                    </div>#}
+{##}
+{#    </div>#}
+    <div class="carousel-container">
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <!-- Line before the image -->
+{#            <div class="container mt-4 divider2"></div>#}
 
+            <!-- Bootstrap Carousel -->
+            <div id="imageCarousel" class="carousel slide w-100" data-bs-ride="carousel" >
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{% static 'tree-6147402.jpg' %}" class="d-block w-100" alt="Image 1">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'earth-day-slide-sample1.jpg' %}" class="d-block w-100" alt="Image 2">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'demonstration.jpg' %}" class="d-block w-100" alt="Image 3">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'tiger-1560775.jpg' %}" class="d-block w-100" alt="Image 4">
+                    </div>
+                </div>
+{#                <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">#}
+{#                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>#}
+{#                    <span class="visually-hidden">Previous</span>#}
+{#                </button>#}
+{#                <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">#}
+{#                    <span class="carousel-control-next-icon" aria-hidden="true"></span>#}
+{#                    <span class="visually-hidden">Next</span>#}
+{#                </button>#}
+                <div class="carousel-indicators">
+                <button type="button" data-bs-target="#imageCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#imageCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#imageCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#imageCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            </div>
+            </div>
+
+            <div  class="fixed-text-overlay">
+
+            <h1 style="font-family: Forte,sans-serif; font-size: 3vw" >Welcome to EnviroChat</h1>
+{#            <p>Additional details or description.</p>#}
+        </div>
+        </div>
     </div>
-    </div>
-    <div style="font-size: 5vw;text-align: center;font-family: Forte,sans-serif;padding-top: 10px;  ">
-        <h2>Welcome to EnviroChat</h2>
-    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const carousel = document.querySelector('#imageCarousel');
+            const carouselInstance = new bootstrap.Carousel(carousel, {
+                interval: 5000, // Change interval to 5 seconds
+                ride: 'carousel' // Automatically start sliding
+            });
+
+            // Optional: If you want to restart the carousel when the user interacts
+            carousel.addEventListener('mouseenter', function () {
+                carouselInstance.pause();
+            });
+
+            carousel.addEventListener('mouseleave', function () {
+                carouselInstance.cycle();
+            });
+        });
+</script>
+
+
+
+
+{#    <div style="font-size: 5vw;text-align: center;font-family: Forte,sans-serif;padding-top: 10px;  ">#}
+{#        <h2>Welcome to EnviroChat</h2>#}
+{#    </div>#}
     <div style="text-align: center">
-    <blockquote style="font-family: 'Comic Sans MS',serif" id="quote-block" class="fade-in">
+    <blockquote style="font-family: 'Comic Sans MS',serif; padding-top: 10px" id="quote-block" class="fade-in">
         "In the face of impending catastrophe, whose warning signs are already unbearably disastrous,
         weak action is unwise. No action is dangerous." <br>
         — William Ruto, President of Kenya
@@ -135,37 +200,79 @@
             {% endfor %}
         </div>
     </div>
-    <div class="container mt-5">
-    <h2 id="trending-section" class="text-center" style="font-size: 2vw; font-family: Forte, sans-serif;">Trending</h2>
-    <ul class="list-unstyled row app-trending-row">
-        <li class="app-trending-row__link col-md-3 text-center mb-4">
-            <a href="https://www.canada.ca/en/environment-climate-change/services/climate-change/canadian-centre-climate-services/basics/trends-projections.html" class="d-block">
+{#    <div class="container mt-5">#}
+{#    <h2 id="trending-section" class="text-center" style="font-size: 2vw; font-family: Forte, sans-serif;">Trending</h2>#}
+{#    <ul class="list-unstyled row app-trending-row">#}
+{#        <li class="app-trending-row__link col-md-3 text-center mb-4">#}
+{#            <a href="https://www.canada.ca/en/environment-climate-change/services/climate-change/canadian-centre-climate-services/basics/trends-projections.html" class="d-block">#}
 {#                <div class="bg-image hover-zoom">#}
 {#                    <img src="{% static 'twitter-logo.png' %}" alt="Article 1" class="w-100">#}
 {#                </div>#}
-                <span>Candian Climate change Trends projection</span>
-            </a>
-        </li>
-        <li class="app-trending-row__link col-md-3 text-center mb-4">
-            <a href="https://www.nature.com/articles/s41586-024-07609-4" class="d-block">
+{#                <span>Candian Climate change Trends projection</span>#}
+{#            </a>#}
+{#        </li>#}
+{#        <li class="app-trending-row__link col-md-3 text-center mb-4">#}
+{#            <a href="https://www.nature.com/articles/s41586-024-07609-4" class="d-block">#}
 {#                <img src="https://example.com/image2.jpg" alt="Article 2" class="img-fluid">#}
-                <span>Sunlight-powered sustained flight of an ultralight micro aerial vehicle</span>
-            </a>
-        </li>
-        <li class="app-trending-row__link col-md-3 text-center mb-4">
-            <a href="https://www.forbes.com/sites/johnwerner/2024/07/19/sustainability-in-business-what-were-looking-for-in-todays-enterprise-climate/" class="d-block">
+{#                <span>Sunlight-powered sustained flight of an ultralight micro aerial vehicle</span>#}
+{#            </a>#}
+{#        </li>#}
+{#        <li class="app-trending-row__link col-md-3 text-center mb-4">#}
+{#            <a href="https://www.forbes.com/sites/johnwerner/2024/07/19/sustainability-in-business-what-were-looking-for-in-todays-enterprise-climate/" class="d-block">#}
 {#                <img src="https://example.com/image3.jpg" alt="Article 3" class="img-fluid">#}
-                <span>Sustainability In Business: What We’re Looking For In Today’s Enterprise Climate</span>
-            </a>
-        </li>
-        <li class="app-trending-row__link col-md-3 text-center mb-4">
-            <a href="https://www.nature.com/articles/d41586-024-02230-x" class="d-block">
+{#                <span>Sustainability In Business: What We’re Looking For In Today’s Enterprise Climate</span>#}
+{#            </a>#}
+{#        </li>#}
+{#        <li class="app-trending-row__link col-md-3 text-center mb-4">#}
+{#            <a href="https://www.nature.com/articles/d41586-024-02230-x" class="d-block">#}
 {#                <img src="https://example.com/image4.jpg" alt="Article 4" class="img-fluid">#}
-                <span>The death forecast: how weather affects human mortality</span>
-            </a>
-        </li>
-    </ul>
+{#                <span>The death forecast: how weather affects human mortality</span>#}
+{#            </a>#}
+{#        </li>#}
+{#    </ul>#}
+{#    </div>#}
+    <div class="container mt-5">
+    <h2 id="trending-section" class="text-center" style="font-size: 2vw; font-family: Forte, sans-serif;padding-bottom: 10px">Trending</h2>
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="trending-card h-100">
+                <a href="https://www.canada.ca/en/environment-climate-change/services/climate-change/canadian-centre-climate-services/basics/trends-projections.html" class="text-decoration-none">
+                    <div class="trending-card-body">
+                        <h5 class="card-title text-center" style="color: darkslategray">Canadian Climate Change Trends Projection</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="trending-card h-100">
+                <a href="https://www.nature.com/articles/s41586-024-07609-4" class="text-decoration-none">
+                    <div class="trending-card-body">
+                        <h5 class="card-title text-center" style="color: darkslategray">Sunlight-Powered Sustained Flight of an Ultralight Micro Aerial Vehicle</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="trending-card h-100">
+                <a href="https://www.forbes.com/sites/johnwerner/2024/07/19/sustainability-in-business-what-were-looking-for-in-todays-enterprise-climate/" class="text-decoration-none">
+                    <div class="trending-card-body">
+                        <h5 class="card-title text-center" style="color: darkslategray">Sustainability In Business: What We’re Looking For In Today’s Enterprise Climate</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="trending-card h-100">
+                <a href="https://www.nature.com/articles/d41586-024-02230-x" class="text-decoration-none">
+                    <div class="trending-card-body">
+                        <h5 class="card-title text-center" style="color: darkslategray">The Death Forecast: How Weather Affects Human Mortality</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
+</div>
+
     <div class="container">
     <div class="row mt-4">
             <div class="col-md-6">
@@ -293,14 +400,14 @@
 
         setInterval(changeQuote, 5000);
     </script>
-    <script>
-        // Ensure the carousel slides every 5 seconds
-        const myCarousel = document.getElementById('carouselExample');
-        const carousel = new bootstrap.Carousel(myCarousel, {
-            interval: 5000,
-            ride: 'carousel'
-        });
-    </script>
+{#    <script>#}
+{#        // Ensure the carousel slides every 5 seconds#}
+{#        const myCarousel = document.getElementById('carouselExample');#}
+{#        const carousel = new bootstrap.Carousel(myCarousel, {#}
+{#            interval: 5000,#}
+{#            ride: 'carousel'#}
+{#        });#}
+{#    </script>#}
 
 
         {#window.onload = function() {#}

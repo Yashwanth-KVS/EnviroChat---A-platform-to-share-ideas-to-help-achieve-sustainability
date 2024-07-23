@@ -66,3 +66,83 @@
         max-width: 100%; /* Ensure the image doesn't overflow the container */
         display: block;
     }
+
+    .carousel-item img {
+            height: 450px;
+            width: 100%;
+            object-fit: cover;
+        }
+        .carousel-container {
+            margin-top: 2px; /* Adjust this value to add space between the header and carousel */
+        }
+
+/*.carousel-indicators {*/
+/*    position: absolute;*/
+/*    align-content: center;*/
+/*    bottom: 10px; !* Adjust as needed *!*/
+/*    left: 50%;*/
+/*    transform: translateX(-50%);*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    gap: 5px; !* Space between dots *!*/
+/*}*/
+
+/*.carousel-indicators button {*/
+/*    background-color: #fff; !* Dot color *!*/
+/*    border-radius: 50%;*/
+/*    width: 10px; !* Dot size *!*/
+/*    height: 10px; !* Dot size *!*/
+/*    opacity: 0.7;*/
+/*}*/
+
+/*.carousel-indicators .active {*/
+/*    background-color: white; !* Active dot color *!*/
+/*    opacity: 1;*/
+/*}*/
+.carousel-indicators {
+    opacity: 0; /* Hide indicators by default */
+    transition: opacity 0.3s ease; /* Smooth transition */
+}
+
+.carousel-container:hover .carousel-indicators {
+    opacity: 1; /* Show indicators on hover */
+}
+
+.carousel-container {
+    position: relative;
+}
+
+.fixed-text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 19%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    z-index: 10; /* Ensure text is on top of the images */
+    /*background-color: rgba(0, 0, 0, 0.5); !* Semi-transparent background *!*/
+    background: linear-gradient(to right, rgba(0.3, 0.5, 0.7, 1.0), rgba(1.0, 0.7, 0, 0));
+    box-sizing: border-box;
+    padding: 10px;
+    border-radius: 10px; /* Optional: Round the corners */
+    width: 600px; /* Fixed width for the text block */
+    height: 100%; /* Height of the image */
+    align-content: center;
+}
+
+.fixed-text-overlay h1,
+.fixed-text-overlay p {
+    margin: 0;
+}
+
+.trending-card {
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+}
+
+.trending-card-body {
+    min-height: 100px; /* Adjust height as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

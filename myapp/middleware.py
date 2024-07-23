@@ -15,3 +15,12 @@ class VisitCounterMiddleware:
         # print(f"Updated global visit count to: {site_visit.visit_count}")
 
         return response
+
+    class ActiveSessionMiddleware:
+        def __init__(self, get_response):
+            self.get_response = get_response
+
+        def __call__(self, request):
+            response = self.get_response(request)
+            request.session.modified = True
+            return response
