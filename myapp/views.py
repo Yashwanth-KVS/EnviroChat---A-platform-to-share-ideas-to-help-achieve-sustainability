@@ -516,8 +516,8 @@ def feed_view(request):
 
     for feed in feed_objects:
         # Fetch related threads, pages, and posts for each feed
-        threads = feed.threads_related.all()[:3]  # Fetching top 3 related threads
-        pages = feed.pages_related.all().values()[:3]  # Fetching top 3 related pages
+        threads = feed.threads_related.all()[:10]  # Fetching top 3 related threads
+        pages = feed.pages_related.all().values()[:10]  # Fetching top 3 related pages
         #pages = Pages.objects.all()
         #posts = feed.posts_related.all()[:3]  # Fetching top 3 related posts
         print(pages)
