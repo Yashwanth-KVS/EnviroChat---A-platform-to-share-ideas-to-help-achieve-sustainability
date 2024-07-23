@@ -1,0 +1,148 @@
+/*.carousel {*/
+/*    width: 100%;*/
+/*    position: fixed;*/
+/*    top: 60px; !* Adjust based on the height of your header *!*/
+/*    left: 0;*/
+/*    overflow: hidden;*/
+/*    z-index: 999;*/
+/*    border: 2px solid #ccc;*/
+/*    border-radius: 10px;*/
+/*    background-color: #fff;*/
+/*}*/
+/*.carousel-container {*/
+/*            position: fixed;*/
+/*            top: 60px; !* Adjust based on the height of your header *!*/
+/*            width: 100%;*/
+/*            height: 300px; !* Set the desired height for the carousel *!*/
+/*            z-index: 999;*/
+/*        }*/
+/*header {*/
+/*            z-index: 1000;*/
+/*        }*/
+
+/*.carousel-inner {*/
+/*    display: flex;*/
+/*    transition: transform 1s ease-in-out;*/
+/*}*/
+
+/*.carousel-item {*/
+/*    min-width: 100%;*/
+/*    transition: transform 1s ease-in-out;*/
+/*}*/
+/*.carousel-inner img {*/
+/*            height: 100%;*/
+/*            object-fit: cover;*/
+/*        }*/
+/*.carousel img {*/
+/*    !*width: 100%;*!*/
+/*    border-radius: 10px;*/
+/*}*/
+/*.content {*/
+/*            margin-top: 360px; !* Adjust based on the height of the header and carousel *!*/
+/*            text-align: center;*/
+/*            padding: 20px;*/
+/*        }*/
+ .divider2 {
+            width: 100%;
+            height: 1px;
+            background-color: forestgreen; /* Change the color as needed */
+            margin-bottom: 20px; /* Adjust the padding as needed */
+            padding-bottom: 1px;
+        }
+
+.image-container2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%; /* Adjust as needed */
+        height: 400px; /* Adjust as needed */
+        margin: auto;
+        /*padding-top: 10px;*/
+    }
+
+    .responsive-img1 {
+        height: 200px; /* Adjust as needed */
+        width: auto;
+        max-width: 100%; /* Ensure the image doesn't overflow the container */
+        display: block;
+    }
+
+    .carousel-item img {
+            height: 450px;
+            width: 100%;
+            object-fit: cover;
+        }
+        .carousel-container {
+            margin-top: 2px; /* Adjust this value to add space between the header and carousel */
+        }
+
+/*.carousel-indicators {*/
+/*    position: absolute;*/
+/*    align-content: center;*/
+/*    bottom: 10px; !* Adjust as needed *!*/
+/*    left: 50%;*/
+/*    transform: translateX(-50%);*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    gap: 5px; !* Space between dots *!*/
+/*}*/
+
+/*.carousel-indicators button {*/
+/*    background-color: #fff; !* Dot color *!*/
+/*    border-radius: 50%;*/
+/*    width: 10px; !* Dot size *!*/
+/*    height: 10px; !* Dot size *!*/
+/*    opacity: 0.7;*/
+/*}*/
+
+/*.carousel-indicators .active {*/
+/*    background-color: white; !* Active dot color *!*/
+/*    opacity: 1;*/
+/*}*/
+.carousel-indicators {
+    opacity: 0; /* Hide indicators by default */
+    transition: opacity 0.3s ease; /* Smooth transition */
+}
+
+.carousel-container:hover .carousel-indicators {
+    opacity: 1; /* Show indicators on hover */
+}
+
+.carousel-container {
+    position: relative;
+}
+
+.fixed-text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 19%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    z-index: 10; /* Ensure text is on top of the images */
+    /*background-color: rgba(0, 0, 0, 0.5); !* Semi-transparent background *!*/
+    background: linear-gradient(to right, rgba(0.3, 0.5, 0.7, 1.0), rgba(1.0, 0.7, 0, 0));
+    box-sizing: border-box;
+    padding: 10px;
+    border-radius: 10px; /* Optional: Round the corners */
+    width: 600px; /* Fixed width for the text block */
+    height: 100%; /* Height of the image */
+    align-content: center;
+}
+
+.fixed-text-overlay h1,
+.fixed-text-overlay p {
+    margin: 0;
+}
+
+.trending-card {
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+}
+
+.trending-card-body {
+    min-height: 100px; /* Adjust height as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
