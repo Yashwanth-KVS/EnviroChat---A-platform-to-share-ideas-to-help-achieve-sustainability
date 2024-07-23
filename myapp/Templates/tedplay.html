@@ -2,38 +2,49 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block body_block %}
-    <title>Four Videos in Grid (2x2)</title>
 
-    <!-- Bootstrap CSS (optional, if using Bootstrap for other styles) -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- Bootstrap CSS (optional, if using Bootstrap for other styles) -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-    <style>
-        /* Custom CSS for video cards */
-        .video-container {
-            position: relative;
-            width: 100%;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio (9 / 16 * 100) */
-            overflow: hidden;
-            background: #000; /* Optional: Black background color while loading */
-        }
+<style>
+    /* Custom CSS for video cards */
+    .video-container {
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%; /* 16:9 aspect ratio (9 / 16 * 100) */
+        overflow: hidden;
+        background: #000; /* Optional: Black background color while loading */
+    }
 
-        .video-frame {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-    </style>
+    .video-frame {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    /* Custom CSS for h1 tag */
+    .custom-h1 {
+        background-color: #4CAF50; /* Green background */
+        color: #ffffff; /* White text */
+        padding: 10px; /* Padding around the text */
+        margin-bottom: 20px; /* Margin below the h1 tag */
+        text-align: center; /* Center align the text */
+    }
+</style>
 
 <body>
     <div class="container" style="padding-top: 20px">
+
+        <!-- Centered h1 tag with white text and green background -->
+        <h1 class="custom-h1">Know more about Sustainability</h1>
 
         <div class="row">
             <div class="col-md-6 mb-4">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h5 class="card-title">Video 1</h5>
+                        <h5 class="card-title">Thing you can do to fight climate change</h5>
                         <div class="video-container">
                             <iframe class="video-frame"
                                     src="https://www.youtube.com/embed/-BvcToPZCLI?si=ptP7tCELgZLA_GSj"
@@ -46,7 +57,7 @@
             <div class="col-md-6 mb-4">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h5 class="card-title">Video 2</h5>
+                        <h5 class="card-title">Beyond the Science: Environmental Problems</h5>
                         <div class="video-container">
                             <iframe class="video-frame"
                                     src="https://www.youtube.com/embed/0VHPkv8ZQQI?si=KrO_IxoD21kZUZIm"
@@ -59,7 +70,7 @@
             <div class="col-md-6 mb-4">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h5 class="card-title">Video 3</h5>
+                        <h5 class="card-title">The fastest way to slow climate change now</h5>
                         <div class="video-container">
                             <iframe class="video-frame"
                                     src="https://www.youtube.com/embed/tlWuP7wESZw?si=ETYqLd2mGirkX8ms"
@@ -72,7 +83,7 @@
             <div class="col-md-6 mb-4">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h5 class="card-title">Video 4</h5>
+                        <h5 class="card-title">Environmental Sustainability</h5>
                         <div class="video-container">
                             <iframe class="video-frame"
                                     src="https://www.youtube.com/embed/4-4NIf5FcAA?si=ns0OSJaA-eVW0xL1"
