@@ -4,6 +4,7 @@
 @import url("profile.css");
 @import url("notification.css");
 @import url("home.css");
+@import url("userhistory.css");
 @keyframes scale-up {
     0% {
         transform: scale(1);

@@ -9,6 +9,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views import View
 
+
 from .utils import active_sessions_count
 import random
 from datetime import datetime, timedelta
@@ -17,6 +18,7 @@ from django.contrib.sessions.models import Session
 from django.contrib.auth.models import User
 from django.contrib.auth.views import PasswordResetConfirmView, LoginView, PasswordResetView
 from django.contrib.auth import logout as auth_logout
+from .models import UserSession
 
 # Create your views here.
 
@@ -600,3 +602,16 @@ def user_logout(request):
 
 def tedtalk(request):
     return render(request,'tedplay.html')
+
+
+@login_required
+def login_history(request):
+    all_history = UserSession.objects.filter(user=request.user).order_by('-created_at')
+    one_day_ago = UserSession.objects.filter(user=request.user, created_at__gte=timezone.now() - timedelta(days=1))
+    seven_day_ago = UserSession.objects.filter(user=request.user, created_at__gte=timezone.now() - timedelta(days=7))
+    return render(request, 'login_history.html', {
+        'all_history': all_history,
+        'title': 'Login History',
+        'one_day_ago': one_day_ago,
+        'seven_day_ago': seven_day_ago
+    })
