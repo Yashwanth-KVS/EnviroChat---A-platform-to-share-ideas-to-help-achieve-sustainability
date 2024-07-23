@@ -1,6 +1,58 @@
-body {
-    font-family: Arial, sans-serif;
-    padding: 20px;
+/*body {*/
+/*    font-family: Arial, sans-serif;*/
+/*    padding: 20px;*/
+/*}*/
+
+.custom-add-page-button {
+    background-color: forestgreen;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    display: inline-block; /* Ensures proper spacing and alignment */
+    text-align: center; /* Center text inside the button */
+}
+
+
+.add-page-button:hover {
+    background-color: forestgreen;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between; /* Center items horizontally */
+    align-items: center; /* Align items vertically centered */
+    margin-bottom: 20px; /* Space between header and list */
+    gap: 20px; /* Space between heading and button */
+}
+
+
+.header-container h1 {
+    margin: 0; /* Remove default margin for consistent alignment */
+}
+
+.custom-cards-container {
+    display: flex;
+    justify-content: center; /* Center align items horizontally */
+}
+
+.add-page-button {
+    margin-top: 10px; /* Space between heading and button */
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.add-page-button:hover {
+    background-color: #45a049;
 }
 
 .custom-page-list {
@@ -8,7 +60,7 @@ body {
     padding: 0;
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start; /* Adjusted to start from the left */
+    justify-content: center; /* Adjusted to start from the left */
     gap: 20px; /* Adds gap between cards */
 }
 
@@ -16,7 +68,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More noticeable shadow */
     padding: 20px;
-    width: calc(45% - 20px); /* Adjust width to make cards smaller */
+    width: calc(33.33% - 20px); /* Adjust width to fit 3 cards per row */
     box-sizing: border-box;
     margin-bottom: 20px;
     position: relative;
@@ -53,10 +105,7 @@ body {
 }
 
 .custom-go-to-button {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    background-color: #4CAF50;
+    background-color: forestgreen;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -67,7 +116,7 @@ body {
 }
 
 .custom-go-to-button:hover {
-    background-color: #45a049;
+    background-color: forestgreen;
 }
 
 /* Responsive adjustments */

@@ -8,7 +8,7 @@ app_name = 'myapp'
 urlpatterns = [
 
 
-    path('create_page/', views.create_pages, name='create_pages'),
+    path('create_pages/', views.create_pages, name='create_pages'),
     path('view_pages/', views.view_pages, name='view_pages'),
     path('view_single_page<int:page_id>/', views.go_to_single_page, name='go_to_single_page'),
     path('add_comment/<int:page_id>/', views.add_comment, name='add_comment'),
@@ -45,4 +45,5 @@ urlpatterns = [
     path('user_post/', views.User_post, name='User_post'),
     path('vote/<int:content_id>/', vote.as_view(), name='vote'),
     path('post_response/', views.post_response, name='post_response'),
+    path('tedplay/', views.tedtalk, name='tedplay')
 ]

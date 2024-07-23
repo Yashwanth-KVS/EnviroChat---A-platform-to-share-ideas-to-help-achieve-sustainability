@@ -1,0 +1,132 @@
+/* style_login.css */
+
+/* General Body Styling */
+body {
+    /*background-color: #f0f8f0; !* Light forest green background *!*/
+    color: #333;
+    font-family: Arial, sans-serif;
+}
+
+/* Container for the Registration Form */
+.register-container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #ffffff; /* White background for the card */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for card effect */
+
+}
+
+/* Form Title */
+.register-container h2 {
+    color: #004d00; /* Dark forest green for the title */
+}
+
+/* Form Fields */
+.form-label {
+    font-weight: bold;
+    color: #333;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-control:focus {
+    border-color: #004d00; /* Forest green border on focus */
+    outline: none;
+}
+
+/* Error Messages */
+.login-alert {
+    color: #ff0000; /* Red color for errors */
+    font-size: 0.875rem;
+    margin-top: 5px;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: forestgreen; /* Forest green background */
+    border: none;
+    color: #ffffff;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: forestgreen; /* Darker green on hover */
+}
+
+/* Sign In Link */
+.text-center p {
+    margin-top: 15px;
+}
+
+.text-center a {
+    /*color: #004d00; !* Forest green for the link *!*/
+    text-decoration: none;
+}
+
+.text-center a:hover {
+    text-decoration: underline;
+}
+
+/*.register-container .form-control {*/
+/*    width: 100%; !* Full width of the container *!*/
+/*}*/
+
+/*.register-container .form-control.custom-width {*/
+/*    width: 80%; !* Adjust specific fields *!*/
+/*}*/
+/*.custom-width {*/
+/*    width: 70%; !* Adjust as needed *!*/
+/*}*/
+.register-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.register-container .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.register-container .form-control {
+    flex: 1; /* Makes the input take available space */
+    min-width: 200px; /* Minimum width */
+}
+
+.form-card {
+    /*max-width: 500px;*/
+    /*margin: 50px auto;*/
+    /*border-radius: 8px;*/
+    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); !* Shadow for card effect *!*/
+    width: 80%; /* Adjust this percentage or use a fixed value like 400px */
+    max-width: 400px; /* Maximum width for larger screens */
+    margin: 50px auto; /* Center the card horizontally */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for card effect */
+    background-color: #ffffff; /* White background for the card */
+    padding: 20px;
+}
+
+/* Form Content */
+.form-card-body {
+    padding: 20px;
+    background-color: #ffffff; /* White background for the card */
+}
+
+/* Form Title */
+.form-card-body h2 {
+    color: #004d00; /* Dark forest green for the title */
+}

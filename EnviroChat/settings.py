@@ -51,8 +51,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'myapp.middleware.VisitCounterMiddleware'
+    'myapp.middleware.VisitCounterMiddleware',
+
 ]
+
+
+
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# SESSION_COOKIE_AGE = 25
 
 ROOT_URLCONF = 'EnviroChat.urls'
 
@@ -132,8 +138,8 @@ DEBUG = True
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
-LOGIN_URL = 'myapp:login'
-LOGIN_REDIRECT_URL = 'myapp:home'
+# LOGIN_URL = 'myapp:login'
+# LOGIN_REDIRECT_URL = 'myapp:login'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email settings for Sendinblue

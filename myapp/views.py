@@ -60,6 +60,7 @@ def register(request):
 
 
 def user_login(request):
+
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -122,7 +123,7 @@ def home(request):
     active_sessions = active_sessions_count()
     # print("viewcount", view_count)
     return render(request, 'home.html', {'view_count': view_count, 'active_sessions': active_sessions
-        , 'goals': goals})
+        , 'goals': goals, 'user': request.user})
 
 
 def aboutus(request):
@@ -208,14 +209,22 @@ def contactus(request):
 
 def create_pages(request):
     if request.method == 'POST':
+        # if request.user.is_authenticated:
+        #     pass
+        # else:
+        #     return redirect('myapp:login')
         form = PageCreateForm(request.POST, request.FILES)
         if form.is_valid():
             new_page = form.save(commit=False)
             now = datetime.datetime.now()
-            user_id = Member.objects.filter(user_id=1).values_list('id', flat=True)[0]
+            #user_id = Member.objects.filter(user_id=1).values_list('id', flat=True)[0]
+            # if request.user.is_authenticated:
+            user_id = request.user.id
+
+            print("///////////////////////////")
             print(user_id)
             form.cleaned_data['user_id'] = user_id
-            new_page.page_id = int(now.strftime('%Y%m%d%H%M%S') + str(user_id))  #+ form.cleaned_data['user_id'])
+            new_page.page_id = int(now.strftime('%Y%m%d%H%M%S')) #+ str(user_id))  #+ form.cleaned_data['user_id'])
             new_page.save()
             print(new_page.page_id)
             print(form.cleaned_data['user_id'])
@@ -228,17 +237,19 @@ def create_pages(request):
 
             print('Form saved successfully')
             pages = Pages.objects.all().order_by('-updated_at')
-            return redirect(request, template_name='view_pages.html', context={'pages': pages})
+            #return redirect(request, template_name='view_pages.html', context={'pages': pages})
+            return redirect(reverse('myapp:view_pages'))
 
         else:
-            return render(request, template_name='create_page.html', context={'form': form})
+            #return render(request, template_name='create_page.html', context={'form': form})
+            return redirect(reverse('myapp:view_pages'))
 
     else:
         form = PageCreateForm()
         return render(request, template_name='create_page.html', context={'form': form})
+        #return redirect(reverse('myapp:view_pages'))
 
 
-@login_required(login_url='/login/')
 def view_pages(request):
     if request.method == 'GET':
         pages = Pages.objects.all().order_by('-updated_at')
@@ -305,7 +316,7 @@ def add_comment(request, page_id):
     page = get_object_or_404(Pages, pk=page_id)
     if request.method == 'POST':
         comment = request.POST.get('text')
-        # author = request.user.username if request.user.is_authenticated else 'Anonymous'
+        author = request.user.id if request.user.is_authenticated else 'Anonymous'
         author = Member.objects.get(pk=1)
         now = datetime.datetime.now()
         # comment_id = int(str(author.user_id)+str(page.page_id))
@@ -585,3 +596,7 @@ def user_logout(request):
         )
         return redirect("myapp:login")
     return redirect("myapp:dashboard")
+
+
+def tedtalk(request):
+    return render(request,'tedplay.html')

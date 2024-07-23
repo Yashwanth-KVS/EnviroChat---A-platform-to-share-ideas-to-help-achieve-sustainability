@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+{% block body_block %}
+    <title>Four Videos in Grid (2x2)</title>
+
+    <!-- Bootstrap CSS (optional, if using Bootstrap for other styles) -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        /* Custom CSS for video cards */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio (9 / 16 * 100) */
+            overflow: hidden;
+            background: #000; /* Optional: Black background color while loading */
+        }
+
+        .video-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
+<body>
+    <div class="container" style="padding-top: 20px">
+
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Video 1</h5>
+                        <div class="video-container">
+                            <iframe class="video-frame"
+                                    src="https://www.youtube.com/embed/-BvcToPZCLI?si=ptP7tCELgZLA_GSj"
+                                    allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Video 2</h5>
+                        <div class="video-container">
+                            <iframe class="video-frame"
+                                    src="https://www.youtube.com/embed/0VHPkv8ZQQI?si=KrO_IxoD21kZUZIm"
+                                    allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Video 3</h5>
+                        <div class="video-container">
+                            <iframe class="video-frame"
+                                    src="https://www.youtube.com/embed/tlWuP7wESZw?si=ETYqLd2mGirkX8ms"
+                                    allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Video 4</h5>
+                        <div class="video-container">
+                            <iframe class="video-frame"
+                                    src="https://www.youtube.com/embed/4-4NIf5FcAA?si=ns0OSJaA-eVW0xL1"
+                                    allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (optional, if using Bootstrap for other functionalities) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+{% endblock %}

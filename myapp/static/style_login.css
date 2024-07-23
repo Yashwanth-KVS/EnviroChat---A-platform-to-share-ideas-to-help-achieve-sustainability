@@ -1,21 +1,83 @@
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #ffffff; /* Pure white background */
+/* Style for the card container */
+.card-container, .login-container {
+    background-color: #ffffff; /* White background */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    padding: 20px;
+    max-width: 400px;
+    margin: 0 auto;
 }
 
-.bg-white {
-    background-color: #ffffff; /* Background color matching the EnviroChat logo */
+.register-area-container{
+    background-color: #ffffff; /* White background */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    margin: 0 auto;
+    max-width: 400px;
 }
 
-.login-form-container {
-    background: white;
-    border-radius: 10px;
-    padding: 40px;
-    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.1);
-    text-align: center;
+/* Style for the form fields */
+.login-form input[type="text"],
+.login-form input[type="password"],
+.login-form input[type="email"],
+.login-form textarea,
+.register-form input[type="text"],
+.register-form input[type="password"],
+.register-form input[type="email"],
+.register-form textarea {
     width: 100%;
-    max-width: 400px; /* Make the form wider */
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+/* Style specifically for textarea */
+.login-form textarea,
+.register-form textarea {
+    resize: vertical; /* Allows vertical resizing */
+    min-height: 100px; /* Ensures a minimum height */
+}
+
+/* Style for submit button */
+.login-form button[type="submit"],
+.register-form button[type="submit"] {
+    background-color: forestgreen; /* Forest green background */
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+}
+
+.login-form button[type="submit"]:hover,
+.register-form button[type="submit"]:hover {
+    background-color: darkgreen; /* Darker green on hover */
+}
+
+/* Optional: Style for messages */
+.login-message-list,
+.register-message-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.login-alert,
+.register-alert {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.login-alert-info,
+.register-alert-info {
+    background-color: #d1ecf1; /* Light blue background */
+    color: #0c5460; /* Dark blue text */
 }
 
 .form-control {
@@ -27,50 +89,24 @@ body {
 .form-control:focus {
     border-color: #80bdff;
     outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
 }
 
-.footer {
-    background-color: #333;
-    color: white;
-    padding: 20px 0;
-    width: 100%;
+/* Ensure the card is centered and responsive */
+@media (min-width: 576px) {
+    .card-container, .login-container, .register-container {
+        max-width: 500px; /* Wider width on larger screens */
+    }
 }
 
-.footer-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+@media (min-width: 768px) {
+    .card-container, .login-container, .register-container {
+        max-width: 600px; /* Even wider width on larger screens */
+    }
 }
 
-.footer-content a {
-    color: #007bff;
-}
-
-.footer-content p {
-    margin: 5px 0;
-}
-
-.footer-links {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-}
-
-.footer-links a {
-    color: #007bff;
-    text-decoration: none;
-    margin: 0 15px;
-    display: flex;
-    align-items: center;
-}
-
-.footer-links img {
-    width: 30px;
-    height: 30px;
-}
-
-.footer-links a:hover {
-    text-decoration: underline;
+@media (min-width: 992px) {
+    .card-container, .login-container, .register-container {
+        max-width: 100%; /* Maximum width for very large screens */
+    }
 }

@@ -1,31 +1,36 @@
 {% extends 'base.html' %}
 
- {% load static %}
+{% load static %}
 {% block body_block %}
 
     <link rel="stylesheet" type="text/css" href="{% static 'subhram_view_pages.css' %}">
     <div class="container mt-4">
-    <h1>List of Pages</h1>
-    <ul class="custom-page-list">
-        {% for page in pages %}
-            <li class="custom-page-item">
-                <a href="{% url 'myapp:go_to_single_page' page.page_id %}" class="custom-page-item-link">
-                    <h2>{{ page.title }}</h2>
-                    {% if page.title_img %}
-                        <img src="{{ page.title_img.url }}" alt="Title Image">
-                    {% endif %}
-                    <div class="custom-page-author">
-                        {% if page.about_img %}
-                            <img src="{{ page.about_img.url }}" alt="Author Image">
+        <div class="header-container">
+{#            <h1>List of Pages</h1>#}
+            <a href="{% url 'myapp:create_pages' %}" class="custom-add-page-button">    Add Page</a>
+        </div>
+        <div class="custom-cards-container">
+        <ul class="custom-page-list">
+            {% for page in pages %}
+                <li class="custom-page-item">
+                    <a href="{% url 'myapp:go_to_single_page' page.page_id %}" class="custom-page-item-link">
+                        <h2>{{ page.title }}</h2>
+                        {% if page.title_img %}
+                            <img src="{{ page.title_img.url }}" alt="Title Image">
                         {% endif %}
-                        <p>{{ page.about_page }}</p>
-                    </div>
-                    <a class="custom-go-to-button" href="{% url 'myapp:go_to_single_page' page.page_id %}">Go to Page</a>
-                </a>
-            </li>
-        {% empty %}
-            <li>No pages found.</li>
-        {% endfor %}
-    </ul>
+                        <div class="custom-page-author">
+                            {% if page.about_img %}
+                                <img src="{{ page.about_img.url }}" alt="Author Image">
+                            {% endif %}
+                            <p>{{ page.about_page }}</p>
+                        </div>
+                        <a class="custom-go-to-button" href="{% url 'myapp:go_to_single_page' page.page_id %}">Go to Page</a>
+                    </a>
+                </li>
+            {% empty %}
+                <li>No pages found.</li>
+            {% endfor %}
+        </ul>
+    </div>
     </div>
 {% endblock %}

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Pages, Pages_followers, Pages_comments,Member, Followers,Feeds, Posts, Favorites, FeedsPosts, SessionCount, SiteVisit, Video, Video_comments,MediaContent
+from .models import Pages, Pages_followers, Pages_comments, Member, Followers, Feeds, Posts, Favorites, FeedsPosts, SessionCount, SiteVisit, Video, Video_comments,MediaContent
 
 # Register your models here.
 admin.site.register(Pages)
