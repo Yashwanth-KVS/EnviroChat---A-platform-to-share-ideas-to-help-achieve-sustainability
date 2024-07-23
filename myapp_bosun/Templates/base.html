@@ -26,14 +26,6 @@
     <header>
          <img src="{% static 'image-logo.jpg' %}" alt="Site Logo" class="image-logo">
         <h1>EnviroChat</h1>
-        <!-- Navigation bar, if any -->
-        <nav>
-            <ul>
-                <li><a href="{% url 'myapp_bosun:home' %}">Home</a></li>
-                <li><a href="{% url 'myapp_bosun:feeds' %}">Feeds</a></li>
-                <!-- Add more navigation links as needed -->
-            </ul>
-        </nav>
     </header>
 
     <main>
@@ -44,6 +36,14 @@
     </main>
 
     <footer>
+         <!-- Navigation bar, if any -->
+        <nav>
+            <ul class="navbar">
+                <li><a href="{% url 'myapp_bosun:home' %}">Home</a></li>
+                <li><a href="{% url 'myapp_bosun:feeds' %}">Feeds</a></li>
+                <!-- Add more navigation links as needed -->
+            </ul>
+        </nav>
         <p>&copy; 2024 EnviroChat. All rights reserved.</p>
     </footer>
 </body>

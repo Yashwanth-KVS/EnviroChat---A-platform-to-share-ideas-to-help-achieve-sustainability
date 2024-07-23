@@ -1,5 +1,6 @@
 /* styles.css */
 
+/* Base styles for all devices */
 .feed-container {
     background-color: #f0f8f0; /* Light green background for the whole container */
     padding: 20px;
@@ -51,3 +52,115 @@ ul {
 li {
     padding: 5px 0;
 }
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Small devices (phones, 600px and below) */
+@media (max-width: 600px) {
+    .feed-container {
+        padding: 10px;
+    }
+
+    .feed-item {
+        padding: 10px;
+    }
+
+    .feed-section {
+        padding: 10px;
+    }
+
+    .feed-block, .threads-block, .pages-block, .posts-block {
+        margin-bottom: 10px;
+    }
+}
+
+/* Medium devices (tablets, 600px to 1024px) */
+@media (min-width: 601px) and (max-width: 1024px) {
+    .feed-container {
+        padding: 15px;
+    }
+
+    .feed-item {
+        padding: 12px;
+    }
+
+    .feed-section {
+        padding: 12px;
+    }
+
+    .feed-block, .threads-block, .pages-block, .posts-block {
+        margin-bottom: 15px;
+    }
+}
+
+/* Large devices (desktops, 1024px and above) */
+@media (min-width: 1025px) {
+    .feed-container {
+        padding: 20px;
+    }
+
+    .feed-item {
+        padding: 15px;
+    }
+
+    .feed-section {
+        padding: 15px;
+    }
+
+    .feed-block, .threads-block, .pages-block, .posts-block {
+        margin-bottom: 20px;
+    }
+}
+/* Adding flexbox properties for responsiveness */
+.feed-container {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 601px) {
+    .feed-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .feed-item, .feed-section, .feed-block, .threads-block, .pages-block, .posts-block {
+        flex: 1 1 calc(50% - 20px); /* 50% width minus padding/margin */
+        box-sizing: border-box;
+    }
+}
+
+@media (min-width: 1025px) {
+    .feed-item, .feed-section, .feed-block, .threads-block, .pages-block, .posts-block {
+        flex: 1 1 calc(33.33% - 20px); /* 33.33% width minus padding/margin */
+        box-sizing: border-box;
+    }
+}
+
+.navbar {
+    list-style-type: none; /* Remove default list styling */
+    padding-left: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+    display: flex; /* Use flexbox for layout */
+    justify-content: flex-start; /* Align items to the start */
+    background-color: #f8f8f8; /* Optional: background color for the nav bar */
+    padding: 10px; /
+}
+
+.navbar li {
+    margin-right: 20px; /* Space between each list item */
+}
+
+.navbar a {
+    text-decoration: none; /* Remove underline from links */
+    color: #333; /* Link color */
+    font-weight: bold; /* Optional: make link text bold */
+}
+
+.navbar a:hover {
+    color: #007BFF; /* Optional: change color on hover */
+}
+

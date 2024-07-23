@@ -5,7 +5,7 @@ from django.utils import timezone
 
 class Member(User):
     user_id = models.AutoField(unique=True, primary_key=True)
-    email_id = models.EmailField(unique=True)
+    # email_id = models.EmailField(unique=True)
     dob = models.DateField(default=datetime.date.today)
     created_at = models.DateTimeField(auto_now_add=True)
     profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
