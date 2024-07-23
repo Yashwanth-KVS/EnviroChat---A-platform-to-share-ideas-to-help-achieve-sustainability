@@ -1,3 +1,4 @@
+
 {#{% extends "tweets/base.html" %}#}
 {##}
 {##}
@@ -15,6 +16,34 @@
 {#{% endblock %}#}
 
 <!-- templates/tweets/User_post.html -->
+{#{% extends "tweets/base.html" %}#}
+{##}
+{#{% block title %}Upload Content{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#<div class="container mt-5">#}
+{#    <h1 class="text-center mb-4">Upload Content</h1>#}
+{#    <div class="card p-4 shadow-sm">#}
+{#        <form method="post" enctype="multipart/form-data">#}
+{#            {% csrf_token %}#}
+{#            <div class="form-group">#}
+{#                <label for="id_content">Content:</label>#}
+{#                <textarea id="id_content" name="content" class="form-control" rows="4" required></textarea>#}
+{#            </div>#}
+{#            <div class="form-group">#}
+{#                <label for="id_image">Image:</label>#}
+{#                <input type="file" id="id_image" name="image" class="form-control-file">#}
+{#            </div>#}
+{#            <div class="form-group">#}
+{#                <label for="id_video">Video:</label>#}
+{#                <input type="file" id="id_video" name="video" class="form-control-file">#}
+{#            </div>#}
+{#            <button type="submit" class="btn btn-primary">Submit</button>#}
+{#        </form>#}
+{#    </div>#}
+{#</div>#}
+{#{% endblock %}#}
+<!-- templates/tweets/User_post.html -->
 {% extends "tweets/base.html" %}
 
 {% block title %}Upload Content{% endblock %}
@@ -22,23 +51,89 @@
 {% block content %}
 <div class="container mt-5">
     <h1 class="text-center mb-4">Upload Content</h1>
-    <div class="card p-4 shadow-sm">
+    <div class="card p-4 shadow-sm custom-card">
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="form-group">
-                <label for="id_content">Content:</label>
+            <div class="form-group mb-3">
+                <label for="id_content" class="form-label">Content:</label>
                 <textarea id="id_content" name="content" class="form-control" rows="4" required></textarea>
             </div>
-            <div class="form-group">
-                <label for="id_image">Image:</label>
-                <input type="file" id="id_image" name="image" class="form-control-file">
+            <div class="form-group mb-3 row align-items-center">
+                <div class="col-md-4 d-flex align-items-center justify-content-center">
+                    <span class="upload-icon" onclick="document.getElementById('id_image').click()">
+                        <i class="fas fa-camera"></i>
+                    </span>
+                    <input type="file" id="id_image" name="image" class="file-input">
+                    <span id="image-label" class="ml-2">No file chosen</span>
+                </div>
+                <div class="col-md-4 d-flex align-items-center justify-content-center">
+                    <span class="upload-icon" onclick="document.getElementById('id_video').click()">
+                        <i class="fas fa-video"></i>
+                    </span>
+                    <input type="file" id="id_video" name="video" class="file-input">
+                    <span id="video-label" class="ml-2">No file chosen</span>
+                </div>
+                <div class="col-md-4 d-flex align-items-center justify-content-center">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="id_video">Video:</label>
-                <input type="file" id="id_video" name="video" class="form-control-file">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
 </div>
+
+<!-- Link to local FontAwesome files -->
+{#<link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">#}
+<!-- Link to Bootstrap CSS (optional, if not already included) -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- Add FontAwesome -->
+<!-- Add FontAwesome from jsDelivr -->
+<script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/js/all.min.js" crossorigin="anonymous"></script>
+
+ <script>
+    function updateLabel(labelId, input) {
+        var label = document.getElementById(labelId);
+        if (input.files.length > 0) {
+            label.textContent = input.files[0].name;
+        } else {
+            label.textContent = 'No file chosen';
+        }
+    }
+
+    document.getElementById('id_image').addEventListener('change', function() {
+        updateLabel('image-label', this);
+    });
+
+    document.getElementById('id_video').addEventListener('change', function() {
+        updateLabel('video-label', this);
+    });
+</script>
+<style>
+    .upload-icon {
+        display: inline-block;
+        padding: 8px;
+        background-color: #ccc;
+        cursor: pointer;
+        border: 1px solid #888;
+        border-radius: 5px;
+        font-size: 1.2em;
+        margin-right: 10px;
+    }
+
+    .upload-icon:hover {
+        background-color: cadetblue;
+    }
+
+    .file-input {
+        display: none;
+    }
+
+    .form-control:focus {
+        border-color: green;
+        box-shadow: 0 0 5px green;
+    }
+
+    .custom-card {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); /* Add a more prominent shadow */
+    }
+</style>
 {% endblock %}
