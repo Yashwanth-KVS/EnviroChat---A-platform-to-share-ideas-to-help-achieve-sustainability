@@ -25,8 +25,8 @@ class Followers(models.Model):
         (2, 'Following'),
     ]
     id = models.AutoField(primary_key=True)
-    follower_id = models.ForeignKey(Member, related_name='followers', on_delete=models.CASCADE)
-    followee_id = models.ForeignKey(Member, related_name='following', on_delete=models.CASCADE)
+    follower_id = models.ForeignKey(Member, related_name='followers', on_delete=models.CASCADE,default=1)
+    followee_id = models.ForeignKey(Member, related_name='following', on_delete=models.CASCADE, default=1)
     request_id = models.ManyToManyField(Member, related_name='requests')
 
     def __str__(self):
@@ -227,5 +227,117 @@ class MediaContent(models.Model):
     def __str__(self):
         return f"MediaContent {self.id}"
 
+class Notifications(models.Model):
+    NOTIFICATION_TYPES = [
+        ('follow', 'Follow Notification'),
+        ('post', 'post Notification'),
+        ('video_like', 'Video Like Notification'),
+        ('post_like', 'Post Like Notification'),
+        ('video_comment', 'Video Comment Notification'),
+        ('post_comment', 'Post Comment Notification'),
+        ('page_comment', 'Page Comment Notification'),
+        ('event', 'Event Notification'),
+        ('page_like', 'Page like Notification'),
+        ('page_dislike', 'Page dislike Notification'),
+        ('video_comment', 'Video Comment Notification'),
+        ('video_dislike', 'Video disLike Notification'),
 
+    ]
 
+    id = models.AutoField(primary_key=True)
+    sender = models.ForeignKey(Member, on_delete=models.CASCADE, null=True, blank=True, related_name='notifications_sent')
+    notification_type = models.CharField(max_length=15, choices=NOTIFICATION_TYPES)
+    message = models.CharField(max_length=128, blank=True, null=True)
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f'Notification {self.id}'
+
+    @classmethod
+    def create_follow_notification(cls, sender):
+        return cls.objects.create(
+            sender=sender,
+            notification_type='follow',
+            message=f"{sender.first_name} {sender.last_name} - Follow Notification"
+        )
+
+    @classmethod
+    def create_post_like_notification(cls, sender):
+        return cls.objects.create(
+            sender=sender,
+            notification_type='post_like',
+            message=f'{sender.first_name} {sender.last_name} - Post Like Notification'
+        )
+
+    @classmethod
+    def create_video_comment_notification(cls, sender):
+        return cls.objects.create(
+            sender=sender,
+            notification_type='video_comment',
+            message=f'{sender.first_name} {sender.last_name} - Video Comment Notification'
+        )
+
+    @classmethod
+    def create_post_comment_notification(cls, sender, post):
+        notification = cls.objects.create(
+            sender=sender,
+            notification_type='post_comment',
+            message=f'{sender.first_name} {sender.last_name} - Post Comment Notification',
+            post=post
+        )
+
+    @classmethod
+    def create_post_notification(cls,  sender):
+        return cls.objects.create(
+            sender=sender,
+            notification_type='post',
+            message=f'{sender.first_name} {sender.last_name} - Post Notification'
+        )
+
+    @classmethod
+    def create_video_like_notification(cls, sender):
+        return cls.objects.create(
+            sender=sender,
+            notification_type='video_like',
+            message=f'{sender.first_name} {sender.last_name} - Video Like Notification'
+        )
+
+    @classmethod
+    def create_page_comment_notification(cls, sender):
+        return cls.objects.create(
+            sender=sender,
+            notification_type='page_comment',
+            message=f'{sender.first_name} {sender.last_name} - Page Comment Notification'
+        )
+
+    @classmethod
+    def create_event_notification(cls, sender):
+        return cls.objects.create(
+            sender=sender,
+            notification_type='event',
+            message=f'{sender.first_name} {sender.last_name} - Event Notification'
+        )
+
+    @classmethod
+    def create_page_like_notification(cls, sender):
+        return cls.objects.create(
+            sender=sender,
+            notification_type='page like',
+            message=f"{sender.first_name} {sender.last_name} - page like Notification"
+        )
+
+    @classmethod
+    def create_page_dislike_notification(cls, sender):
+        return cls.objects.create(
+            sender=sender,
+            notification_type='page dislike',
+            message=f"{sender.first_name} {sender.last_name} - page dislike Notification"
+        )
+
+    @classmethod
+    def create_video_dislike_notification(cls, sender):
+        return cls.objects.create(
+            sender=sender,
+            notification_type='video_dislike',
+            message=f'{sender.first_name} {sender.last_name} - Video disLike Notification'
+        )

@@ -27,7 +27,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .forms import UserRegisterForm, PageCreateForm, VideoUploadForm, ContentUploadForm
 from django.http import JsonResponse
-from .models import Member, Pages, Pages_comments, Pages_followers, SiteVisit, SessionCount, Video, Video_comments, Feeds, MediaContent
+from .models import Member, Pages, Pages_comments, Pages_followers, SiteVisit, SessionCount, Video, Video_comments, Feeds, MediaContent, Notifications
 
 from django.shortcuts import render
 from myapp.video import VideoCamera, IPWebCam
@@ -282,6 +282,7 @@ def like_page(request, page_id):
     author = Member.objects.get(pk=1)
     num_upvotes = 0
     Pages_comments.objects.create(page_id=page, user_id=author, upvote=0)
+    Notifications.create_page_like_notification(sender=author)
     pages_likes = Pages_comments.objects.filter(page_id=page_id).values()
     for page_com in pages_likes:
         if page_com['upvote'] == 0:
@@ -294,6 +295,7 @@ def dislike_page(request, page_id):
     author = Member.objects.get(pk=1)
     dislikes = 0
     Pages_comments.objects.create(page_id=page, user_id=author, upvote=0)
+    Notifications.create_page_dislike_notification(sender=author)
     pages_likes = Pages_comments.objects.filter(page_id=page_id).values()
     for page_com in pages_likes:
         if page_com['downvote'] == 0:
@@ -310,6 +312,7 @@ def add_comment(request, page_id):
         now = datetime.datetime.now()
         # comment_id = int(str(author.user_id)+str(page.page_id))
         Pages_comments.objects.create(page_id=page, user_id=author, comment=comment)
+        Notifications.create_page_comment_notification(sender=author)
     return redirect('myapp:go_to_single_page', page_id=page.page_id)
 
 
@@ -318,6 +321,7 @@ def follow_page(request, page_id):
     if request.method == 'POST':
         author = Member.objects.get(pk=1)
         Pages_followers.objects.create(page_id=page, follower_id=author)
+        Notifications.create_follow_notification(sender=author)
         num_pages_followers = Pages_followers.objects.filter(page_id=page).values()
         followed_by = num_pages_followers.count()
         return JsonResponse({'followed by': followed_by})
@@ -355,6 +359,7 @@ def events(request):
             return HttpResponseRedirect(reverse('myapp:events'))
         else:
             return render(request, 'events.html', {'form': form})
+
     else:
         form = VideoUploadForm()
         return render(request, 'events.html')
@@ -437,6 +442,7 @@ def like_videos(request, video_id):
     num_upvotes = 0
     Video_comments.objects.create(video_id=video, user_id=author, upvote=0)
     video_likes = Video_comments.objects.filter(video_id=video_id).values()
+    Notifications.create_video_like_notification(sender=author)
     for page_com in video_likes:
         if page_com['upvote'] == 0:
             num_upvotes += 1
@@ -448,6 +454,7 @@ def dislike_videos(request, video_id):
     author = Member.objects.get(pk=1)
     dislikes = 0
     Video_comments.objects.create(video_id=video, user_id=author, upvote=0)
+    Notifications.create_video_dislike_notification(sender=author)
     video_likes = Video_comments.objects.filter(video_id=video_id).values()
     for page_com in video_likes:
         if page_com['downvote'] == 0:
@@ -466,6 +473,7 @@ def add_comment_videos(request, video_id):
         # comment_id = int(str(author.user_id)+str(page.page_id))
         Video_comments.objects.create(video_id=video, user_id=author, comment=comment)
         print(video.video_id)
+        Notifications.create_video_comment_notification(sender=author)
     return redirect('myapp:video_detail', video_id=video.video_id)
 
 
@@ -585,3 +593,8 @@ def user_logout(request):
         )
         return redirect("myapp:login")
     return redirect("myapp:dashboard")
+
+
+def notifications_list(request):
+    notifications = Notifications.objects.all().order_by('-created_at')
+    return render(request, 'notification_page.html', {'notifications': notifications})

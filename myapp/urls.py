@@ -45,4 +45,6 @@ urlpatterns = [
     path('user_post/', views.User_post, name='User_post'),
     path('vote/<int:content_id>/', vote.as_view(), name='vote'),
     path('post_response/', views.post_response, name='post_response'),
+
+    path('notifications/', views.notifications_list, name='notifications_list'),
 ]
