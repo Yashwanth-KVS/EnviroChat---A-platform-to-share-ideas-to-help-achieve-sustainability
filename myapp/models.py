@@ -8,7 +8,7 @@ from django.utils import timezone
 
 class Member(User):
     user_id = models.AutoField(unique=True, primary_key=True)
-    email_id = models.EmailField(unique=True)
+    # email_id = models.EmailField(unique=True)
     dob = models.DateField(default=datetime.date.today)
     created_at = models.DateTimeField(auto_now_add=True)
     profile_picture = models.ImageField(upload_to='profile_pictures')
@@ -228,4 +228,7 @@ class MediaContent(models.Model):
         return f"MediaContent {self.id}"
 
 
-
+class UserSession(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    session_key = models.CharField(max_length=60)
+    created_at = models.DateTimeField(auto_now_add=True)

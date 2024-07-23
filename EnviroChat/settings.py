@@ -138,8 +138,8 @@ DEBUG = True
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
-# LOGIN_URL = 'myapp:login'
-# LOGIN_REDIRECT_URL = 'myapp:login'
+LOGIN_URL = 'myapp:login'
+LOGIN_REDIRECT_URL = 'myapp:home'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email settings for Sendinblue
