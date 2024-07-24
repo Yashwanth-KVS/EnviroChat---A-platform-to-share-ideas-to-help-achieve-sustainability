@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+<head>
+    {% block title %}Login History{% endblock %}
+</head>
+{#{% block head %}#}
+{#{{ block.super }}#}
+<link rel="stylesheet" href="{% static 'userhistory.css' %}" type="text/css" />
+{#{% endblock %}#}
+{% block body_block %}
+<div class="container mt-5 mb-5">
+    <div class="header pt-3" style="font-family: 'Berlin Sans FB', sans-serif">
+        <h1>Login History</h1>
+        <div class="header-underline mb-3"></div>
+    </div>
+    <div class="mt-4">
+        <div class="user-history d-flex flex-column-reverse gap-3">
+            <div class='login-details-container'>
+                <table class="aui-responsive-status-table table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                <div class="aui-th">Date</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for current_login in all_history %}
+                        <tr class="aui-table-status-success">
+                            <td data-title="Date">
+                                <div class="aui-td">{{ current_login.created_at }}</div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="second">
+                <div class="login-extra-details d-flex flex-wrap justify-content-around align-items-center pt-4">
+                    <div class="custom-card1 text-center">
+                        <div class="card-body">
+                        <h5 class="card-title">Total Login</h5>
+                            <p class="card-text">{{ all_history|length }}</p>
+                    </div>
+                    </div>
+                    <div class="custom-card1 text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">In Past 24 Hours</h5>
+                            <p class="card-text">{{ one_day_ago|length }}</p>
+                        </div>
+                    </div>
+                    <div class="custom-card1 text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">In Past One Week</h5>
+                            <p class="card-text">{{ seven_day_ago|length }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

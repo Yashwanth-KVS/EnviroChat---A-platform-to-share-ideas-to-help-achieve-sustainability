@@ -27,7 +27,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .forms import UserRegisterForm, PageCreateForm, VideoUploadForm, ContentUploadForm
 from django.http import JsonResponse
-from .models import Member, Pages, Pages_comments, Pages_followers, SiteVisit, SessionCount, Video, Video_comments, Feeds, MediaContent
+from .models import Member, Pages, Pages_comments, Pages_followers, SiteVisit, SessionCount, Video, Video_comments, Feeds, MediaContent, UserSession, Notifications
 
 from django.shortcuts import render
 from myapp.video import VideoCamera, IPWebCam
@@ -206,7 +206,7 @@ def contactus(request):
 #
 #     return JsonResponse({'active_sessions': sessions_data})
 
-
+@login_required()
 def create_pages(request):
     if request.method == 'POST':
         # if request.user.is_authenticated:
@@ -293,6 +293,7 @@ def like_page(request, page_id):
     author = Member.objects.get(pk=1)
     num_upvotes = 0
     Pages_comments.objects.create(page_id=page, user_id=author, upvote=0)
+    Notifications.create_page_like_notification(sender=author)
     pages_likes = Pages_comments.objects.filter(page_id=page_id).values()
     for page_com in pages_likes:
         if page_com['upvote'] == 0:
@@ -305,6 +306,7 @@ def dislike_page(request, page_id):
     author = Member.objects.get(pk=1)
     dislikes = 0
     Pages_comments.objects.create(page_id=page, user_id=author, upvote=0)
+    Notifications.create_page_dislike_notification(sender=author)
     pages_likes = Pages_comments.objects.filter(page_id=page_id).values()
     for page_com in pages_likes:
         if page_com['downvote'] == 0:
@@ -321,6 +323,7 @@ def add_comment(request, page_id):
         now = datetime.datetime.now()
         # comment_id = int(str(author.user_id)+str(page.page_id))
         Pages_comments.objects.create(page_id=page, user_id=author, comment=comment)
+        Notifications.create_page_comment_notification(sender=author)
     return redirect('myapp:go_to_single_page', page_id=page.page_id)
 
 
@@ -329,6 +332,7 @@ def follow_page(request, page_id):
     if request.method == 'POST':
         author = Member.objects.get(pk=1)
         Pages_followers.objects.create(page_id=page, follower_id=author)
+        Notifications.create_follow_notification(sender=author)
         num_pages_followers = Pages_followers.objects.filter(page_id=page).values()
         followed_by = num_pages_followers.count()
         return JsonResponse({'followed by': followed_by})
@@ -355,7 +359,7 @@ def check_session(request):
 
     return render(request, 'home.html', {'session_count': session_count})
 
-
+@login_required()
 def events(request):
     if request.method == 'POST':
         form = VideoUploadForm(request.POST, request.FILES)
@@ -376,7 +380,7 @@ def myvideos(request):
     videos = Video.objects.all()
     return render(request, 'video.html', {'videos': videos, 'media_url': settings.MEDIA_URL})
 
-
+@login_required()
 def delete_video(request, video_id):
     print('delete_video')
     video = get_object_or_404(Video, pk=video_id)
@@ -416,7 +420,7 @@ def video_detail(request, video_id):
     video = Video.objects.filter(video_id=video_id).values()
     return render(request, 'video_detail.html', {'video': video, 'media_url': settings.MEDIA_URL})
 
-
+@login_required()
 def streaming(request):
     return render(request, 'video_stream.html')
 
@@ -441,31 +445,33 @@ def gen(camera):
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
-
+@login_required()
 def like_videos(request, video_id):
     video = get_object_or_404(Video, pk=video_id)
     author = Member.objects.get(pk=1)
     num_upvotes = 0
     Video_comments.objects.create(video_id=video, user_id=author, upvote=0)
     video_likes = Video_comments.objects.filter(video_id=video_id).values()
+    Notifications.create_video_like_notification(sender=author)
     for page_com in video_likes:
         if page_com['upvote'] == 0:
             num_upvotes += 1
     return JsonResponse({'likes': num_upvotes})
 
-
+@login_required()
 def dislike_videos(request, video_id):
     video = get_object_or_404(Video, pk=video_id)
     author = Member.objects.get(pk=1)
     dislikes = 0
     Video_comments.objects.create(video_id=video, user_id=author, upvote=0)
     video_likes = Video_comments.objects.filter(video_id=video_id).values()
+    Notifications.create_video_dislike_notification(sender=author)
     for page_com in video_likes:
         if page_com['downvote'] == 0:
             dislikes += 1
     return JsonResponse({'dislikes': dislikes})
 
-
+@login_required()
 def add_comment_videos(request, video_id):
     video = get_object_or_404(Video, pk=video_id)
     print(video)
@@ -476,6 +482,7 @@ def add_comment_videos(request, video_id):
         now = datetime.datetime.now()
         # comment_id = int(str(author.user_id)+str(page.page_id))
         Video_comments.objects.create(video_id=video, user_id=author, comment=comment)
+        Notifications.create_video_comment_notification(sender=author)
         print(video.video_id)
     return redirect('myapp:video_detail', video_id=video.video_id)
 
@@ -535,7 +542,7 @@ def feed_view(request):
 
     return render(request, 'feeds.html', context)
 
-
+@login_required()
 def User_post(request):
     print("entered")
     print(request)
@@ -600,3 +607,35 @@ def user_logout(request):
 
 def tedtalk(request):
     return render(request,'tedplay.html')
+
+
+
+@login_required
+def login_history(request):
+    all_history = UserSession.objects.filter(user=request.user).order_by('-created_at')
+    one_day_ago = UserSession.objects.filter(user=request.user, created_at__gte=timezone.now() - timedelta(days=1))
+    seven_day_ago = UserSession.objects.filter(user=request.user, created_at__gte=timezone.now() - timedelta(days=7))
+    return render(request, 'login_history.html', {
+        'all_history': all_history,
+        'title': 'Login History',
+        'one_day_ago': one_day_ago,
+        'seven_day_ago': seven_day_ago
+    })
+
+
+@login_required()
+def delete_page(request, page_id):
+    print('delete_page')
+    page = get_object_or_404(Pages, pk=page_id)
+    if request.method == 'POST':
+        page.delete()
+        print('Page deleted')
+        # Optionally, redirect to a different URL after deletion
+        return redirect('myapp:view_pages')
+    # Handle GET request (if any)
+    return redirect('myapp:view_pages')
+
+@login_required()
+def notifications_list(request):
+    notifications = Notifications.objects.all().order_by('-created_at')
+    return render(request, 'notification_page.html', {'notifications':notifications})

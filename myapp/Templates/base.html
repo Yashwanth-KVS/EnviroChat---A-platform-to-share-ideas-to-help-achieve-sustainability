@@ -11,6 +11,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static "apple-touch-icon.png" %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static "favicon-32x32.png" %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static "favicon-16x16.png" %}">
+    <link rel="manifest" href="{% static "site.webmanifest" %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <title>EnviroChat-{% block title %}{% endblock%}</title>
 </head>
 
 {#<div class="container-fluid">#}
@@ -53,17 +59,20 @@
                     Menu
                 </button>
 {#                {% if user.is_authenticated %} should be used only once user is logged in#}
+                {% if user.is_authenticated %}
                 <div class="profile-pic-container dropdown">
                     <button class="profile-img " style=""><img src="{% static 'login.png' %}" style="width: 40px; height: 40px" alt="Profile"></button>
 {#                        <img src="{% static 'login.png' %}" style="width: 40px; height: 40px" alt="Profile">#}
-                        {% if user.is_authenticated%}
+
                         <div class="dropdown-content">
                             <ul>
-{#                                <li><a class="dropdown-item py-2 d-flex align-items-center" href="#"><span class="material-symbols-outlined"#}
-{#                                                                                                           style="padding-right: 10px">Update</span>Update Profile</a></li>#}
+                                <li><a class="dropdown-item py-2 d-flex align-items-center" href="{% url 'myapp:post_response' %}"><span class="material-symbols-outlined"
+                                                                                                           style="padding-right: 10px">post_add</span>Posts</a></li>
+                                <li><a class="dropdown-item py-2 d-flex align-items-center" href="{% url 'myapp:events' %}"><span class="material-symbols-outlined" style="padding-right: 10px">upload_file</span>Upload Media</a></li>
                                 <li><a class="dropdown-item py-2 d-flex align-items-center" href="{% url 'myapp:myvideos' %}"><span class="material-symbols-outlined"
                                                                                                            style="padding-right: 10px">Upload</span>My Uploads</a></li>
-                                <li><a class="dropdown-item py-2 d-flex align-items-center" href="#"><span class="material-symbols-outlined"
+                                <li><a class="dropdown-item py-2 d-flex align-items-center" href="{% url 'myapp:steam' %}"><span class="material-symbols-outlined" style="padding-right: 10px">live_tv</span>Go Live</a></li>
+                                <li><a class="dropdown-item py-2 d-flex align-items-center" href="{% url 'myapp:login_history' %}"><span class="material-symbols-outlined"
                                                                                                            style="padding-right: 10px">History</span>Login History</a></li>
                                 <li><a class="dropdown-item py-2 d-flex align-items-center" href="{% url 'myapp:search' %}"><span class="material-symbols-outlined"
                                                                                                            style="padding-right: 10px">search</span>Search</a></li>
@@ -122,8 +131,8 @@
             <a href="{% url 'myapp:home' %}" class="btn btn-custom w-100 {% if request.path == "" %}active{% endif %}">
                 <button type="submit" style="width: 100%;" class="btn transparent-btn align-center " value="Done">Home</button></a>
 
-            <a href="#" class="btn btn-custom w-100 {% if request.path == "#" %}active{% endif %}">
-                <button type="submit" style="width: 100%;" class="btn transparent-btn align-center " value="Done">Events</button></a>
+{#            <a href="{% url 'myapp:post_response' %}" class="btn btn-custom w-100 {% if request.path == "#" %}active{% endif %}">#}
+{#                <button type="submit" style="width: 100%;" class="btn transparent-btn align-center " value="Done">Posts</button></a>#}
 
             <a href="{% url 'myapp:home' %}#trending-section" class="btn btn-custom w-100">
                 <button type="submit" style="width: 100%;" class="btn transparent-btn align-center " value="Done">Trending</button></a>
@@ -134,8 +143,11 @@
                 <button type="submit" style="width: 100%;" class="btn transparent-btn align-center " value="Done">Search</button></a>
             <a href="{% url 'myapp:login' %}" class="btn btn-custom w-100">
                 <button type="submit" style="width: 100%;" class="btn transparent-btn align-center " value="Done">Login/Register</button></a>
-            <a href="#" class="btn btn-custom w-100">
-                <button type="submit" style="width: 100%;" class="btn transparent-btn align-center " value="Done">Feed</button></a>
+            <a href="{% url 'myapp:notifications_list' %}" class="btn btn-custom w-100">
+                <button type="submit" style="width: 100%;" class="btn transparent-btn align-center " value="Done">Notifications</button></a>
+            <a href="{% url 'myapp:User_post' %}" class="btn btn-custom w-100">
+                <button type="submit" style="width: 100%;" class="btn transparent-btn align-center "
+                        value="Done">Create Post</button></a>
             <a href="{% url 'myapp:tedplay' %}" class="btn btn-custom w-100">
                 <button type="submit" style="width: 100%;" class="btn transparent-btn align-center "
                         value="Done">Know more about Sustainability</button></a>

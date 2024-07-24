@@ -1,13 +1,53 @@
+<!DOCTYPE html>
 {% extends 'base.html'%}
 {% load static %}
 
-
 {% block body_block %}
-<h1>Upload Video</h1>
-    <form method="post" enctype="multipart/form-data" action="{% url 'myapp:events' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-       <input type="submit" name="upload" value="upload" />
-    </form>
+    <style>
+        /* Custom CSS for the form and h1 tag */
+        .upload-form {
+            max-width: 600px; /* Adjust the maximum width of the form */
+            margin: 0 auto; /* Center align the form horizontally */
+            padding: 40px; /* Add more padding around the form */
+            border: 1px solid #ddd; /* Optional: Add a border */
+            background-color: #f9f9f9; /* Light background color */
+            border-radius: 8px; /* Optional: Rounded corners */
+        }
+
+        .upload-form h1 {
+            text-align: center; /* Center align the h1 tag */
+            margin-bottom: 30px; /* Add space below the h1 tag */
+            color: #333; /* Text color */
+            font-size: 36px; /* Larger font size */
+        }
+
+        .upload-form input[type="submit"] {
+            background-color: #4CAF50; /* Green background for submit button */
+            color: #fff; /* White text color */
+            border: none; /* Remove border */
+            padding: 15px 30px; /* More padding inside the button */
+            text-align: center; /* Center align text */
+            text-decoration: none; /* Remove underline */
+            display: inline-block;
+            font-size: 20px; /* Larger font size */
+            margin-top: 20px; /* More margin on top of the button */
+            cursor: pointer; /* Cursor style */
+            border-radius: 8px; /* Optional: Rounded corners */
+            {#padding-bottom: 50px;#}
+        }
+
+        .upload-form input[type="submit"]:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+    </style>
+
+    <div class="upload-form mt-5 mb-5">
+        <h1>Upload Video</h1>
+        <form method="post" enctype="multipart/form-data" action="{% url 'myapp:events' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" name="upload" value="Upload" />
+        </form>
+    </div>
 
 {% endblock %}

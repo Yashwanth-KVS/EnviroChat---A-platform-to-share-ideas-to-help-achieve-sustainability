@@ -9,19 +9,27 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
+<script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>//
 <link rel="stylesheet" href="https://unpkg.com/@trevoreyre/autocomplete-js/dist/style.css" />
 <style>
   .dropdown-menu {
     width: 100%;
   }
+  .autocomplete-result-list li:hover {
+    background-color: #28a745; /* Green color for hover */
+    color: white; /* White text color on hover */
+  }
+
+  .container {
+            min-height: 100%;
+        }
 </style>
 
 <div class="container mt-5 pt-5">
     <div class="col-md-6 mx-auto">
         <div id="autocomplete" class="autocomplete">
-            <input class="autocomplete-input" />
-            <ul class="autocomplete-result-list"></ul>
+            <input class="autocomplete-input form-control" placeholder="Search users..." />
+            <ul class="autocomplete-result-list list-group"></ul>
         </div>
     </div>
 </div>
@@ -29,13 +37,16 @@
 <script>
     new Autocomplete('#autocomplete', {
         search: input => {
+            if (input.length < 1) {
+                return [];
+            }
             const url = `/search_name/?search=${input}`;
             return new Promise(resolve => {
                 fetch(url)
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data.payload)
-                    resolve(data.payload)
+                    console.log(data.payload);
+                    resolve(data.payload);
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
@@ -51,7 +62,7 @@
             }
             return `
             ${group}
-            <li ${props}>
+            <li class="list-group-item" ${props}>
                 <div class="wiki-title">
                     ${result.name}
                 </div>
@@ -60,7 +71,7 @@
         onSubmit: result => {
             const url = `/search_details/${result.id}`;
             window.location.href = url;
-         },
+        },
         getResultValue: result => result.name
     });
 </script>

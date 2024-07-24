@@ -10,6 +10,7 @@
         <div class="custom-container">
             <div class="custom-content-wrapper">
                 <div class="custom-page-detail">
+{#                    <a href="{% url 'myapp:delete_page' page.page_id %}" class="custom-delete-page-button"> Delete Page</a>#}
                     <h1>{{ page.title }}</h1>
                     {% if page.title_img %}
                         <img src="{{ page.title_img.url }}" alt="Title Image">

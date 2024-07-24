@@ -27,6 +27,7 @@
     <orderEntry type="library" name="@trevoreyre" level="application" />
     <orderEntry type="library" name="@trevoreyre/autocomplete-js" level="application" />
     <orderEntry type="library" name="bootstrap.bundle" level="application" />
+    <orderEntry type="library" name="@fortawesome/fontawesome-free" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />

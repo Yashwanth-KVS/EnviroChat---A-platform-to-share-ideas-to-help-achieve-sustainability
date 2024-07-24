@@ -3,22 +3,25 @@
 
 {% block body_block %}
 <div class="container mt-5">
-    <div class="card">
+    <div class="card shadow-lg">
         <!-- Cover Picture -->
         <img src="{{ member.cover_picture.url }}" alt="Cover Picture" class="card-img-top cover-picture" onerror="this.onerror=null; this.src='{% static 'path/to/default-cover.jpg' %}'">
         <div class="card-body text-center">
             <!-- Profile Picture and Follow Button -->
-            <div class="d-flex justify-content-center align-items-center">
+            <div class="d-flex justify-content-center align-items-center mb-4">
                 <div class="profile-picture-box">
-                    <img src="{{ member.profile_picture.url }}" alt="Profile Picture" class="profile-picture img-thumbnail" onerror="this.onerror=null; this.src='{% static 'path/to/default-profile.jpg' %}'">
+                    <img src="{{ member.profile_picture.url }}" alt="Profile Picture" class="profile-picture img-thumbnail rounded-circle" onerror="this.onerror=null; this.src='{% static 'path/to/default-profile.jpg' %}'">
                 </div>
-                <button class="btn btn-primary follow-btn ms-3" onclick="followUser('{{ member.username }}')">Follow</button>
+                <button class="btn btn-success follow-btn ms-3" onclick="followUser('{{ member.username }}')">Follow</button>
             </div>
             <!-- User Details -->
             <h2 class="card-title mt-3">{{ member.username }}</h2>
-            <p class="card-text">{{ member.email_id }}</p>
+            <p class="card-text text-muted">{{ member.email_id }}</p>
             <p class="card-text"><strong>Date of Birth:</strong> {{ member.dob }}</p>
-            <p class="card-text"><strong>Interests:</strong> {{ member.interests }}</p>
+            <p class="card-text"><strong>Interests:</strong></p>
+            <div class="interests-box" id="interests-box">
+                <!-- Interests will be populated by JavaScript -->
+            </div>
             <p class="card-text"><strong>Joined:</strong> {{ member.created_at }}</p>
         </div>
     </div>
@@ -27,32 +30,83 @@
 <style>
     body {
         font-family: 'Roboto', sans-serif;
+        background-color: #f0f2f5;
+        margin: 0;
+        padding: 0;
     }
     .cover-picture {
         width: 100%;
-        height: 200px; /* Adjust the height as needed */
+        height: 400px; /* Increased height for better visual */
         object-fit: cover;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
     }
     .profile-picture-box {
-        width: 150px; /* Increased size by 50% */
-        height: 150px; /* Increased size by 50% */
+        width: 150px;
+        height: 150px;
         border: 5px solid white;
         background-color: white;
+        border-radius: 50%; /* Makes the box circular */
         display: flex;
         justify-content: center;
         align-items: center;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+    }
+    .profile-picture-box:hover {
+        transform: scale(1.05);
     }
     .profile-picture {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        border-radius: 50%; /* Makes the image circular */
     }
     .card {
         margin-top: 20px;
+        border: none;
+        border-radius: 10px;
+        transition: box-shadow 0.3s ease-in-out;
+        background: linear-gradient(to bottom, #ffffff, #f0f2f5);
+    }
+    .card:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     }
     .follow-btn {
-        margin-left: 15px; /* Space between profile picture and button */
+        margin-left: 15px;
+        font-weight: bold;
+        background-color: #28a745; /* Green color */
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
     }
+    .follow-btn:hover {
+        background-color: #218838; /* Darker green on hover */
+        transform: scale(1.05);
+    }
+    .interests-box {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 15px;
+    }
+    .interest {
+        background-color: #28a745; /* Green color */
+        color: white;
+        padding: 10px 20px;
+        margin: 5px;
+        border-radius: 20px;
+        font-size: 14px;
+        transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .interest:hover {
+        background-color: #218838;
+        transform: scale(1.05);
+    }
+
 </style>
 
 <script>
@@ -60,5 +114,17 @@
         // Implement the follow user functionality here
         alert('Followed ' + username);
     }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const interests = "{{ member.interests }}".split(',');
+        const interestsBox = document.getElementById('interests-box');
+
+        interests.forEach(function(interest) {
+            const interestElement = document.createElement('span');
+            interestElement.classList.add('interest');
+            interestElement.textContent = interest.trim();
+            interestsBox.appendChild(interestElement);
+        });
+    });
 </script>
 {% endblock body_block %}

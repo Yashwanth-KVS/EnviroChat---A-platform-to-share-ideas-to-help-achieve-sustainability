@@ -45,5 +45,9 @@ urlpatterns = [
     path('user_post/', views.User_post, name='User_post'),
     path('vote/<int:content_id>/', vote.as_view(), name='vote'),
     path('post_response/', views.post_response, name='post_response'),
-    path('tedplay/', views.tedtalk, name='tedplay')
+    path('tedplay/', views.tedtalk, name='tedplay'),
+    path('login_history/', views.login_history, name='login_history'),
+    path('delete_page/', views.delete_page, name='delete_page'),
+    path('notifications/', views.notifications_list, name='notifications_list'),
+
 ]
