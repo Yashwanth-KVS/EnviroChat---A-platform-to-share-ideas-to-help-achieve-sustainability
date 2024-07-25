@@ -1,9 +1,14 @@
 {% extends "base.html" %}
+<head>
+    {% block title %}Login{% endblock %}
+{#<link rel="stylesheet" type="text/css" href="{% static 'style_login.css' %}">#}
+</head>
 {% load static %}
 
 {% block body_block %}
-<link rel="stylesheet" type="text/css" href="{% static 'style_login.css' %}">
-<div class="login-container mt-5">
+    <link rel="stylesheet" type="text/css" href="{% static 'style_login.css' %}">
+{#<div style="padding-bottom: 50px">#}
+<div class="login-container mt-5 mb-5" >
     <h2 class="login-heading">Login</h2>
     <div class="login-form-container">
         <form method="post" class="login-form">
@@ -26,4 +31,5 @@
         </ul>
     {% endif %}
 </div>
+{#    </div>#}
 {% endblock %}

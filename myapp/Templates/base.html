@@ -10,7 +10,12 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static "redketchup/apple-touch-icon.png" %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static "redketchup/favicon-32x32.png" %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static "redketchup/favicon-16x16.png" %}">
+    <link rel="manifest" href="{% static "redketchup/site.webmanifest" %}">
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <title>EnviroChat-{% block title %}{% endblock %}</title>
 </head>
 
 {#<div class="container-fluid">#}

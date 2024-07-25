@@ -27,6 +27,10 @@
     <orderEntry type="library" name="@trevoreyre" level="application" />
     <orderEntry type="library" name="@trevoreyre/autocomplete-js" level="application" />
     <orderEntry type="library" name="bootstrap.bundle" level="application" />
+    <orderEntry type="library" name="jquery-3.5.1.slim" level="application" />
+    <orderEntry type="library" name="@popperjs/core" level="application" />
+    <orderEntry type="library" name="@trevoreyre" level="application" />
+    <orderEntry type="library" name="@trevoreyre/autocomplete-js" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
