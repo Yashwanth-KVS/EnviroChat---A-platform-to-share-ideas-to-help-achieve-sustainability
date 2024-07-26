@@ -20,17 +20,17 @@ from django.views import View
 
 
 def User_post(request):
-    print("entered")
+    # print("entered")
     print(request)
     if request.method == 'POST':
-        print("entered post")
+        # print("entered post")
         form = ContentUploadForm(request.POST, request.FILES)
 
         if form.is_valid():
             new_post = form.save(commit=False)
             print(form.cleaned_data['content'])
             print(form.cleaned_data['image'])
-            print("entered valid")
+            # print("entered valid")
             # media_content = MediaContent(
             #     content=form.cleaned_data['content'],
             #     image=form.cleaned_data.get('image'),

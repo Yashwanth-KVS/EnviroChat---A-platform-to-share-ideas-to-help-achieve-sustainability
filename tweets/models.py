@@ -11,6 +11,7 @@ from PIL import Image
 
 
 class MediaContent(models.Model):
+    # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='media_contents')
     content = models.TextField()
     image = models.ImageField(upload_to='images/%y', blank=True, null=True)
     video = models.FileField(upload_to='videos/%y', blank=True, null=True)
