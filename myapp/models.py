@@ -1,6 +1,6 @@
 from random import choices
 
-from django.db import models
+from django.db import models, OperationalError
 import datetime
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -223,20 +223,44 @@ class Video_comments(models.Model):
     def __str__(self):
         return str(self.comment)
 
+# class MediaContent(models.Model):
+#     content = models.TextField()
+#     image = models.ImageField(upload_to='images/%y', blank=True, null=True)
+#     video = models.FileField(upload_to='videos/%y', blank=True, null=True)
+#     likes = models.IntegerField(default=0)
+#     dislikes = models.IntegerField(default=0)
+#     feed = models.ForeignKey(Feeds, on_delete=models.CASCADE, related_name='media_related',
+#                              default=1)
+#     created_at = models.DateTimeField(default=timezone.now)
+#
+#     def __str__(self):
+#         return f"MediaContent {self.id}"
+#
+def get_default_user():
+    try:
+        default_user, created = User.objects.get_or_create(username='Nobita', defaults={'password': 'Doremon_7'})
+        if created:
+            default_user.set_password('Doremon_7')
+            default_user.save()
+        return default_user.id
+    except OperationalError:
+        # This exception might be raised if the database is not ready yet (e.g., during initial migration)
+        return 1  # Return a fallback user ID, which you should ensure exists
+
+
 class MediaContent(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=get_default_user)
     content = models.TextField()
     image = models.ImageField(upload_to='images/%y', blank=True, null=True)
     video = models.FileField(upload_to='videos/%y', blank=True, null=True)
-    likes = models.IntegerField(default=0)
-    dislikes = models.IntegerField(default=0)
-    feed = models.ForeignKey(Feeds, on_delete=models.CASCADE, related_name='media_related',
-                             default=1)
+    likes = models.ManyToManyField(User, related_name='liked_posts')
+    dislikes = models.ManyToManyField(User, related_name='disliked_posts')
+    saves = models.ManyToManyField(User, related_name='saved_posts')
+    feed = models.ForeignKey(Feeds, on_delete=models.CASCADE, related_name='media_related',default=1)
     created_at = models.DateTimeField(default=timezone.now)
 
-    def __str__(self):
-        return f"MediaContent {self.id}"
-
-
+    def _str_(self):
+        return f"MediaContent{self.id}"
 
 
 class UserSession(models.Model):
