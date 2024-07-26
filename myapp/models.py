@@ -45,6 +45,8 @@ class Feeds(models.Model):
     threads = models.ManyToManyField('Threads', related_name='feeds_threads', blank=True)
     pages = models.ManyToManyField('Pages', related_name='feeds_pages', blank=True)
     posts = models.ManyToManyField('Posts', related_name='feeds_posts', blank=True)
+    videos = models.ManyToManyField('Video', related_name='feeds_videos', blank=True)
+    media = models.ManyToManyField('MediaContent', related_name='feeds_media', blank=True)
 
     class Meta:
         verbose_name_plural = 'Feeds'
@@ -101,6 +103,7 @@ class Posts(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    feed = models.ForeignKey(to=Feeds, on_delete=models.CASCADE, related_name="posts_related", default=1)
 
     def __str__(self):
         return str(self.id)
@@ -198,6 +201,9 @@ class Video(models.Model):
     video_id = models.IntegerField(primary_key=True)
     video = models.FileField(upload_to='videos/%Y/%m/%d')
     uploaded_by = models.ForeignKey(to=Member, on_delete=models.CASCADE, null=True, blank=True, default = 1)
+    feed = models.ForeignKey(Feeds, on_delete=models.CASCADE, related_name='videos_related',
+                             default=1)
+    uploaded_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return str(self.Title)
@@ -223,6 +229,9 @@ class MediaContent(models.Model):
     video = models.FileField(upload_to='videos/%y', blank=True, null=True)
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
+    feed = models.ForeignKey(Feeds, on_delete=models.CASCADE, related_name='media_related',
+                             default=1)
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f"MediaContent {self.id}"

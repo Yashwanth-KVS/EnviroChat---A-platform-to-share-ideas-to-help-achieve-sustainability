@@ -515,32 +515,7 @@ def search_detail(request, id):
     mem = get_object_or_404(Member, id=id)
     return render(request, "search-details.html", {"member": mem})
 
-def feed_view(request):
-    # Query feeds and related objects
-    feed_items = []
 
-    feed_objects = Feeds.objects.all()[:10]  # Fetching top 10 feeds
-
-    for feed in feed_objects:
-        # Fetch related threads, pages, and posts for each feed
-        threads = feed.threads_related.all()[:10]  # Fetching top 3 related threads
-        pages = feed.pages_related.all().values()[:10]  # Fetching top 3 related pages
-        #pages = Pages.objects.all()
-        #posts = feed.posts_related.all()[:3]  # Fetching top 3 related posts
-        print(pages)
-        # Append to feed_items list
-        feed_items.append({
-            'feed': feed,
-            'threads': threads,
-            'pages': pages,
-            #'posts': posts
-        })
-
-    context = {'feed_items': feed_items}
-
-    print(context)
-
-    return render(request, 'feeds.html', context)
 
 @login_required()
 def User_post(request):
@@ -639,3 +614,56 @@ def delete_page(request, page_id):
 def notifications_list(request):
     notifications = Notifications.objects.all().order_by('-created_at')
     return render(request, 'notification_page.html', {'notifications':notifications})
+
+@login_required()
+def feed_view(request):
+    # Query feeds and related objects
+    feed_items = []
+
+    feed_objects = Feeds.objects.all()  # Fetch all feeds
+
+    for feed in feed_objects:
+        # Fetch related threads, pages, posts, and videos for each feed
+        threads = feed.threads_related.order_by('created_at')[:5]  # Fetch top 5 related threads
+        pages = feed.pages_related.order_by('-created_at')[:5]     # Fetch top 5 related pages
+        posts = feed.posts_related.order_by('-created_at')[:5]     # Fetch top 5 related posts
+        videos = feed.videos_related.order_by('-uploaded_at')[:5]  # Fetch top 5 related videos
+        media_related = feed.media_related.order_by('-created_at')[:5]  # Fetch top 5 related media
+
+        media_items = [{
+            'content': media.content,
+            'image': media.image.url if media.image else None,
+            'video': media.video.url if media.video else None,
+            'likes': media.likes,
+            'dislikes': media.dislikes
+        } for media in media_related]
+
+        page_items = [{
+            'title': page.title,
+            'content': page.content,
+            'title_img': page.title_img.url if page.title_img else '',
+            'content_img': page.content_img.url if page.content_img else '',
+            'about_page': page.about_page,
+            'about_img': page.about_img.url if page.about_img else '',
+            'created_at': page.created_at,
+            'updated_at': page.updated_at
+        } for page in pages]
+
+        post_items = [{
+            'content': post.content,
+            'created_at': post.created_at,
+            'updated_at': post.updated_at
+        } for post in posts]
+
+        feed_items.append({
+            'feed': feed,
+            'threads': threads,
+            'pages': page_items,
+            'posts': post_items,
+            'videos': videos,
+            'media': media_items
+        })
+
+    context = {'feed_items': feed_items}
+
+    return render(request, 'feeds.html', context)

@@ -1,113 +1,100 @@
-{#{% extends "base.html" %}#}
-{##}
-{#{% block content %}#}
-{#<div class="feed-container">#}
-{#    {% for item in feed_items %}#}
-{#        <div class="feed-item">#}
-{#            <!-- Feed Block -->#}
-{#            <div class="feed-section feed-block">#}
-{#                <h2>{{ item.feed.title }}</h2>#}
-{#            </div>#}
-{##}
-{#            <!-- Threads Block -->#}
-{#            <div class="feed-section threads-block">#}
-{#                <h3>Threads:</h3>#}
-{#                {% if item.threads.count > 0 %}#}
-{#                    <ul>#}
-{#                        {% for thread in item.threads %}#}
-{#                            <li>{{ thread.query }}</li>#}
-{#                        {% endfor %}#}
-{#                    </ul>#}
-{#                {% else %}#}
-{#                    <p>No threads available.</p>#}
-{#                {% endif %}#}
-{#            </div>#}
-{##}
-{#            <!-- Pages Block -->#}
-{#            <div class="feed-section pages-block">#}
-{#                <h3>Pages:</h3>#}
-{#                {% if item.pages %}#}
-{#                    <ul>#}
-{#                        {% for page in item.pages %}#}
-{#                            <li>{{ page }}</li>#}
-{#                        {% endfor %}#}
-{#                    </ul>#}
-{#                {% else %}#}
-{#                    <p>No pages available.</p>#}
-{#                {% endif %}#}
-{#            </div>#}
-{##}
-{#            <!-- Posts Block -->#}
-{#            <div class="feed-section posts-block">#}
-{#                <h3>Posts:</h3>#}
-{#                {% if item.posts %}#}
-{#                    <ul>#}
-{#                        {% for post in item.posts %}#}
-{#                            <li>{{ post.content }}</li>#}
-{#                        {% endfor %}#}
-{#                    </ul>#}
-{#                {% else %}#}
-{#                    <p>No posts available.</p>#}
-{#                {% endif %}#}
-{#            </div>#}
-{#        </div>#}
-{#    {% empty %}#}
-{#        <p>No feeds available.</p>#}
-{#    {% endfor %}#}
-{#</div>#}
-{#{% endblock %}#}
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block body_block %}
+{#    <h1> Feeds </h1>#}
     <link rel="stylesheet" type="text/css" href="{% static 'bosun-style-sheet.css' %}">
-<div class="feed-container">
-    {% for item in feed_items %}
-        <div class="feed-item">
-            <!-- Feed Block -->
-            <div class="feed-section feed-block">
-                <h2>{{ item.feed.title }}</h2>
-            </div>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles_posts.css' %}">
 
-            <!-- Threads Block -->
-            <div class="feed-section threads-block">
-                <h3>Threads:</h3>
-                {% if item.threads.count > 0 %}
-                    <ul>
-                        {% for thread in item.threads %}
-                            <li>{{ thread.query }}</li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p>No threads available.</p>
-                {% endif %}
-            </div>
+    <div class="feed-container">
+        {% for item in feed_items %}
+            <div class="feed-item">
+                <!-- Feed Block -->
+                <div class="feed-section feed-block">
+                    <h2>{{ item.feed.title }}</h2>
+                </div>
 
-            <!-- Pages Block -->
-            <div class="feed-section pages-block">
-                <h3>Pages:</h3>
-                {% if item.pages %}
-                    <ul>
-                        {% for page in item.pages %}
-                            <li>
-                                <h4>{{ page.title }}</h4>
-                                <p>{{ page.content }}</p>
-                                <img src="{{ page.title_img.url }}" alt="{{ page.title }}">
-                                <img src="{{ page.content_img.url }}" alt="Content Image">
-                                <p>About: {{ page.about_page }}</p>
-                                <img src="{{ page.about_img.url }}" alt="About Image">
-                                <p>Created At: {{ page.created_at }}</p>
-                                <p>Updated At: {{ page.updated_at }}</p>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p>No pages available.</p>
-                {% endif %}
+ <!-- Pages Block -->
+                <div class="feed-section pages-block">
+{#                    <h3>Pages:</h3>#}
+                    {% if item.pages %}
+                        <ul>
+                            {% for page in item.pages %}
+                                <li>
+                                    <h4>{{ page.title }}</h4>
+                                    <p>{{ page.content }}</p>
+                                    {% if page.title_img %}
+                                        <img src="{{ page.title_img }}" alt="{{ page.title }}">
+                                    {% endif %}
+                                    {% if page.content_img %}
+                                        <img src="{{ page.content_img }}" alt="Content Image" >
+                                    {% endif %}
+                                    <p>About: {{ page.about_page }}</p>
+                                    {% if page.about_img %}
+                                        <img src="{{ page.about_img }}" alt="About Image" >
+                                    {% endif %}
+                                    <p>Created At: {{ page.created_at }}</p>
+                                    <p>Updated At: {{ page.updated_at }}</p>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No pages available.</p>
+                    {% endif %}
+                </div>
+
+                <!-- Posts Block -->
+                <div class="feed-section posts-block">
+{#                    <h3>Posts:</h3>#}
+                    {% if item.media %}
+                        <ul>
+                            {% for media in item.media %}
+
+                                <li>
+                                    <p>{{ media.content }}</p>
+                                        <img src="{{ media.image }}" alt="Post Image">
+                                    {% empty %}
+                                         <p>No posts available.</p>
+                            {% endfor %}
+                        </ul>
+
+                    {% endif %}
+                </div>
+
+                <!-- Threads Block -->
+                <div class="feed-section threads-block">
+{#                    <h3>Threads:</h3>#}
+                    {% if item.threads %}
+                        <ul>
+                            {% for thread in item.threads %}
+                                <li>{{ thread.query }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No threads available.</p>
+                    {% endif %}
+                </div>
+
+                <!-- Videos Block -->
+                <div class="feed-section videos-block">
+                    <h3>Videos:</h3>
+                    {% if item.videos %}
+                        <ul>
+                            {% for video in item.videos %}
+                                <li>
+                                    <h4>{{ video.Title }}</h4>
+                                    <p>Created At: {{ video.uploaded_at }}</p>
+                                    <video width="100%" controls>
+                                        <source src="{{ video.video.url }}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No videos available.</p>
+                    {% endif %}
+                </div>
             </div>
-        </div>
-    {% empty %}
-        <p>No feeds available.</p>
-    {% endfor %}
-</div>
+        {% endfor %}
+    </div>
 {% endblock %}
