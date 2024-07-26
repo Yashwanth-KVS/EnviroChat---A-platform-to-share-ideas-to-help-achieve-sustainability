@@ -1,3 +1,5 @@
+{#This is new html ----- specific_posts#}
+
 {% extends "base.html" %}
 {% load static %}
 
@@ -42,7 +44,7 @@
                             <span class="like-count">{{ post.likes.count }} </span>
                         </form>
                     </div>
-                    
+
                     <div class="middle-buttons">
                         <form action="{% url 'myapp:downvote' post.id %}" method="POST" class="dislike-form">
                             {% csrf_token %}

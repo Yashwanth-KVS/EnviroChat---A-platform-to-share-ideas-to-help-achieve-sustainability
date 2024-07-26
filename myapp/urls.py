@@ -43,11 +43,16 @@ urlpatterns = [
     path('search_details/<int:id>', views.search_detail, name="search_name"),
     path('feeds/', views.feed_view, name='feeds'),
     path('user_post/', views.User_post, name='User_post'),
-    path('vote/<int:content_id>/', vote.as_view(), name='vote'),
+    path('vote/<int:content_id>/', views.vote, name='vote'),
     path('post_response/', views.post_response, name='post_response'),
     path('tedplay/', views.tedtalk, name='tedplay'),
     path('login_history/', views.login_history, name='login_history'),
     path('delete_page/', views.delete_page, name='delete_page'),
     path('notifications/', views.notifications_list, name='notifications_list'),
+    path('vote/<int:content_id>/', views.vote, name='vote'),  # Use post_id for consistency
+    path('downvote/<int:content_id>/', views.downvote, name='downvote'),  # Use post_id for consistency
+    path('savecontent/<int:content_id>/', views.savecontent, name='savecontent'),  # Use post_id for consistency
+    path('specific_posts/<int:user_id>/', views.specific_posts, name='specific_posts'),  # Path to view posts by a specific user
+
 
 ]
