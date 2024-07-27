@@ -7,8 +7,6 @@ body {
 
 /* Container styling */
 .container {
-    /*max-width: 800px;*/
-    /*margin: 0 auto;*/
     text-align: center;
 }
 
@@ -60,30 +58,52 @@ body {
 }
 
 .post-buttons {
-    margin-top: 10px;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 10px;
 }
 
-.post-buttons .btn {
-    margin: 0 5px;
+.button-container {
+    display: flex;
+    align-items: center;
 }
 
-.btn-primary {
-    background-color: #6c757d;
+.btn-like, .btn-dislike, .btn-save {
+    background-color: transparent;
     border: none;
-    transition: background-color 0.3s ease;
+    cursor: pointer;
+    font-size: 1.5em; /* Adjust icon size */
+    color: #6c757d;
+    padding: 5px;
+    transition: color 0.3s ease;
 }
 
-.btn-primary:hover {
-    background-color: #5a6268;
+.btn-like:hover, .btn-dislike:hover, .btn-save:hover {
+    color: #007BFF; /* Change color on hover */
 }
 
-.btn-secondary {
-    background-color: #6c757d;
-    border: none;
+.like-count, .dislike-count, .save-count {
+    margin-left: 5px;
+    font-size: 0.9em;
+    color: #666;
 }
 
-.btn-secondary:hover {
-    background-color: #5a6268;
+.user-info {
+    text-align: left;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.user-info a {
+    text-decoration: none;
+    color: #000; /* Black color */
+    font-weight: normal; /* Normal weight */
+    transition: color 0.3s ease, font-weight 0.3s ease; /* Smooth transition */
+}
+
+.user-info a:hover {
+    color: #28a745; /* Green color on hover */
+    font-weight: bold; /* Bold on hover */
+    text-decoration: none; /* Remove underline */
 }
