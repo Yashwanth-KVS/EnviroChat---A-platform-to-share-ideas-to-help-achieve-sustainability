@@ -9,7 +9,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>//
+<script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
 <link rel="stylesheet" href="https://unpkg.com/@trevoreyre/autocomplete-js/dist/style.css" />
 <style>
   .dropdown-menu {
@@ -19,10 +19,10 @@
     background-color: #28a745; /* Green color for hover */
     color: white; /* White text color on hover */
   }
-
-  .container {
-            min-height: 100%;
-        }
+  .alert-message {
+    display: none;
+    margin-top: 20px;
+  }
 </style>
 
 <div class="container mt-5 pt-5">
@@ -30,6 +30,9 @@
         <div id="autocomplete" class="autocomplete">
             <input class="autocomplete-input form-control" placeholder="Search users..." />
             <ul class="autocomplete-result-list list-group"></ul>
+        </div>
+        <div id="alert-message" class="alert alert-warning alert-message" role="alert">
+            User does not exist. <a href="/register" class="alert-link">Click here to register a new user.</a>
         </div>
     </div>
 </div>
@@ -45,23 +48,23 @@
                 fetch(url)
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data.payload);
+                    if (data.payload && data.payload.length === 0) {
+                        // If no results, show the alert message
+                        document.getElementById('alert-message').style.display = 'block';
+                    } else {
+                        document.getElementById('alert-message').style.display = 'none';
+                    }
                     resolve(data.payload);
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
+                    document.getElementById('alert-message').style.display = 'block';
                     resolve([]);
                 });
             });
         },
         renderResult: (result, props) => {
-            let group = '';
-            if(result.index % 3 === 0){
-                group = `<li class="group">Group</li>`;
-                console.log(result.name);
-            }
             return `
-            ${group}
             <li class="list-group-item" ${props}>
                 <div class="wiki-title">
                     ${result.name}
@@ -69,8 +72,14 @@
             </li>`;
         },
         onSubmit: result => {
-            const url = `/search_details/${result.id}`;
-            window.location.href = url;
+            if (!result || !result.id) {
+                // No valid result found, show alert message
+                document.getElementById('alert-message').style.display = 'block';
+            } else {
+                // Redirect to user details page
+                const url = `/search_details/${result.id}`;
+                window.location.href = url;
+            }
         },
         getResultValue: result => result.name
     });

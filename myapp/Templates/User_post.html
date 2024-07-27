@@ -1,3 +1,5 @@
+{#User_post#}
+
 {#{% extends "tweets/base.html" %}#}
 {##}
 {##}
@@ -51,7 +53,7 @@
 <div class="container mt-5">
     <h1 class="text-center mb-4">Upload Content</h1>
     <div class="card p-4 shadow-sm custom-card">
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" action="{% url 'myapp:User_post'%}">
             {% csrf_token %}
             <div class="form-group mb-3">
                 <label for="id_content" class="form-label">Content:</label>

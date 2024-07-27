@@ -517,33 +517,33 @@ def search_detail(request, id):
 
 
 
-@login_required()
-def User_post(request):
-    print("entered")
-    print(request)
-    if request.method == 'POST':
-        print("entered post")
-        form = ContentUploadForm(request.POST, request.FILES)
-
-        if form.is_valid():
-            new_post = form.save(commit=False)
-            print(form.cleaned_data['content'])
-            print(form.cleaned_data['image'])
-            print("entered valid")
-            # media_content = MediaContent(
-            #     content=form.cleaned_data['content'],
-            #     image=form.cleaned_data.get('image'),
-            #     video=form.cleaned_data.get('video')
-            # )
-            # print(media_content)
-            # media_content.save()
-            new_post.save()
-
-            return redirect('myapp:post_response')
-    else:
-        print("entered else")
-        form = ContentUploadForm()
-    return render(request, 'User_post.html', {'form': form})
+# @login_required()
+# def User_post(request):
+#     print("entered")
+#     print(request)
+#     if request.method == 'POST':
+#         print("entered post")
+#         form = ContentUploadForm(request.POST, request.FILES)
+#
+#         if form.is_valid():
+#             new_post = form.save(commit=False)
+#             print(form.cleaned_data['content'])
+#             print(form.cleaned_data['image'])
+#             print("entered valid")
+#             # media_content = MediaContent(
+#             #     content=form.cleaned_data['content'],
+#             #     image=form.cleaned_data.get('image'),
+#             #     video=form.cleaned_data.get('video')
+#             # )
+#             # print(media_content)
+#             # media_content.save()
+#             new_post.save()
+#
+#             return redirect('myapp:post_response')
+#     else:
+#         print("entered else")
+#         form = ContentUploadForm()
+#     return render(request, 'User_post.html', {'form': form})
 
 
 class vote(View):
@@ -561,10 +561,10 @@ class vote(View):
         return redirect('post_responses')
 
 
-def post_response(request):
-    print("entered post_resp")
-    posts = MediaContent.objects.all()
-    return render(request, 'post_response.html', {'posts': posts})
+# def post_response(request):
+#     print("entered post_resp")
+#     posts = MediaContent.objects.all()
+#     return render(request, 'post_response.html', {'posts': posts})
 
 
 def user_logout(request):
@@ -667,3 +667,100 @@ def feed_view(request):
     context = {'feed_items': feed_items}
 
     return render(request, 'feeds.html', context)
+
+
+
+@login_required
+def vote(request, content_id):
+    content = get_object_or_404(MediaContent, id=content_id)
+    user = request.user
+
+    if content.likes.filter(id=user.id).exists():
+        content.likes.remove(user)
+        print("disliked")
+    else:
+        content.likes.add(user)
+        print("likked")
+
+    print("i am here ....", content.likes.all())
+    return redirect('myapp:post_response')
+
+@login_required
+def downvote(request, content_id):
+    content = get_object_or_404(MediaContent, id=content_id)
+    user = request.user
+
+    if content.dislikes.filter(id=user.id).exists():
+        content.dislikes.remove(user)
+        print("disliked")
+    else:
+        content.dislikes.add(user)
+        print("likked")
+
+    print("i am here ....", content.dislikes.all())
+    return redirect('myapp:post_response')
+
+
+@login_required
+def savecontent(request, content_id):
+    content = get_object_or_404(MediaContent, id=content_id)
+    user = request.user
+
+    if content.saves.filter(id=user.id).exists():
+        content.saves.remove(user)
+        print("disliked")
+    else:
+        content.saves.add(user)
+        print("likked")
+
+    return redirect('myapp:post_response')
+
+@login_required
+def specific_posts(request, user_id):
+    print("entered")
+    user = get_object_or_404(User, id=user_id)
+    posts = MediaContent.objects.filter(user__id=user_id).order_by('-id')
+    return render(request, 'specific_posts.html', {'posts': posts, 'user': user})
+
+@login_required()
+def User_post(request):
+    user_id = request.user.id
+    print(user_id)
+    print("entered")
+    print(request)
+    if request.method == 'POST':
+        print("entered post")
+        form = ContentUploadForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            new_post = form.save(commit=False)
+            print(form.cleaned_data['content'])
+            print(form.cleaned_data['image'])
+            print("entered valid")
+            # media_content = MediaContent(
+            #     content=form.cleaned_data['content'],
+            #     image=form.cleaned_data.get('image'),
+            #     video=form.cleaned_data.get('video')
+            # )
+            # print(media_content)
+            # media_content.save()
+            MediaContent.objects.create(
+                user_id=user_id,
+                content=form.cleaned_data['content'],
+                image=form.cleaned_data['image'],
+                video=form.cleaned_data['video']
+            )
+            print(new_post)
+            # new_post.save()
+
+            return redirect('myapp:post_response')
+    else:
+        print("entered else")
+        form = ContentUploadForm()
+    return render(request, 'User_post.html', {'form': form})
+
+
+def post_response(request):
+    print("entered post_resp")
+    posts = MediaContent.objects.all()
+    return render(request, 'post_response.html', {'posts': posts})
