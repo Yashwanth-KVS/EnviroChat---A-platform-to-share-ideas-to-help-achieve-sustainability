@@ -1,16 +1,10 @@
+
 {% extends "myapp/base.html" %}
-{% load static %}
 {% block title %}Dashboard{% endblock %}
 
 {% block body_block %}
 <div class="container mt-5">
-    <h2 class="heading-title">Welcome to your Dashboard</h2>
-    {% if messages %}
-        <ul class="mt-3">
-            {% for message in messages %}
-                <li class="alert alert-success">{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+    <h2 class="heading-title">Dashboard</h2>
+    <a href="{% url 'myapp:logout_page' %}">Logout</a>
 </div>
 {% endblock %}

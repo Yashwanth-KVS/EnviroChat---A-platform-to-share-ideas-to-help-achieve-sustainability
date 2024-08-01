@@ -12,12 +12,6 @@
             <a href="{% url 'myapp:login' %}">
                 <img src="{% static 'image-logo.jpg' %}" alt="EnviroChat" style="width:370px;height:128px;">
             </a>
-              {% if user.is_authenticated %}
-                <form method="post" action="{% url 'myapp:logout' %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-secondary">Logout</button>
-                </form>
-            {% endif %}
         </div>
     </div>
 
