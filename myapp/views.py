@@ -23,7 +23,7 @@ def register(request):
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created for {username}!')
             logger.debug(f"Account created for {username}")
-            return redirect('myapp:dashboard')
+            return redirect('myapp:login')
     else:
         logger.debug("GET request received in register view")
         form = UserRegisterForm()
@@ -67,7 +67,7 @@ class CustomPasswordResetView(PasswordResetView):
     success_url = reverse_lazy('myapp:password_reset_done')
     success_message = "Password reset link has been sent to your email."
 
-
+@login_required()
 def dashboard(request):
     return render(request, 'myapp/dashboard.html')
 
