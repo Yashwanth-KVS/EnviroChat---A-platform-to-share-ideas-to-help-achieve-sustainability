@@ -107,23 +107,39 @@ def home(request):
         {"title": "Advocate for Policy Change",
          "description": "Mobilize the community to advocate for environmental policies and influence decision-makers to implement sustainable practices and regulations."}
     ]
-    total_visits = request.session.get('total_visits', 0)
-    site_visit, created = SiteVisit.objects.get_or_create(id=1)
-    site_visit.visit_count += 1
-    site_visit.save()
-    print(f"Updated global visit count to: {site_visit.visit_count}")
-    view_count = site_visit.visit_count
-    # if 'view_count' in request.session:
-    #     request.session['view_count'] += 1
-    # else:
-    #     request.session['view_count'] = 1
-    #
-    # view_count = request.session['view_count']
-    # print(response)
     active_sessions = active_sessions_count()
-    # print("viewcount", view_count)
-    return render(request, 'home.html', {'view_count': view_count, 'active_sessions': active_sessions
-        , 'goals': goals, 'user': request.user})
+    if 'visited' not in request.COOKIES:
+        site_visit, created = SiteVisit.objects.get_or_create(id=1)
+        site_visit.visit_count += 1
+        site_visit.save()
+        view_count = site_visit.visit_count
+        response = render(request, 'home.html', {'view_count': view_count, 'active_sessions': active_sessions
+            , 'goals': goals, 'user': request.user})
+        response.set_cookie('visited', 'yes', max_age=60 * 60 * 24 * 1)
+        print(f"Updated global visit count to: {site_visit.visit_count}")
+    else:
+        print("Visit already counted using cookies.")
+        view_count = SiteVisit.objects.get(id=1).visit_count
+        response = render(request, 'home.html', {'view_count': view_count, 'active_sessions': active_sessions
+            , 'goals': goals, 'user': request.user})
+    # total_visits = request.session.get('total_visits', 0)
+    # site_visit, created = SiteVisit.objects.get_or_create(id=1)
+    # site_visit.visit_count += 1
+    # site_visit.save()
+    # print(f"Updated global visit count to: {site_visit.visit_count}")
+    # view_count = site_visit.visit_count
+    # # if 'view_count' in request.session:
+    # #     request.session['view_count'] += 1
+    # # else:
+    # #     request.session['view_count'] = 1
+    # #
+    # # view_count = request.session['view_count']
+    # # print(response)
+    # active_sessions = active_sessions_count()
+    # # print("viewcount", view_count)
+    # return render(request, 'home.html', {'view_count': view_count, 'active_sessions': active_sessions
+    #     , 'goals': goals, 'user': request.user})
+    return response
 
 
 def aboutus(request):
